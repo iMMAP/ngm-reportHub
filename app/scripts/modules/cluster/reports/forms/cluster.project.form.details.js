@@ -282,6 +282,8 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				// upload
 				uploadUrl:'project-upload.html',
 
+				setReportDurationUrl:'duration-report.html',
+
 				// for import from file
 				text_input: '',
 				messageWarning: '',
@@ -3237,6 +3239,20 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				// },
 
 				// <++++++++++++++++++++++++++++++++++++++++++++++++++++++++> 
+
+				// set Reporting to bi weeekly
+				checkedReportbyPeriode:function(periode){
+					// for now periode issue to report it just bi-weekly
+					return $scope.project.definition.report_type_id === periode? true:false;
+				},
+				setReportbyPeriode: function (periode,id){
+					if (document.getElementById(id).checked) {
+						$scope.project.definition.report_type_id = periode;
+					}else{
+						$scope.project.definition.report_type_id = 'monthly';
+					}
+					
+				},
 
 
 

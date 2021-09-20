@@ -288,6 +288,8 @@
 		<!-- Project Document Upload -->
 		<div ng-if="!project.newProject" ng-include="project.templatesUrl + project.uploadUrl"></div>
 
+		<div ng-include="project.templatesUrl + project.setReportDurationUrl"></div>
+
 		<!-- Project Status (set to false) -->
 		<div class="row remove" ng-if="false">
 			<div class="col s12 m12 l12">

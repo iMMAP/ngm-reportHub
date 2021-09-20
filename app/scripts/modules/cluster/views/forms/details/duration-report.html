@@ -1,0 +1,244 @@
+<style>
+    .dropzone {
+        border: 2px dashed #42A5F5;
+        margin: 0 20px 0 20px;
+
+    }
+
+    .modal {
+        max-height: unset;
+    }
+
+    .modal .modal-footer {
+        /* border-radius: 0 0 2px 2px; */
+        background-color: #ffffff;
+        /* height: 20px; */
+    }
+
+    .close-button {
+        margin-top: 4px;
+        color: #a0a4a6;
+    }
+
+    #close-preview-file.modal,
+    #remove-modal.modal {
+        width: auto !important;
+        right: auto !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .remove-upload.btn-floating {
+        position: absolute;
+        top: -14px;
+        right: -12px;
+        z-index: 20;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer !important;
+    }
+
+    .remove-upload.btn-floating i {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    .dropzone .dz-preview .dz-details {
+        padding: 3em 1em;
+        color: #000000;
+        background: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .percent-upload {
+        display: none;
+    }
+
+    li .collection-item .avatar .coll .list-upload {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .ng-table th {
+        text-align: left;
+        padding-left: 20px;
+    }
+
+    .list-upload-item td {
+        padding-left: 20px;
+    }
+
+    .line {
+        display: inline-block;
+    }
+
+    .card-reveal .line {
+        display: inline-block;
+        padding-left: 21%;
+        margin-top: 15%;
+    }
+
+    .collection .collection-item.avatar i.circle {
+        font-size: 15px;
+        line-height: 25px;
+    }
+
+    .collection .collection-item.avatar .circle {
+        width: 25px;
+        height: 25px;
+        top: -11px;
+        left: -4px;
+    }
+
+    .pagination li.active {
+        background-color: #42A5F5;
+    }
+
+    ul.pagination.ng-table-pagination {
+        margin-top: 15px;
+    }
+
+    .edit-report-btn-left {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+    }
+
+    .ng-table th.sortable.sort-desc,
+    .ng-table th.sortable.sort-asc {
+        background-color: rgba(141, 192, 219, 0);
+    }
+
+    .grid-list {
+        display: inline-flex;
+        margin-top: 15px;
+        margin-left: 52%;
+    }
+
+    .color_teal {
+        color: #26a69a !important;
+    }
+
+    .color_white {
+        color: #ffffff !important;
+    }
+
+    .border-radius {
+        border-radius: 6px;
+        border: 1px solid #dadce0;
+        box-shadow: none;
+    }
+
+    .card .border-radius {
+        min-height: 200px;
+    }
+
+    .card .card-image {
+        height: 150px;
+    }
+
+    .card .card-image img {
+        /* height: 100%;
+		width: auto; */
+        width: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .card .card-reveal {
+        padding: 0;
+    }
+
+    .card .card-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .material-tooltip {
+        padding: 10px 10px;
+        width: auto;
+        font-weight: 600;
+    }
+
+    .close-uplod-btn {
+        background-color: red;
+        color: #fff;
+        font-size: 30px;
+    }
+
+    .imitate-circle {
+        border-radius: 50%;
+
+    }
+
+    .collection .collection-item.avatar i.imitate-circle {
+        font-size: 18px;
+        line-height: 42px;
+        color: #fff;
+        /* background-color: #999; */
+        text-align: center;
+        line-height: 30px;
+        width: 30px;
+        height: 30px;
+    }
+</style>
+
+<div class="row" window-size>
+    <div class="col s12 m12 l12">
+        <div class="card">
+
+            <ul class="collection with-header">
+                <li class="collection-header blue lighten-1">
+                    <h5 class="report-work-title white-text">
+                        <i class="material-icons left">attach_file</i>
+                        Report Periode
+                    </h5>
+                </li>
+
+                <li class="collection-item avatar " style=" border-bottom-width: 0px;min-height: 60px; ">
+                    <div class="row" style="margin-bottom: 20px; margin-left:0px;margin-right:0px;margin-top: 20px;
+                                        										border: 1px dotted rgb(158, 158, 158);">
+                        <div class="input-field col s12 m4 l4">
+                            <p ng-if="true" style="padding-left:12px;cursor:pointer;">
+                                <label class="checkbox-label" for="report_by_biweekly">
+                                    <input type="checkbox" class="filled-in" id="report_by_biweekly"
+                                        ng-click="project.setReportbyPeriode('bi-weekly','report_by_biweekly')"
+                                        ng-checked="project.checkedReportbyPeriode('bi-weekly')"/>
+                                        
+                                    <span style="color:#757575 font-size: 1.2rem;line-height:1.2rem">Report by bi-weekly</span>
+                                </label>
+                            </p>
+                        </div>
+                        <!-- <div class="input-field col s12 m4 l4">
+                            <p ng-if="true" style="padding-left:12px;cursor:pointer;">
+                                <label class="checkbox-label" for="show_location_groupings_by_admin2pcode">
+                                    <input type="checkbox" class="filled-in" id="show_location_groupings_by_admin2pcode"
+                                        ng-checked="project.checkedLocationGroupingBy('admin2pcode')"
+                                        ng-click="project.showLocationGroupingsModal( $event,'admin2pcode' )" />
+                                    <span style="color:#757575 font-size: 1.2rem;">Group Target Locations by
+                                        {{project.definition.admin0pcode === 'ET'?'Zone':'District'}}</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="input-field col s12 m4 l4">
+                            <p ng-if="true" style="padding-left:12px;cursor:pointer;">
+                                <label class="checkbox-label" for="show_location_groupings_by_custom">
+                                    <input type="checkbox" class="filled-in" id="show_location_groupings_by_custom"
+                                        ng-checked="project.checkedLocationGroupingBy('custom')"
+                                        ng-click="project.showLocationGroupingsModal( $event,'custom' )" />
+                                    <span style="color:#757575 font-size: 1.2rem;">Group Target Locations Custom</span>
+                                </label>
+                            </p>
+                        </div> -->
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<script>
+    setTimeout(function () {
+        $('.tooltipped-report-upload').tooltip();
+    }, 100);
+</script>

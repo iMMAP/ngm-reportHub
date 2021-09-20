@@ -94,7 +94,11 @@ angular.module('ngmReportHub')
 				
 
 				// add project code to subtitle?
-				var text = $filter('translate')('actual_monthly_beneficiaries_report_for')+' ' + $scope.report.project.project_title
+				var text = $filter('translate')('actual_monthly_beneficiaries_report_for')+' ' + $scope.report.project.project_title;
+				
+				if($scope.report.project.report_type_id === 'bi-weekly'){
+					text = 'Actual Bi-weekly Report for' + ' ' + $scope.report.project.project_title;
+				};
 				var subtitle = $scope.report.project.project_code ?  $scope.report.project.project_code + ' - ' + text : text;
 
 				// report dashboard model
@@ -175,6 +179,7 @@ angular.module('ngmReportHub')
 									templateUrl: $scope.report.getReportTemplate(),
 									orderBy: 'reporting_due_date',
 									format: true,
+									report_type: $scope.report.project.report_type_id === 'bi-weekly' ? $scope.report.project.report_type_id :'monthly',
 									request: {
 										method: 'POST',
 										url: ngmAuth.LOCATION + '/api/cluster/report/getReportsList',
@@ -205,6 +210,7 @@ angular.module('ngmReportHub')
 									templateUrl: $scope.report.getReportTemplate(),
 									orderBy: 'reporting_due_date',
 									format: true,
+									report_type: $scope.report.project.report_type_id === 'bi-weekly' ? $scope.report.project.report_type_id : 'monthly',
 									request: {
 										method: 'POST',
 										url: ngmAuth.LOCATION + '/api/cluster/report/getReportsList',
