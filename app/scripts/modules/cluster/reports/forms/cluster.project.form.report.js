@@ -957,6 +957,16 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 						}
 					}
 
+					if ($scope.project.report.report_type_id && $scope.project.report.report_type_id === 'bi-weekly'){
+						var number_date_of_reporting_period = moment.utc($scope.project.report.reporting_period).format('D')
+						params.report_month = (number_date_of_reporting_period <= 14 )? $scope.project.report.report_month - 1 : $scope.project.report.report_month;
+						var _period = (number_date_of_reporting_period <= 14) ? moment($scope.project.report.reporting_period).subtract(1, 'M').set('date', 15).format() : moment($scope.project.report.reporting_period).set('date', 1).format();
+						params.reporting_period = _period;
+						params.report_type_id = $scope.project.report.report_type_id
+					}
+
+
+
 					// setReportRequest
 					var get_prev_report = {
 						method: 'POST',

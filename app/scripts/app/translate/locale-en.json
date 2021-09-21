@@ -866,6 +866,7 @@
         "create_project_cancelled":"Create Project Cancelled!",
 
         "copy_last_month":"Copy Last Month",
+        "copy_last_report":"Copy Last Report",
         "beneficiaries_covered":"Beneficiaries Covered",
         "stock_report":"Stock Report",
         "donwload_monthly_stock_report_as_csv":"Download Monthly Stock Report as CSV",

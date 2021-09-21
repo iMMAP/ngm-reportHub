@@ -185,7 +185,7 @@
 				      					title="Copy {{ project.previousMonth }}"	      					
 												ng-click="project.copyPreviousMonth()"
 												ng-disabled="deactivedCopybutton">
-	      					<i class="material-icons left">content_copy</i>{{'copy_last_month' | translate}}
+	      					<i class="material-icons left">content_copy</i>{{(project.report.report_type_id === 'bi-weekly' ?'copy_last_report':'copy_last_month') | translate}}
 							</button>
 
 							<button ng-hide="( project.report.admin0pcode !== 'AF') ||
