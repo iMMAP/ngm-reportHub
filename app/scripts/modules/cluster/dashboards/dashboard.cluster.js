@@ -158,6 +158,38 @@ angular.module('ngmReportHub')
 
 					return path;
 				},
+				getPathWithDate: function (cluster_id, activity_type_id, activity_description_id, organization_tag, admin1pcode, admin2pcode, hrp,start_date,end_date) {
+
+					if (cluster_id !== 'rnr_chapter') {
+						var path = '/cluster/5w/' + $scope.dashboard.adminRpcode +
+							'/' + $scope.dashboard.admin0pcode +
+							'/' + admin1pcode +
+							'/' + admin2pcode +
+							'/' + cluster_id +
+							'/' + activity_type_id +
+							'/' + activity_description_id +
+							'/' + organization_tag +
+							'/' + $scope.dashboard.beneficiaries.join('+') +
+							'/' + start_date +
+							'/' + end_date +
+							'/' + hrp;
+					} else {
+						var path = '/cluster/5w/' + $scope.dashboard.adminRpcode +
+							'/' + $scope.dashboard.admin0pcode +
+							'/' + admin1pcode +
+							'/' + admin2pcode +
+							'/' + cluster_id +
+							'/' + activity_type_id +
+							'/' + activity_description_id +
+							'/' + organization_tag +
+							'/returnee_undocumented+returnee_documented+refugee_pakistani' +
+							'/' + start_date +
+							'/' + end_date +
+							'/' + hrp;
+					}
+
+					return path;
+				},
 
         // set URL based on user rights
 				setUrl: function(){
@@ -798,8 +830,77 @@ angular.module('ngmReportHub')
 							});
 						}
 
+						if($scope.dashboard.cluster_id === 'esnfi'){
+							getBiWeeklyRows()
+						}
+
 
 					});
+
+					getBiWeeklyRows = function() {
+
+						// rows
+						var rows = [];
+
+						// for each week
+						for (var x = 0; x <= 11; x++) {
+							var firstPeriodTitle=moment().month(x).format('MMM') + ' - First Period';
+							var secondPeriodTitle = moment().month(x).format('MMM') + ' - Second Period';
+							var startDateofBiweeklyFirstPeriod = moment().month(x).set('date', 1).format('YYYY-MM-DD');
+							var endDateofBiweeklyFirstPeriod = moment().month(x).set('date', 14).format('YYYY-MM-DD');
+							var startDateofBiweeklySecondPeriod = moment().month(x).set('date', 15).format('YYYY-MM-DD')
+							var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
+							var pathFirstPeriod = $scope.dashboard.getPathWithDate($scope.dashboard.cluster_id, 
+																				    $scope.dashboard.activity_type_id,
+																					$scope.dashboard.activity_description_id,
+																					$scope.dashboard.organization_tag,
+																					$scope.dashboard.admin1pcode,
+																					$scope.dashboard.admin2pcode,
+																					$scope.dashboard.hrp,
+																					startDateofBiweeklyFirstPeriod,
+																					endDateofBiweeklyFirstPeriod
+																					)
+							
+							var pathSecondPeriod = $scope.dashboard.getPathWithDate($scope.dashboard.cluster_id, 
+																				    $scope.dashboard.activity_type_id,
+																					$scope.dashboard.activity_description_id,
+																					$scope.dashboard.organization_tag,
+																					$scope.dashboard.admin1pcode,
+																					$scope.dashboard.admin2pcode,
+																					$scope.dashboard.hrp,
+																					startDateofBiweeklySecondPeriod,
+																					endDateofBiweeklySecondPeriod
+																					)
+							
+							rows.push({
+								'title': firstPeriodTitle,
+								'param': 'start',
+								'active': startDateofBiweeklyFirstPeriod,
+								'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+								'href': '/desk/#' + pathFirstPeriod
+							}, {
+								'title': secondPeriodTitle,
+								'param': 'start',
+								'active': startDateofBiweeklySecondPeriod,
+								'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+								'href': '/desk/#' + pathSecondPeriod
+							})
+						}
+
+						// push to menu
+						$scope.model.menu.push({
+							'id': '5w-bi-weekly',
+							'icon': 'date_range',
+							'title': 'Biweekly',//'Report Week',
+							'class': 'teal lighten-1 white-text',
+							'rows': rows
+						});
+
+					};
+
+					
+
+					
 
 				},
 
