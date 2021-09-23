@@ -830,7 +830,7 @@ angular.module('ngmReportHub')
 							});
 						}
 
-						if($scope.dashboard.cluster_id === 'esnfi'){
+						if (($scope.dashboard.admin0pcode === 'af') && ($scope.dashboard.cluster_id === 'esnfi')){
 							getBiWeeklyRows()
 						}
 
@@ -844,8 +844,8 @@ angular.module('ngmReportHub')
 
 						// for each week
 						for (var x = 0; x <= 11; x++) {
-							var firstPeriodTitle=moment().month(x).format('MMM') + ' - First Period';
-							var secondPeriodTitle = moment().month(x).format('MMM') + ' - Second Period';
+							var firstPeriodTitle=moment().month(x).format('MMM') + ' Biweekly - First Period';
+							var secondPeriodTitle = moment().month(x).format('MMM') + ' Biweekly - Second Period';
 							var startDateofBiweeklyFirstPeriod = moment().month(x).set('date', 1).format('YYYY-MM-DD');
 							var endDateofBiweeklyFirstPeriod = moment().month(x).set('date', 14).format('YYYY-MM-DD');
 							var startDateofBiweeklySecondPeriod = moment().month(x).set('date', 15).format('YYYY-MM-DD')
