@@ -210,6 +210,12 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 					// Set limited amount of locations
 					$scope.paginated_monthly_locations = $scope.project.report.locations.slice($scope.startMonthlyLocation, $scope.endMonthlyLocation);
 
+					if ($scope.project.report.report_type_id === 'bi-weekly'){
+						var period_biweekly = (moment.utc($scope.project.report.reporting_period).format('D') <= 14) ? 'Biweekly Period 1' :'Biweekly Period 2';
+						$scope.project.monthlyTitleFormat += " "+ period_biweekly;
+					}
+					
+					
 				},
 
 				// sets title for each location / activity

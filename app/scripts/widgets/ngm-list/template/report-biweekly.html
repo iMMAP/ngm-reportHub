@@ -79,7 +79,7 @@
                         ng-style="($root.rtl) && { 'padding-left':'40px' } || { 'padding-right':'40px' }"
                         ng-hide="windowWidth < 992">{{ list.reportFormat( item ) }}</span>
                     <p align="justify" style="padding:10px 0px 10px 0px;">
-                        Bi-weekly Progress for {{ item.reporting_period_title }}
+                        Biweekly Progress for {{ item.reporting_period_title }}
                     </p>
                     <a href="{{ list.report_url }}/{{ item.project_id }}/{{ item.id }}"
                         title="{{ list.hoverTitle }} {{ list.dueFormat( item.reporting_period ) }} Report"

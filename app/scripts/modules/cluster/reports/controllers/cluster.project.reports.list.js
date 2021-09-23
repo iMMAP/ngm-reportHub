@@ -51,6 +51,9 @@ angular.module('ngmReportHub')
 				if ( $scope.report.project.admin0pcode === 'SO' ) {
 					tmpl = '/scripts/widgets/ngm-list/template/report_somalia.html';
 				}
+				if ($scope.report.project.report_type_id === 'bi-weekly'){
+					tmpl = '/scripts/widgets/ngm-list/template/report-biweekly.html';
+				}
 				return tmpl;
 			},
 
@@ -97,7 +100,7 @@ angular.module('ngmReportHub')
 				var text = $filter('translate')('actual_monthly_beneficiaries_report_for')+' ' + $scope.report.project.project_title;
 				
 				if($scope.report.project.report_type_id === 'bi-weekly'){
-					text = 'Actual Bi-weekly Report for' + ' ' + $scope.report.project.project_title;
+					text = 'Actual Biweekly Report for' + ' ' + $scope.report.project.project_title;
 				};
 				var subtitle = $scope.report.project.project_code ?  $scope.report.project.project_code + ' - ' + text : text;
 
