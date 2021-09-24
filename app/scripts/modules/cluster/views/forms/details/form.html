@@ -181,6 +181,23 @@
 		</div>
 	</div>
 </div>
+<!-- change reporting period duration -->
+<div id="change-reporting-period-duration-to-biweekly-modal" class="modal">
+	<div class="modal-content dialog">
+		<h4 class="header-modal red lighten-2"><i class="material-icons left small">info_outline</i>Set Reporting Period to Biweekly</h4>
+		<p style="font-weight: 500;">Would you like to do reporting every 2 week (Biweekly)?
+		</p>
+		<p
+			style="font-weight:400;background-color: #dcdcdc; border-radius: 5px; font-style: italic;  font-size: 14px;margin: 20px 50px 10px 20px;">
+			Once you the set to report biweekly you cannot change it again.
+		</p>
+	</div>
+	<div class="modal-footer">
+		<a 
+			class=" modal-action modal-close waves-effect waves-green btn">{{'yes'|translate}}</a>
+		<a class="modal-close waves-effect waves-green btn-flat" ng-click="project.resetReportbyPeriode()">{{'cancel_mayus' | translate}}</a>
+	</div>
+</div>
 <!-- list/cancel btn -->
 <div class="row" ng-if="project.definition.project_status === 'new'">
 	<div class="col s12 m12 l12">
@@ -288,7 +305,7 @@
 		<!-- Project Document Upload -->
 		<div ng-if="!project.newProject" ng-include="project.templatesUrl + project.uploadUrl"></div>
 
-		<div ng-include="project.templatesUrl + project.setReportDurationUrl"></div>
+		<div ng-if="(project.newProject && project.definition.admin0pcode === 'AF') || (!project.newProject && project.definition.report_type_id ==='bi-weekly')" ng-include="project.templatesUrl + project.setReportDurationUrl"></div>
 
 		<!-- Project Status (set to false) -->
 		<div class="row remove" ng-if="false">

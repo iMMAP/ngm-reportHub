@@ -196,10 +196,10 @@
                 </li>
 
                 <li class="collection-item avatar " style=" border-bottom-width: 0px;min-height: 60px; ">
-                    <div class="row" style="margin-bottom: 20px; margin-left:0px;margin-right:0px;margin-top: 20px;
+                    <div ng-if="project.newProject" class="row" style="margin-bottom: 20px; margin-left:0px;margin-right:0px;margin-top: 20px;
                                         										border: 1px dotted rgb(158, 158, 158);">
-                        <div class="input-field col s12 m4 l4">
-                            <p ng-if="true" style="padding-left:12px;cursor:pointer;">
+                        <div class="input-field col s12 m4 l4" >
+                            <p style="padding-left:12px;cursor:pointer;">
                                 <label class="checkbox-label" for="report_by_biweekly">
                                     <input type="checkbox" class="filled-in" id="report_by_biweekly"
                                         ng-click="project.setReportbyPeriode('bi-weekly','report_by_biweekly')"
@@ -209,27 +209,13 @@
                                 </label>
                             </p>
                         </div>
-                        <!-- <div class="input-field col s12 m4 l4">
-                            <p ng-if="true" style="padding-left:12px;cursor:pointer;">
-                                <label class="checkbox-label" for="show_location_groupings_by_admin2pcode">
-                                    <input type="checkbox" class="filled-in" id="show_location_groupings_by_admin2pcode"
-                                        ng-checked="project.checkedLocationGroupingBy('admin2pcode')"
-                                        ng-click="project.showLocationGroupingsModal( $event,'admin2pcode' )" />
-                                    <span style="color:#757575 font-size: 1.2rem;">Group Target Locations by
-                                        {{project.definition.admin0pcode === 'ET'?'Zone':'District'}}</span>
-                                </label>
+                    </div>
+                    <div class="row" ng-if="!project.newProject && project.definition.report_type_id ==='bi-weekly'">
+                        <div class="input-field col s12 m12 l12" >
+                            <p style="font-weight: 600;">
+                                Reporting Period for this Project already set to Biweekly
                             </p>
                         </div>
-                        <div class="input-field col s12 m4 l4">
-                            <p ng-if="true" style="padding-left:12px;cursor:pointer;">
-                                <label class="checkbox-label" for="show_location_groupings_by_custom">
-                                    <input type="checkbox" class="filled-in" id="show_location_groupings_by_custom"
-                                        ng-checked="project.checkedLocationGroupingBy('custom')"
-                                        ng-click="project.showLocationGroupingsModal( $event,'custom' )" />
-                                    <span style="color:#757575 font-size: 1.2rem;">Group Target Locations Custom</span>
-                                </label>
-                            </p>
-                        </div> -->
                     </div>
                 </li>
             </ul>

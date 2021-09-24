@@ -3247,11 +3247,17 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				},
 				setReportbyPeriode: function (periode,id){
 					if (document.getElementById(id).checked) {
+						$("#change-reporting-period-duration-to-biweekly-modal").modal({ dismissible: false });
+						$("#change-reporting-period-duration-to-biweekly-modal").modal('open');
+						
 						$scope.project.definition.report_type_id = periode;
 					}else{
 						$scope.project.definition.report_type_id = 'monthly';
 					}
 					
+				},
+				resetReportbyPeriode:function(){
+					$scope.project.definition.report_type_id = 'monthly';
 				},
 
 
