@@ -3259,6 +3259,15 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				resetReportbyPeriode:function(){
 					$scope.project.definition.report_type_id = 'monthly';
 				},
+				showBiweeklyCheckbox:function(){
+					var inter_cluster_activities = $scope.project.definition.inter_cluster_activities && $scope.project.definition.inter_cluster_activities.length ? $scope.project.definition.inter_cluster_activities.map(c=>c.cluster_id) : [];
+
+					if ($scope.project.definition.cluster_id === 'esnfi' || (inter_cluster_activities.length && (inter_cluster_activities.indexOf('esnfi')>-1))){
+						console.log($scope.project.definition.cluster_id,$scope.project.definition.inter_cluster_activities)
+						return true;
+					}
+					return false;
+				},
 
 
 

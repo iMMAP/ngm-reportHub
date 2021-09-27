@@ -305,7 +305,7 @@
 		<!-- Project Document Upload -->
 		<div ng-if="!project.newProject" ng-include="project.templatesUrl + project.uploadUrl"></div>
 
-		<div ng-if="(project.newProject && project.definition.admin0pcode === 'AF') || (!project.newProject && project.definition.report_type_id ==='bi-weekly')" ng-include="project.templatesUrl + project.setReportDurationUrl"></div>
+		<div ng-if="(project.newProject && project.definition.admin0pcode === 'AF' && project.showBiweeklyCheckbox()) || (!project.newProject && project.definition.report_type_id ==='bi-weekly')" ng-include="project.templatesUrl + project.setReportDurationUrl"></div>
 
 		<!-- Project Status (set to false) -->
 		<div class="row remove" ng-if="false">
