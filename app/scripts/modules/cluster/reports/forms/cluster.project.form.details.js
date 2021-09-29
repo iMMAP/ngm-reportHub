@@ -3261,10 +3261,11 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				},
 				showBiweeklyCheckbox:function(){
 					var inter_cluster_activities = $scope.project.definition.inter_cluster_activities && $scope.project.definition.inter_cluster_activities.length ? $scope.project.definition.inter_cluster_activities.map(c=>c.cluster_id) : [];
-
+					var project_details_array = $scope.project.definition.project_details ? $scope.project.definition.project_details.map(d => d.project_detail_id) :[]
 					if ($scope.project.definition.cluster_id === 'esnfi' || (inter_cluster_activities.length && (inter_cluster_activities.indexOf('esnfi')>-1))){
-						console.log($scope.project.definition.cluster_id,$scope.project.definition.inter_cluster_activities)
-						return true;
+						if (project_details_array.indexOf('winterization')>-1){
+							return true;
+						}
 					}
 					return false;
 				},
