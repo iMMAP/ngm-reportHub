@@ -237,9 +237,9 @@ angular.module( 'ngmReportHub' )
 
 			},
 
-			downloadStockLists: function(admin0pcode, warehouses) {
+			downloadStockLists: function(admin0pcode, warehouses,cluster_id,start_date, end_date) {
 
-				let lists = ngmClusterLists.getStockLists(admin0pcode);
+				let lists = ngmClusterLists.getStockLists(admin0pcode, cluster_id, start_date, end_date);
 
 				// XLSX processing
 				const workbook = new ExcelJS.Workbook();

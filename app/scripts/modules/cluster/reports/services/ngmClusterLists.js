@@ -62,7 +62,7 @@ angular.module( 'ngmReportHub' )
 					hrp_beneficiary_types: ngmClusterLists.getHrpBeneficiaries(project.admin0pcode, moment(project.project_end_date).year()),
 					// location_groups: ngmClusterLists.getLocationGroups(),
 					currencies: ngmClusterLists.getCurrencies( project.admin0pcode ),
-					donors: ngmClusterLists.getDonors( project.admin0pcode, project.cluster_id ),
+					donors: ngmClusterLists.getDonors(project.admin0pcode, project.cluster_id, start_date, end_date ),
 					organizations: ngmClusterLists.getOrganizations(project.admin0pcode),
 					project_details: ngmClusterLists.getProjectDetails(project.admin0pcode),
 
@@ -121,7 +121,8 @@ angular.module( 'ngmReportHub' )
 				}
 			},
 
-			getStockLists: function (admin0pcode) {
+			getStockLists: function (admin0pcode, cluster_id, start_date, end_date) {
+				cluster_id = cluster_id ? cluster_id:'';
 				return {
 					clusters: ngmClusterLists.getClusters(admin0pcode).filter(cluster => cluster.filter !== false && cluster.registration !== false),
 					units: ngmClusterLists.getUnits(admin0pcode),
@@ -177,7 +178,7 @@ angular.module( 'ngmReportHub' )
 						stock_item_purpose_name: 'Operational',
 					}],
 					stock_targeted_groups: ngmClusterLists.getStockTargetedGroups(),
-					donors: ngmClusterLists.getDonors(admin0pcode, ''),
+					donors: ngmClusterLists.getDonors(admin0pcode, cluster_id, start_date, end_date),
 					organizations: ngmClusterLists.getOrganizations(admin0pcode),
 					types: [{ stock_type_id: 'stock', stock_type_name: 'Stock' }, { stock_type_id: 'pipeline', stock_type_name: 'Pipeline' }]
 				};
@@ -4047,7 +4048,7 @@ angular.module( 'ngmReportHub' )
 
 
 			// get cluster donors
-			getDonors: function( admin0pcode, cluster_id ) {
+			getDonors: function (admin0pcode, cluster_id, start_date, end_date ) {
 
 				// donor list
 				var donors;
@@ -5016,6 +5017,8 @@ angular.module( 'ngmReportHub' )
 
 				// Sort A-Z
 				if (donors_filter.length){
+					// filter by date
+					donors_filter = ngmClusterLists.filterActiveDate(donors_filter, start_date, end_date);
 					donors_filter = $filter('orderBy')(donors_filter, 'project_donor_name');
 				}
 				donors_filter.push({ project_donor_id: 'other', project_donor_name: 'Other' });

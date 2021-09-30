@@ -1456,7 +1456,7 @@ angular.module('ngm.widget.upload.beneficiaries.stock.report', ['ngm.provider'])
                         
                     }else{
                         $scope.detailStocks[index] = !$scope.detailStocks[index];
-                        $scope.upload.lists.stocks = ngmClusterLists.getStockLists(item.admin0pcode)
+                        $scope.upload.lists.stocks = ngmClusterLists.getStockLists(item.admin0pcode, item.cluster_id ,moment(item.reporting_period).startOf('month'), moment(item.reporting_period).endOf('month'))
                         $scope.stocksList[index] = $scope.upload.lists.stocks
                     }
 

@@ -127,7 +127,7 @@ angular.module('ngmReportHub')
 								request: {
 									filename: 'stock_lists' + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) + '.xlsx',
 									mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-									function: () => ngmClusterDownloads.downloadStockLists($scope.report.organization.admin0pcode, $scope.report.organization.warehouses)
+									function: () => ngmClusterDownloads.downloadStockLists($scope.report.organization.admin0pcode,'', $scope.report.organization.warehouses, moment($scope.report.definition.reporting_period).startOf('month'), moment($scope.report.definition.reporting_period).endOf('month'))
 								},
 								metrics: {
 									method: 'POST',
