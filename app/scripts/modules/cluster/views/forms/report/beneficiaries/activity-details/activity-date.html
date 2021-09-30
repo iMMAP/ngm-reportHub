@@ -7,7 +7,7 @@
 		<!-- input-date directive -->
 		<div class="input-field col s12 m5">
 			<label for="ngm-activity-start-date-{{ $locationIndex }}-{{ $beneficiaryIndex }}" class="active">Start Date</label>
-			<input materialize-datepicker
+			<input ngm-date
 							id="ngm-activity-start-date-{{ $locationIndex }}-{{ $beneficiaryIndex }}"
 							type="text"
 							class="datepicker"
@@ -24,7 +24,7 @@
 		<!-- input-date directive -->
 		<div class="input-field col s12 m5">
 			<label for="ngm-activity-end-date-{{ $locationIndex }}-{{ $beneficiaryIndex }}" class="active">End Date</label>
-			<input materialize-datepicker
+			<input ngm-date
 							id="ngm-activity-end-date-{{ $locationIndex }}-{{ $beneficiaryIndex }}"
 							type="text"
 							class="datepicker"
