@@ -1062,7 +1062,7 @@ angular.module('ngmReportHub')
 					$scope.dashboard.organization_tag = $route.current.params.organization_tag;
 					$scope.dashboard.report_type = $route.current.params.report_type;
 					$scope.dashboard.activity_type_id = $route.current.params.activity_type_id;
-					$scope.dashboard.report_period_type_id = $route.current.params.report_period_type_id ? $route.current.params.report_period_type_id:'all';
+					$scope.dashboard.report_period_type_id = $route.current.params.report_period_type_id && $scope.dashboard.cluster_id === 'esnfi' ? $route.current.params.report_period_type_id:'all';
 
 					// report name
 					$scope.dashboard.report_file_name += moment().format( 'YYYY-MM-DDTHHmm' );

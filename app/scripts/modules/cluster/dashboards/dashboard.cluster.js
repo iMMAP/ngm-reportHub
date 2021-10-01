@@ -764,7 +764,7 @@ angular.module('ngmReportHub')
 							var hrp_list = [{ hrp: true, hrp_title:'HRP'},{hrp:false, hrp_title:'TIMESTAMP'}]
 							hrpRows=[];
 							angular.forEach(hrp_list, function (h, i) {
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, h.hrp);
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, h.hrp, $scope.dashboard.report_type_id);
 								hrpRows.push({
 									'title': h.hrp_title,
 									'param': 'hrp',
@@ -1013,7 +1013,7 @@ angular.module('ngmReportHub')
 					$scope.dashboard.activity_type_id = $route.current.params.activity_type_id;
 					$scope.dashboard.activity_description_id = $route.current.params.activity_description_id;
 					$scope.dashboard.hrp = $route.current.params.hrp ? $route.current.params.hrp : true;
-					$scope.dashboard.report_type_id = $route.current.params.report_type_id ? $route.current.params.report_type_id : 'all';
+					$scope.dashboard.report_type_id = $route.current.params.report_type_id && $scope.dashboard.cluster_id === 'esnfi' ? $route.current.params.report_type_id : 'all';
 					console.log($scope.dashboard.report_type_id)
 
 
@@ -1125,7 +1125,7 @@ angular.module('ngmReportHub')
 										if ( date !== $scope.dashboard.startDate ) {
 											// set new date
 											$scope.dashboard.startDate = date;
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp );
+											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp,$scope.dashboard.report_type_id );
 											$location.path( path );
 										}
 									}
@@ -1141,7 +1141,7 @@ angular.module('ngmReportHub')
 										if ( date !== $scope.dashboard.endDate ) {
 											// set new date
 											$scope.dashboard.endDate = date;
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp );
+											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp,$scope.dashboard.report_type_id );
 											$location.path( path );
 										}
 									}
