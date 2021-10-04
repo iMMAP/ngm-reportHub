@@ -512,7 +512,7 @@ angular
 			})
 
 			// ADMIN
-			.when( '/cluster/admin/:adminRpcode/:admin0pcode/:cluster_id/:activity_type_id/:organization_tag/:report_type/:start/:end/:report_period_type_id?', {
+			.when( '/cluster/admin/:adminRpcode/:admin0pcode/:cluster_id/:activity_type_id/:organization_tag/:report_type/:start/:end/:report_period_type_id?/:week?', {
 				templateUrl: '/views/app/dashboard.html',
 				controller: 'DashboardClusterAdminCtrl',
 				resolve: {

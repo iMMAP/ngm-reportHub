@@ -136,7 +136,7 @@ angular.module('ngmReportHub')
 				},
 
 				// admin
-				getPath: function( cluster_id, activity_type_id, report_type, organization_tag, report_period_type_id ){
+				getPath: function( cluster_id, activity_type_id, report_type, organization_tag, report_period_type_id, week ){
 
 					var path = '/cluster/admin/' + $scope.dashboard.adminRpcode.toLowerCase() +
 												 '/' + $scope.dashboard.admin0pcode.toLowerCase() +
@@ -146,7 +146,25 @@ angular.module('ngmReportHub')
 												 '/' + report_type +
 												 '/' + $scope.dashboard.startDate +
 												 '/' + $scope.dashboard.endDate+
-												 '/' + report_period_type_id ;
+												 '/' + report_period_type_id+
+												 '/' + week;
+
+					return path;
+				},
+
+				getPathWithDate: function (cluster_id, activity_type_id, report_type, organization_tag, report_period_type_id, start_date, end_date, week) {
+
+					var path = '/cluster/admin/' + $scope.dashboard.adminRpcode.toLowerCase() +
+						'/' + $scope.dashboard.admin0pcode.toLowerCase() +
+						'/' + cluster_id +
+						'/' + activity_type_id +
+						'/' + organization_tag +
+						'/' + report_type +
+						'/' + start_date +
+						'/' + end_date +
+						'/' + report_period_type_id+
+						'/'+ week;
+
 
 					return path;
 				},
@@ -155,7 +173,7 @@ angular.module('ngmReportHub')
 				setUrl: function(){
 
 					// if ADMIN
-					var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.report_type, $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id );
+					var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.report_type, $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
 
 					// if current location is not equal to path
 					if ( path !== $location.$$path ) {
@@ -491,7 +509,7 @@ angular.module('ngmReportHub')
 						angular.forEach( $scope.dashboard.lists.clusters, function( d, i ){
 
 							// admin URL
-							var path = $scope.dashboard.getPath(d.cluster_id, 'all', $scope.dashboard.report_type, $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id );
+							var path = $scope.dashboard.getPath(d.cluster_id, 'all', $scope.dashboard.report_type, $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
 
 							// menu rows
 							clusterRows.push({
@@ -542,7 +560,7 @@ angular.module('ngmReportHub')
 								if ( d ) {
 
 									// admin URL
-									var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.report_type, d.organization_tag, $scope.dashboard.report_period_type_id );
+									var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.report_type, d.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
 
 									// menu rows
 									orgRows.push({
@@ -576,14 +594,19 @@ angular.module('ngmReportHub')
 
 						var report_types = [{ title: "ALL", active: 'all' }, { title: "MONTHLY", active: 'monthly' }, { title: "BIWEEKLY", active: 'bi-weekly' }];
 						var rows = []
+						var startDate = moment($scope.dashboard.startDate).startOf('month').format('YYYY-MM-DD');
+						var endDate = moment($scope.dashboard.endDate).endOf('month').format('YYYY-MM-DD');
 						for (i in report_types) {
-							$scope.dashboard.getPath($scope.dashboard.report_period_type_id);
+							
 
-							var url = $scope.dashboard.getPath($scope.dashboard.cluster_id,
+							var url = $scope.dashboard.getPathWithDate($scope.dashboard.cluster_id,
 								$scope.dashboard.activity_type_id,
 								$scope.dashboard.report_type,
 								$scope.dashboard.organization_tag,
-								report_types[i].active
+								report_types[i].active,
+								startDate,
+								endDate,
+								'all'
 							)
 							rows.push({
 								'title': report_types[i].title,
@@ -604,8 +627,77 @@ angular.module('ngmReportHub')
 						});
 
 					};
+					
+					setBiweeklyPeriodMenu = function(){
+						var rows = [];
+						
+						var month_start = moment($scope.dashboard.startDate).month()
+						var month_end = moment($scope.dashboard.endDate).month()
+						// for each week
+						for (var x = month_start; x <= month_end; x++) {
+							var firstPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 1';
+							var secondPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 2';
+							var startDateofBiweeklyFirstPeriod = moment().month(x).set('date', 1).format('YYYY-MM-DD');
+							var endDateofBiweeklyFirstPeriod = moment().month(x).set('date', 14).format('YYYY-MM-DD');
+							var startDateofBiweeklySecondPeriod = moment().month(x).set('date', 15).format('YYYY-MM-DD')
+							var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
+							var weekFirstPeriod = moment().month(x).format('M')+'-01';
+							var weekSecondPeriod = moment().month(x).format('M') +'-02';
+
+							var pathFirstPeriod = $scope.dashboard.getPathWithDate(
+								$scope.dashboard.cluster_id,
+								$scope.dashboard.activity_type_id,
+								$scope.dashboard.report_type,
+								$scope.dashboard.organization_tag,
+								$scope.dashboard.report_period_type_id,
+								startDateofBiweeklyFirstPeriod,
+								endDateofBiweeklyFirstPeriod,
+								weekFirstPeriod
+							)
+
+							var pathSecondPeriod = $scope.dashboard.getPathWithDate(
+								$scope.dashboard.cluster_id,
+								$scope.dashboard.activity_type_id,
+								$scope.dashboard.report_type,
+								$scope.dashboard.organization_tag,
+								$scope.dashboard.report_period_type_id,
+								startDateofBiweeklySecondPeriod,
+								endDateofBiweeklySecondPeriod,
+								weekSecondPeriod
+							)
+
+							rows.push({
+								'title': firstPeriodTitle,
+								'param': 'week',
+								'active': weekFirstPeriod,
+								'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+								'href': '/desk/#' + pathFirstPeriod
+							}, {
+								'title': secondPeriodTitle,
+								'param': 'week',
+								'active': weekSecondPeriod,
+								'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+								'href': '/desk/#' + pathSecondPeriod
+							})
+						}
+
+						// push to menu
+						$scope.model.menu.push({
+							'id': 'admin-bi-weekly',
+							'icon': 'date_range',
+							'title': 'Biweekly',//'Report Week',
+							'class': 'teal lighten-1 white-text',
+							'rows': rows
+						});
+					}
+
 					if (($scope.dashboard.admin0pcode === 'af') && ($scope.dashboard.cluster_id === 'esnfi')) {
 						setProjectReportPeriodMenu()
+						
+					}
+
+					if ($scope.dashboard.report_period_type_id === 'bi-weekly'){
+						setBiweeklyPeriodMenu();
 					}
 					
 
@@ -730,13 +822,13 @@ angular.module('ngmReportHub')
 							'param': 'report_type',
 							'active': 'activity',
 							'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-							'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+							'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 						},{
 							'title': 'Stock',
 							'param': 'report_type',
 							'active': 'stock',
 							'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-							'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, 'stock', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+							'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, 'stock', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 						}]
 					});
 
@@ -759,19 +851,19 @@ angular.module('ngmReportHub')
 									'param': 'activity_type_id',
 									'active': 'all',
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'all', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'all', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 								},{
 									'title': 'CPiE',
 									'param': 'activity_type_id',
 									'active': 'cpie',
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'cpie', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'cpie', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 								},{
 									'title': 'GBV',
 									'param': 'activity_type_id',
 									'active': 'gbv',
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'gbv', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'gbv', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 								}]
 							});
 						}
@@ -789,25 +881,25 @@ angular.module('ngmReportHub')
 									'param': 'activity_type_id',
 									'active': 'all',
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'all', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'all', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 								},{
 									'title': $filter('translate')('child_protection'),
 									'param': 'activity_type_id',
 									'active': 'child_protection',
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'child_protection', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'child_protection', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 								},{
 									'title': 'GBV',
 									'param': 'activity_type_id',
 									'active': 'gbv',
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'gbv', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'gbv', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 								},{
 									'title': $filter('translate')('protection'),
 										'param': 'activity_type_id',
 									'active': 'general_protection',
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'general_protection', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id )
+									'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, 'general_protection', 'activity', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
 								}]
 							});
 						}
@@ -1063,6 +1155,7 @@ angular.module('ngmReportHub')
 					$scope.dashboard.report_type = $route.current.params.report_type;
 					$scope.dashboard.activity_type_id = $route.current.params.activity_type_id;
 					$scope.dashboard.report_period_type_id = $route.current.params.report_period_type_id && $scope.dashboard.cluster_id === 'esnfi' ? $route.current.params.report_period_type_id:'all';
+					$scope.dashboard.week = $route.current.params.week && $scope.dashboard.cluster_id === 'esnfi' ? $route.current.params.week : 'all';
 
 					// report name
 					$scope.dashboard.report_file_name += moment().format( 'YYYY-MM-DDTHHmm' );
@@ -1134,7 +1227,7 @@ angular.module('ngmReportHub')
 											// set new date
 											$scope.dashboard.startDate = date;
 											// URL
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id );
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
 											// update new date
 											$location.path( path );
 
@@ -1153,7 +1246,7 @@ angular.module('ngmReportHub')
 											// set new date
 											$scope.dashboard.endDate = date;
 											// URL
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id );
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
 											// update new date
 											$location.path( path );
 										}
@@ -1188,7 +1281,7 @@ angular.module('ngmReportHub')
 											$scope.dashboard.startDate = start_date;
 											$scope.dashboard.endDate = end_date;
 											// set path
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id );
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
 											// update new date
 											$location.path( path );
 										},
@@ -1200,7 +1293,7 @@ angular.module('ngmReportHub')
 											$scope.dashboard.startDate = start_date;
 											$scope.dashboard.endDate = end_date;
 											// set path
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id );
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
 											// update new date
 											$location.path( path );
 										},
