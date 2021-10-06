@@ -146,8 +146,11 @@
                   </a>
                 </td>
 
-                <td data-title="'month_mayus'|translate" sortable="'reporting_period'">
+                <!-- <td data-title="'month_mayus'|translate" sortable="'reporting_period'">
                     {{ table.formatUtcDate( row.reporting_period ) }}
+                </td> -->
+                <td data-title="'Period'" sortable="'reporting_period'">
+                  {{ table.formatPeriod( row ) }}
                 </td>
                 <td data-title="'goto'|translate" sortable="'reporting_period'">
                   
