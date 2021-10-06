@@ -758,7 +758,7 @@ angular.module('ngmReportHub')
 						});
 					}
 
-					if (($scope.dashboard.admin0pcode === 'af') && ($scope.dashboard.cluster_id === 'esnfi')) {
+					if (($scope.dashboard.admin0pcode === 'af') && ($scope.dashboard.cluster_id === 'esnfi') && ($scope.dashboard.report_type === 'activity')) {
 						setProjectReportPeriodMenu()
 						
 					}
@@ -1497,7 +1497,7 @@ angular.module('ngmReportHub')
 										headerClass: 'collection-header red lighten-2',
 										headerText: 'white-text',
 										headerIcon: 'assignment_late',
-										headerTitle: $filter('translate')('reports_due'),
+										headerTitle: ($scope.dashboard.report_type === 'stock' ?'Stock ':'') + $filter('translate')('reports_due'),
 										templateUrl: '/scripts/widgets/ngm-table/templates/cluster/admin.project.list.html',
 										tableOptions:{
 											count: 10,
@@ -1585,7 +1585,7 @@ angular.module('ngmReportHub')
 										headerClass: 'collection-header teal lighten-2',
 										headerText: 'white-text',
 										headerIcon: 'assignment_turned_in',
-										headerTitle: $filter('translate')('reports_completed'),
+										headerTitle: ($scope.dashboard.report_type === 'stock' ? 'Stock ' : '') + $filter('translate')('reports_completed'),
 										templateUrl: '/scripts/widgets/ngm-table/templates/cluster/admin.project.list.html',
 										tableOptions:{
 											count: 10,
