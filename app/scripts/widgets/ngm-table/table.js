@@ -73,6 +73,14 @@ angular.module('ngm.widget.table', ['ngm.provider'])
           return moment.utc( date ).format('MMMM');
         },
 
+        formatPeriod: function(row){
+          if (row.report_type_id === 'bi-weekly'){
+            var period = moment.utc(row.reporting_period).date() === 1 ? 'Period 1': 'Period 2';
+            return moment.utc(row.reporting_period).format('MMMM') + ' Biweekly '+period;
+          }
+          return moment.utc(row.reporting_period).format('MMMM');
+        },
+
         // on row click
         rowClick: function( newTab, href ){
 
