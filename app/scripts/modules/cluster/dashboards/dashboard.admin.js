@@ -895,7 +895,7 @@ angular.module('ngmReportHub')
 							'param': 'report_type',
 							'active': 'stock',
 							'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-							'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, 'stock', $scope.dashboard.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week)
+							'href': '/desk/#' + $scope.dashboard.getPath( $scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, 'stock', $scope.dashboard.organization_tag, 'all' ,'all')
 						}]
 					});
 
@@ -1224,13 +1224,6 @@ angular.module('ngmReportHub')
 					$scope.dashboard.report_period_type_id = $route.current.params.report_period_type_id && $scope.dashboard.cluster_id === 'esnfi' ? $route.current.params.report_period_type_id:'all';
 					$scope.dashboard.week = $route.current.params.week && $scope.dashboard.cluster_id === 'esnfi' ? $route.current.params.week : 'all';
 
-					$scope.dashboard.typeDocument = 'all'
-					if ($scope.dashboard.report_period_type_id !=='all'){
-						$scope.dashboard.typeDocument = $scope.dashboard.report_period_type_id === 'monthly'? 'monthly':'Biweekly';
-						if ($scope.dashboard.week !== 'all' && $scope.dashboard.report_period_type_id === 'bi-weekly'){
-							$scope.dashboard.typeDocument += $scope.dashboard.week.split('-')[1] === "01" ? " Period 1" :"Period 2";
-						}
-					}
 
 					// report name
 					$scope.dashboard.report_file_name += moment().format( 'YYYY-MM-DDTHHmm' );
@@ -1678,7 +1671,7 @@ angular.module('ngmReportHub')
 											color: 'blue lighten-4',
 											itemsPerPage: 12,
 											itemsPerPageGrid: 18,
-											typeDocument: $scope.dashboard.typeDocument,
+											typeDocument: 'Uploaded Document',
 											firstLetterUpperCase: function (string) { return string.charAt(0).toUpperCase() + string.slice(1); },
 											openModal: function (modal, link) {
 												// $('#' + modal).openModal({ dismissible: false });
