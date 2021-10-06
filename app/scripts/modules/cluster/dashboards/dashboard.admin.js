@@ -633,53 +633,120 @@ angular.module('ngmReportHub')
 						
 						var month_start = moment($scope.dashboard.startDate).month()
 						var month_end = moment($scope.dashboard.endDate).month()
-						// for each week
-						for (var x = month_start; x <= month_end; x++) {
-							var firstPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 1';
-							var secondPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 2';
-							var startDateofBiweeklyFirstPeriod = moment().month(x).set('date', 1).format('YYYY-MM-DD');
-							var endDateofBiweeklyFirstPeriod = moment().month(x).set('date', 14).format('YYYY-MM-DD');
-							var startDateofBiweeklySecondPeriod = moment().month(x).set('date', 15).format('YYYY-MM-DD')
-							var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
-							var weekFirstPeriod = moment().month(x).format('M')+'-01';
-							var weekSecondPeriod = moment().month(x).format('M') +'-02';
-
-							var pathFirstPeriod = $scope.dashboard.getPathWithDate(
-								$scope.dashboard.cluster_id,
-								$scope.dashboard.activity_type_id,
-								$scope.dashboard.report_type,
-								$scope.dashboard.organization_tag,
-								$scope.dashboard.report_period_type_id,
-								startDateofBiweeklyFirstPeriod,
-								endDateofBiweeklyFirstPeriod,
-								weekFirstPeriod
-							)
-
-							var pathSecondPeriod = $scope.dashboard.getPathWithDate(
-								$scope.dashboard.cluster_id,
-								$scope.dashboard.activity_type_id,
-								$scope.dashboard.report_type,
-								$scope.dashboard.organization_tag,
-								$scope.dashboard.report_period_type_id,
-								startDateofBiweeklySecondPeriod,
-								endDateofBiweeklySecondPeriod,
-								weekSecondPeriod
-							)
-
-							rows.push({
-								'title': firstPeriodTitle,
-								'param': 'week',
-								'active': weekFirstPeriod,
-								'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-								'href': '/desk/#' + pathFirstPeriod
-							}, {
-								'title': secondPeriodTitle,
-								'param': 'week',
-								'active': weekSecondPeriod,
-								'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-								'href': '/desk/#' + pathSecondPeriod
-							})
+						var yearStart = moment($scope.dashboard.startDate).year()
+						var yearEnd = moment($scope.dashboard.endDate).year()
+						
+						var obj_biweekly_init =[]
+						for(var y=yearStart;y<=yearEnd;y++){
+							obj ={};
+							obj.year = y
+							obj.m_start =0;
+							obj.m_end = 11;
+							if(y === yearStart )obj.m_start = month_start;
+							if(y === yearEnd) obj.m_end = month_end;
+							obj_biweekly_init.push(obj)
 						}
+						
+						for(var w =0 ; w < obj_biweekly_init.length; w++){
+							for (var x = obj_biweekly_init[w].m_start; x <= obj_biweekly_init[w].m_end; x++) {
+								var firstPeriodTitle = moment().month(x).year(obj_biweekly_init[w].year).format('MMM') + ' Biweekly Period 1' ;
+								var secondPeriodTitle = moment().month(x).year(obj_biweekly_init[w].year).format('MMM') + ' Biweekly Period 2';
+								var startDateofBiweeklyFirstPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 1).format('YYYY-MM-DD');
+								var endDateofBiweeklyFirstPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 14).format('YYYY-MM-DD');
+								var startDateofBiweeklySecondPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 15).format('YYYY-MM-DD')
+								var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
+								var weekFirstPeriod = moment().month(x).year(obj_biweekly_init[w].year).format('M') + '-01';
+								var weekSecondPeriod = moment().month(x).year(obj_biweekly_init[w].year).format('M') + '-02';
+
+								if(yearStart !== yearEnd){
+									firstPeriodTitle += ' (' + obj_biweekly_init[w].year + ')';
+									secondPeriodTitle += ' (' + obj_biweekly_init[w].year + ')';
+								}
+
+								var pathFirstPeriod = $scope.dashboard.getPathWithDate(
+									$scope.dashboard.cluster_id,
+									$scope.dashboard.activity_type_id,
+									$scope.dashboard.report_type,
+									$scope.dashboard.organization_tag,
+									$scope.dashboard.report_period_type_id,
+									startDateofBiweeklyFirstPeriod,
+									endDateofBiweeklyFirstPeriod,
+									weekFirstPeriod
+								)
+
+								var pathSecondPeriod = $scope.dashboard.getPathWithDate(
+									$scope.dashboard.cluster_id,
+									$scope.dashboard.activity_type_id,
+									$scope.dashboard.report_type,
+									$scope.dashboard.organization_tag,
+									$scope.dashboard.report_period_type_id,
+									startDateofBiweeklySecondPeriod,
+									endDateofBiweeklySecondPeriod,
+									weekSecondPeriod
+								)
+
+								rows.push({
+									'title': firstPeriodTitle,
+									'param': 'week',
+									'active': weekFirstPeriod,
+									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+									'href': '/desk/#' + pathFirstPeriod
+								}, {
+									'title': secondPeriodTitle,
+									'param': 'week',
+									'active': weekSecondPeriod,
+									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+									'href': '/desk/#' + pathSecondPeriod
+								})
+							}
+						}
+						// for each week
+						// for (var x = month_start; x <= month_end; x++) {
+						// 	var firstPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 1';
+						// 	var secondPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 2';
+						// 	var startDateofBiweeklyFirstPeriod = moment().month(x).set('date', 1).format('YYYY-MM-DD');
+						// 	var endDateofBiweeklyFirstPeriod = moment().month(x).set('date', 14).format('YYYY-MM-DD');
+						// 	var startDateofBiweeklySecondPeriod = moment().month(x).set('date', 15).format('YYYY-MM-DD')
+						// 	var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
+						// 	var weekFirstPeriod = moment().month(x).format('M')+'-01';
+						// 	var weekSecondPeriod = moment().month(x).format('M') +'-02';
+
+						// 	var pathFirstPeriod = $scope.dashboard.getPathWithDate(
+						// 		$scope.dashboard.cluster_id,
+						// 		$scope.dashboard.activity_type_id,
+						// 		$scope.dashboard.report_type,
+						// 		$scope.dashboard.organization_tag,
+						// 		$scope.dashboard.report_period_type_id,
+						// 		startDateofBiweeklyFirstPeriod,
+						// 		endDateofBiweeklyFirstPeriod,
+						// 		weekFirstPeriod
+						// 	)
+
+						// 	var pathSecondPeriod = $scope.dashboard.getPathWithDate(
+						// 		$scope.dashboard.cluster_id,
+						// 		$scope.dashboard.activity_type_id,
+						// 		$scope.dashboard.report_type,
+						// 		$scope.dashboard.organization_tag,
+						// 		$scope.dashboard.report_period_type_id,
+						// 		startDateofBiweeklySecondPeriod,
+						// 		endDateofBiweeklySecondPeriod,
+						// 		weekSecondPeriod
+						// 	)
+
+						// 	rows.push({
+						// 		'title': firstPeriodTitle,
+						// 		'param': 'week',
+						// 		'active': weekFirstPeriod,
+						// 		'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+						// 		'href': '/desk/#' + pathFirstPeriod
+						// 	}, {
+						// 		'title': secondPeriodTitle,
+						// 		'param': 'week',
+						// 		'active': weekSecondPeriod,
+						// 		'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+						// 		'href': '/desk/#' + pathSecondPeriod
+						// 	})
+						// }
 
 						// push to menu
 						$scope.model.menu.push({
@@ -1235,7 +1302,7 @@ angular.module('ngmReportHub')
 											// set new date
 											$scope.dashboard.startDate = date;
 											// URL
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all' ,'all');
 											// update new date
 											$location.path( path );
 
@@ -1254,7 +1321,7 @@ angular.module('ngmReportHub')
 											// set new date
 											$scope.dashboard.endDate = date;
 											// URL
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all' ,'all');
 											// update new date
 											$location.path( path );
 										}
@@ -1440,7 +1507,8 @@ angular.module('ngmReportHub')
 										headerTitle: $filter('translate')('reports_due'),
 										templateUrl: '/scripts/widgets/ngm-table/templates/cluster/admin.project.list.html',
 										tableOptions:{
-											count: 10
+											count: 10,
+											sorting: { createdAt: "desc" }
 										},
 										search_tool: true,
 										sendEmailButtonDisabled:false,
@@ -1527,7 +1595,8 @@ angular.module('ngmReportHub')
 										headerTitle: $filter('translate')('reports_completed'),
 										templateUrl: '/scripts/widgets/ngm-table/templates/cluster/admin.project.list.html',
 										tableOptions:{
-											count: 10
+											count: 10,
+											sorting: { createdAt: "desc" }
 										},
 										request: {
 											method: 'POST',
