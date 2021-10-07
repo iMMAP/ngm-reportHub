@@ -3267,8 +3267,14 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 					// 		return true;
 					// 	}
 					// }
-					if ($scope.project.definition.cluster_id === 'esnfi' && (project_details_array.indexOf('winterization') > -1)) {
-						return true;
+					if ($scope.project.definition.cluster_id === 'esnfi') {
+						if (project_details_array.indexOf('winterization') > -1) {
+							return true;
+						} else {
+							if ($scope.project.newProject && $scope.project.definition.report_type_id && $scope.project.definition.report_type_id === 'bi-weekly') {
+								$scope.project.definition.report_type_id = 'monthly';
+							}
+						}
 					}
 					return false;
 				},
