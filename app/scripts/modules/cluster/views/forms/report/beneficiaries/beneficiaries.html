@@ -206,16 +206,21 @@
 
 
 
-			<div id ="need_tochange-{{ $locationIndex }}-{{ $beneficiaryIndex }}" ng-if="!project.checkActiveActivities(beneficiary)" class="row"
-				ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }">
+			<!-- <div id ="need_tochange-{{ $locationIndex }}-{{ $beneficiaryIndex }}" ng-if="!project.checkActiveActivities(beneficiary)" class="row"
+				ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }"> -->
+			<div id="need_tochange-{{ $locationIndex }}-{{ $beneficiaryIndex }}" ng-show="beneficiaryIncorrectActivityChecking[ $locationIndex ] && beneficiaryIncorrectActivityChecking[ $locationIndex ][ $beneficiaryIndex ] && beneficiaryIncorrectActivityChecking[ $locationIndex ][ $beneficiaryIndex ].activity"
+				class="row" ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }">
 				<p><i class="material-icons left" style="color: #e57373">info</i></p>
 				<p style="color: #e57373;font-weight:500;font-size: 16px;">
 					This activity has ended. Please consider to change to the new one. Contact your cluster coordinator for more information.
 				</p>
 			</div>
 
-			<div id="need_tochange-beneficiary-type-{{ $locationIndex }}-{{ $beneficiaryIndex }}" ng-if="!project.checkActiveBeneficiaryType(beneficiary,$locationIndex, $beneficiaryIndex)"
-				class="row" ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }">
+			<!-- <div id="need_tochange-beneficiary-type-{{ $locationIndex }}-{{ $beneficiaryIndex }}" ng-if="!project.checkActiveBeneficiaryType(beneficiary,$locationIndex, $beneficiaryIndex)"
+				class="row" ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }"> -->
+			<div id="need_tochange-beneficiary-type-{{ $locationIndex }}-{{ $beneficiaryIndex }}"
+				ng-show=" beneficiaryIncorrectActivityChecking[ $locationIndex ] && beneficiaryIncorrectActivityChecking[ $locationIndex ][ $beneficiaryIndex ] && beneficiaryIncorrectActivityChecking[ $locationIndex ][ $beneficiaryIndex ].beneficiary_type_id " class="row"
+				ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }">
 				<p><i class="material-icons left" style="color: #e57373">info</i></p>
 				<p style="color: #e57373;font-weight:500;font-size: 16px;">
 					The Beneficiary type is not available in the current month. Please consider to change to the new one. Contact your cluster coordinator for more
@@ -223,8 +228,11 @@
 				</p>
 			</div>
 
-			<div id="need_tochange-hrp_beneficiary-type-{{ $locationIndex }}-{{ $beneficiaryIndex }}" ng-if="!project.checkActiveHRP(beneficiary,$locationIndex, $beneficiaryIndex)"
-				class="row" ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }">
+			<!-- <div id="need_tochange-hrp_beneficiary-type-{{ $locationIndex }}-{{ $beneficiaryIndex }}" ng-if="!project.checkActiveHRP(beneficiary,$locationIndex, $beneficiaryIndex)"
+				class="row" ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }"> -->
+			<div id="need_tochange-hrp_beneficiary-type-{{ $locationIndex }}-{{ $beneficiaryIndex }}"
+				ng-show=" beneficiaryIncorrectActivityChecking[ $locationIndex ] && beneficiaryIncorrectActivityChecking[ $locationIndex ][ $beneficiaryIndex ] && beneficiaryIncorrectActivityChecking[ $locationIndex ][ $beneficiaryIndex ].hrp_beneficiary_type_id " class="row"
+				ng-style="($root.rtl) && { 'padding':'10px 21px 5px 0px' } || { 'padding':'10px 0px 5px 21px' }">
 				<p><i class="material-icons left" style="color: #e57373">info</i></p>
 				<p style="color: #e57373;font-weight:500;font-size: 16px;">
 					The HRP Beneficiary type is not available in the current month. Please consider to change to the new one. Contact your cluster coordinator for more
