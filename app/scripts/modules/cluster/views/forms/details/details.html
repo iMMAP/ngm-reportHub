@@ -269,7 +269,7 @@
 
 								<div class="input-field col s12 m6 l3"
 									ng-class="{ 'error-label': healthProjectForm.$submitted && !project.definition.project_budget_currency }">
-									    <select materialize-select watch class="validate"
+									    <select materialize-select watch watch-options="project.lists.currencies" class="validate"
 									    	id="ngm-project_budget_currency"
 											ng-model="project.definition.project_budget_currency"
 											ng-change="ngmClusterBeneficiaries.inputChange('ngm-project_budget_currency')"

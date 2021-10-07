@@ -37,6 +37,7 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
       $scope.messageFromfile = [];
       $scope.inputString = false;
       $scope.detailStocks=[];
+      $scope.deactivedCopybutton = false;
       // project
       $scope.report = {
 
@@ -186,6 +187,7 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
           $scope.detailStocks[$parent][$scope.report.report.stocklocations[$parent].stocks.length - 1]= true;
 
           $scope.report.updateListDonors($scope.inserted, $parent, $scope.report.report.stocklocations[$parent].stocks.length - 1);
+          $scope.report.activePrevReportButton();
         },
         addStockFromFile: function ($parent, stock,$indexFile){
          var insert = {
@@ -249,11 +251,13 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
                 })
               }
           $scope.messageFromfile[$indexFile] = ngmClusterValidation.validationStockInputFromFile(stock, $scope.report.organization.admin0pcode);
+          $scope.report.activePrevReportButton();
         },
 				// remove from array if no id
         cancelEdit: function( $parent, $index ) {
 						if ( !$scope.report.report.stocklocations[ $parent ].stocks[ $index ].id ) {
 							$scope.report.report.stocklocations[ $parent ].stocks.splice( $index, 1 );
+              $scope.report.activePrevReportButton()
 						}
 				},
 
@@ -548,6 +552,8 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 					var id = $scope.report.report.stocklocations[ $parent ].stocks[$index].id;
 					$scope.report.report.stocklocations[ $parent ].stocks.splice( $index, 1 );
 					if (id) $scope.report.removeStockRequest(id);
+
+          $scope.report.activePrevReportButton();
 				},
 
 				// remove beneficiary
@@ -563,6 +569,7 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 							M.toast({ html: 'Error! Please correct the ROW and try again', displayLength: 4000, classes: 'error' });
 						}
 						if ( !result.data.err ) { $scope.report.save( false ); }
+            $scope.report.activePrevReportButton();
 					}).catch(function( err ) {
 						// Materialize.toast( 'Error!', 4000, 'error' );
 						M.toast({ html: 'Error!', displayLength: 4000, classes: 'error' });
@@ -623,7 +630,7 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 									cluster: s.cluster,
 									stock_item_type: s.stock_item_type,
 									stock_item_name: s.stock_item_name,
-									stock_item_purpose_id: s.stock_item_name,
+									stock_item_purpose_id: s.stock_item_purpose_id,
 									stock_item_purpose_name: s.stock_item_purpose_name,
 									stock_status_id: s.stock_status_id,
 									stock_status_name: s.stock_status_name,
@@ -667,6 +674,8 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 				// entry copy previous report
 				copyPrevReport: function () {
 
+          $scope.deactivedCopybutton = true;
+
 					var getPrevReport = {
 						method: 'POST',
 						url: ngmAuth.LOCATION + '/api/cluster/stock/getReport',
@@ -693,6 +702,7 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 								var msg = $filter('translate')('no_previous_report'),
 										typ = 'success';
 							}
+              $scope.deactivedCopybutton = false;
 						} else {
 								var msg = $filter('translate')('copied')+' ' + nrows + ' '+$filter('translate')('rows'),
 										typ = 'success';
@@ -702,9 +712,32 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 					}).catch(function (e) {
             // Materialize.toast($filter('translate')('error_not_copied'), 6000, 'error');
             M.toast({ html: $filter('translate')('error_not_copied'), displayLength: 6000, classes: 'error' });
+            $scope.deactivedCopybutton = false;
 					});
 
 				},
+
+
+
+        // active deactivate copy previoust month
+        activePrevReportButton: function () {
+
+          $scope.stockCount = 0;
+          $scope.report.report.stocklocations.forEach(function (l) {
+            if (l.stocks && l.stocks.length) {
+              $scope.stockCount += l.stocks.length;
+            }
+          });
+
+          if ( $scope.report.report.report_status === 'complete' || (($scope.stockCount > 0))) {
+            $scope.deactivedCopybutton = true;
+            return $scope.deactivedCopybutton
+          } else {
+            $scope.deactivedCopybutton = false;
+            return $scope.deactivedCopybutton;
+          }
+
+        },
 
 
 
@@ -1665,6 +1698,7 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
       }
 
 			$scope.report.init();
+      $scope.report.activePrevReportButton();
 
   }
 

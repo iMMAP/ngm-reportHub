@@ -160,13 +160,13 @@
 
 							<button class="btn waves-effect waves-light hide-on-small-only edit-report-btn"
 	      					title="Edit {{ report.titleFormat }}"
-	      					ng-show="report.report.report_status === 'todo'"
-	      					ng-click="report.copyPrevReport()">
+	      					ng-show="report.report.report_status === 'todo' && !deactivedCopybutton"
+	      					ng-click="report.copyPrevReport()" ng-disabled="deactivedCopybutton">
 	      					<i class="material-icons left">content_copy</i>{{'copy_last_month'|translate}}
 							</button>
 
 							<button class="btn waves-effect waves-light hide-on-small-only file-report-btn" title="Edit {{ report.titleFormat }}"
-								ng-show="report.report.report_status === 'todo' && report.organization.admin0pcode === 'AF'" ng-click="report.uploadFileReport.openModal('upload-monthly-file-stock')">
+								ng-show="report.report.report_status === 'todo' && report.organization.admin0pcode === 'AF' && !deactivedCopybutton" ng-click="report.uploadFileReport.openModal('upload-monthly-file-stock')" ng-disabled="deactivedCopybutton">
 								<i class="material-icons left">publish</i>Import Form File
 							</button>
 
