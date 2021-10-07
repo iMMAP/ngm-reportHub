@@ -1025,11 +1025,12 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 										delete b.report_submitted;
 
 									var forFilter = {};
+									var mark = { activity: false, hrp_beneficiary_type_id: false, beneficiary_type_id: false }
 									forFilter.beneficiary_type_name = b.beneficiary_type_name;
 									forFilter.cluster_id = b.cluster_id;
 									isBeneficiaryTypeStillExist = $filter('filter')($scope.project.lists.beneficiary_types, forFilter, true)
 
-									if (!isBeneficiaryTypeStillExist.length) {delete b.beneficiary_type_id};
+									if (!isBeneficiaryTypeStillExist.length) { delete b.beneficiary_type_id; mark.beneficiary_type_id = true;}
 										// if(!$scope.project.checkActiveBeneficiaryType(b,locationIndex,beneficiariesIndex)){
 										// 	delete b.beneficiary_type_id;
 										// }
@@ -1038,7 +1039,13 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 									var forFilterHRP = {};
 									forFilterHRP.hrp_beneficiary_type_name = b.hrp_beneficiary_type_name;
 									isHRPBeneficiaryTypeStillExist = $filter('filter')($scope.project.lists.hrp_beneficiary_types, forFilterHRP, true)
-									if (!isHRPBeneficiaryTypeStillExist.length) {delete b.hrp_beneficiary_type_id};
+									if (!isHRPBeneficiaryTypeStillExist.length) { delete b.hrp_beneficiary_type_id; mark.hrp_beneficiary_type_id = true;};
+									if(!$scope.project.checkActiveActivities(b)) {mark.activity =true};
+									if (Object.keys(mark).length) {
+										if (!$scope.beneficiaryIncorrectActivityChecking[locationIndex]) $scope.beneficiaryIncorrectActivityChecking[locationIndex] = [];
+
+										$scope.beneficiaryIncorrectActivityChecking[locationIndex].push(mark);
+									}
 									// 	if(!$scope.project.checkActiveHRP(b, locationIndex,beneficiariesIndex)){
 									// 		delete b.hrp_beneficiary_type_id;
 									// 	}
