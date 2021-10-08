@@ -710,6 +710,17 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 							beneficiary.response.push(winter[0]);
 						}
 					}
+					// if project is winterization and actity has a winterization response then put it winterization
+					if (ngmClusterBeneficiaries.form[0][$scope.project.definition.target_beneficiaries.length - 1]['response'] &&
+						ngmClusterBeneficiaries.form[0][$scope.project.definition.target_beneficiaries.length - 1]['response'].length &&
+						$scope.project.definition.project_details.length &&
+						$scope.project.definition.project_details.findIndex(x => x.project_detail_id === 'winterization') > -1) {
+						var winter = $filter('filter')(ngmClusterBeneficiaries.form[0][$scope.project.definition.target_beneficiaries.length - 1]['response'], { response_id: "winterization" }, true);
+						if (winter.length && beneficiary.response.findIndex(x => x.response_id === 'winterization') < 0) {
+							beneficiary.response.push(winter[0]);
+						}
+					}
+
 				},
 
 				addBeneficiaryFromFile: function (beneficiary, $indexFile) {
