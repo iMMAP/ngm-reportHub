@@ -351,7 +351,7 @@
 											<input type="checkbox" class="filled-in" id="{{p.project_detail_id}}"
 												ng-checked="project.checkProjectDetail(p.project_detail_id)"
 												ng-click="project.updateProjectDetails(p.project_detail_id)"
-												ng-disabled="project.definition.project_status === 'complete' || !project.canEdit" />
+												ng-disabled="project.definition.project_status === 'complete' || !project.canEdit || (p.project_detail_id === 'winterization' && project.definition.report_type_id === 'bi-weekly' && !project.newProject) "  />
 											<span style="left: .75rem;">{{'yes' | translate}}</span>
 										</label>
 									</p>
