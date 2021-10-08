@@ -287,6 +287,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'contacts', report: $scope.dashboard.cluster_id_filename + '_contacts_list-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'cluster_contact_list', 'csv' )
 					},{
+						id:'download_ocha_hrp_report_as_csv',
 						type: 'csv',
 						color: 'blue lighten-2',
 						icon: 'assignment_turned_in',
@@ -295,6 +296,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'ocha_report', report: $scope.dashboard.cluster_id_filename + '_ocha_hrp_report-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'cluster_ocha_report', 'csv' )
 					},{
+						id:'download_ocha_financial_report_as_csv',
 						type: 'csv',
 						color: 'blue lighten-2',
 						icon: 'attach_money',
@@ -303,6 +305,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'financial_report', report: $scope.dashboard.cluster_id_filename + '_ocha_financial_report-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'cluster_financial_report', 'csv' )
 					},{
+						id:'download_beneficiary_data_as_csv',
 						type: 'csv',
 						color: 'blue lighten-2',
 						icon: 'group',
@@ -310,6 +313,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'beneficiaries', report: $scope.dashboard.activity_filename + $scope.dashboard.cluster_id_filename + '_beneficiary_data-extracted-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'beneficiary_data', 'csv' )
 					},{
+						id:'download_sector_iscg_as_excel',
 						type: 'pdf',
 						color: 'teal darken-3',
 						icon: 'library_books',
@@ -318,6 +322,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { indicator: 'sector_iscg_excel', downloadUrl: ngmAuth.LOCATION + '/report/', report: '-' + $scope.dashboard.cluster_id + '-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'sector_iscg_excel', 'excel' )
 					},{
+						id: 'download_stock_data_as_csv',
 						type: 'csv',
 						color: 'blue lighten-2',
 						icon: 'show_chart',
@@ -329,6 +334,7 @@ angular.module('ngmReportHub')
 
 					// ng wash dls
 					var ng_wash_dl = [{
+						id: 'download_accountability_data_as_csv',
 						type: 'csv',
 						color: 'teal lighten-3',
 						icon: 'compare_arrows',
@@ -336,6 +342,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'accountability', report: $scope.dashboard.activity_filename + $scope.dashboard.cluster_id_filename + '_accountability_data-extracted-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'accountability_data', 'csv' )
 					},{
+						id: 'download_borehol_data_as_csv',
 						type: 'csv',
 						color: 'teal lighten-3',
 						icon: 'radio_button_checked',
@@ -343,6 +350,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'boreholes', report: $scope.dashboard.cluster_id_filename + '_boreholes_data-extracted-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'borehole_data', 'csv' )
 					},{
+						id: 'download_cash_programming_data_as_csv',
 						type: 'csv',
 						color: 'teal lighten-3',
 						icon: 'local_activity',
@@ -350,6 +358,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'cash', report: $scope.dashboard.cluster_id_filename + '_cash_programming-extracted-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'cash_programming', 'csv' )
 					},{
+						id: 'download_hygiene_data_as_csv',
 						type: 'csv',
 						color: 'teal lighten-3',
 						icon: 'spa',
@@ -357,6 +366,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'hygiene', report: $scope.dashboard.cluster_id_filename + '_hygiene_data-extracted-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'hygiene_data', 'csv' )
 					},{
+						id: 'download_sanitarian_data_as_csv',
 						type: 'csv',
 						color: 'teal lighten-3',
 						icon: 'wc',
@@ -364,6 +374,7 @@ angular.module('ngmReportHub')
 						request: $scope.dashboard.getRequest( { csv: true, indicator: 'sanitation', report: $scope.dashboard.cluster_id_filename + '_sanitation_data-extracted-from-' + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format( 'YYYY-MM-DDTHHmm' ) } ),
 						metrics: $scope.dashboard.getMetrics( 'sanitation_data', 'csv' )
 					},{
+						id: 'download_water_data_as_csv',
 						type: 'csv',
 						color: 'teal lighten-3',
 						icon: 'local_drink',
@@ -403,6 +414,10 @@ angular.module('ngmReportHub')
 					
 					if ($scope.dashboard.hide_contact_for_download){
 						downloads = downloads.filter(x => x.id !== 'cluster_contact_list')
+					}
+					// hide stock data when $scope.dashboard.report_type_id or $route.current.params.report_type_id is bi-weekly
+					if ($scope.dashboard.report_type_id === 'bi-weekly'){
+						downloads = downloads.filter(x => x.id !== 'download_stock_data_as_csv')
 					}
 					return downloads;
 				},
