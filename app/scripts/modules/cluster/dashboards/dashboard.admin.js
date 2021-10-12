@@ -1366,7 +1366,7 @@ angular.module('ngmReportHub')
 											$scope.dashboard.startDate = start_date;
 											$scope.dashboard.endDate = end_date;
 											// set path
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all','all');
 											// update new date
 											$location.path( path );
 										},
@@ -1378,7 +1378,7 @@ angular.module('ngmReportHub')
 											$scope.dashboard.startDate = start_date;
 											$scope.dashboard.endDate = end_date;
 											// set path
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, $scope.dashboard.report_period_type_id ,$scope.dashboard.week);
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all','all');
 											// update new date
 											$location.path( path );
 										},
@@ -1556,7 +1556,7 @@ angular.module('ngmReportHub')
 													M.toast({ html: 'Email sent successfully!', displayLength: 3000, classes: 'success' });
 													table.sendEmailButtonDisabled = false;
 													var exp_date = moment().add((24 * 60 * 60), 'seconds').format();
-													var cookies_name = $scope.dashboard.user.username + '-' + report.project_title + '-' + moment.utc(report.reporting_period).format('MMMM YYYY');
+													var cookies_name = $scope.dashboard.user.username + '-' + report.project_title + '-' + moment.utc(report.reporting_period).format('MMMM YYYY DD');
 													var cookie_value = "disable_send_email_button-" + $scope.dashboard.user.username + '-' + report.project_title + '-' + moment.utc(report.reporting_period).format('MMMM YYYY');
 													$cookies.putObject(cookies_name, cookie_value, { 'expires': exp_date });
 												}, 400);
@@ -1571,7 +1571,7 @@ angular.module('ngmReportHub')
 											});
 										},
 										checkDisableSendEmailButton: function (report, table){
-											var cookies_name = $scope.dashboard.user.username + '-' + report.project_title + '-' + moment.utc(report.reporting_period).format('MMMM YYYY');
+											var cookies_name = $scope.dashboard.user.username + '-' + report.project_title + '-' + moment.utc(report.reporting_period).format('MMMM YYYY DD');
 											var disable = false;
 											if($cookies.getObject(cookies_name)){
 												disable = true;
