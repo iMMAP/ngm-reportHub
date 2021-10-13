@@ -797,105 +797,108 @@ angular.module('ngmReportHub')
 							});
 						}
 
+						setProjectReportPeriodMenu = function () {
+
+							// rows
+							// var rows = [];
+
+							// // for each week
+							// for (var x = 0; x <= 11; x++) {
+							// 	var firstPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 1';
+							// 	var secondPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 2';
+							// 	var startDateofBiweeklyFirstPeriod = moment().month(x).set('date', 1).format('YYYY-MM-DD');
+							// 	var endDateofBiweeklyFirstPeriod = moment().month(x).set('date', 14).format('YYYY-MM-DD');
+							// 	var startDateofBiweeklySecondPeriod = moment().month(x).set('date', 15).format('YYYY-MM-DD')
+							// 	var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
+							// 	var pathFirstPeriod = $scope.dashboard.getPathWithDate($scope.dashboard.cluster_id, 
+							// 														    $scope.dashboard.activity_type_id,
+							// 															$scope.dashboard.activity_description_id,
+							// 															$scope.dashboard.organization_tag,
+							// 															$scope.dashboard.admin1pcode,
+							// 															$scope.dashboard.admin2pcode,
+							// 															$scope.dashboard.hrp,
+							// 															startDateofBiweeklyFirstPeriod,
+							// 															endDateofBiweeklyFirstPeriod
+							// 															)
+
+							// 	var pathSecondPeriod = $scope.dashboard.getPathWithDate($scope.dashboard.cluster_id, 
+							// 														    $scope.dashboard.activity_type_id,
+							// 															$scope.dashboard.activity_description_id,
+							// 															$scope.dashboard.organization_tag,
+							// 															$scope.dashboard.admin1pcode,
+							// 															$scope.dashboard.admin2pcode,
+							// 															$scope.dashboard.hrp,
+							// 															startDateofBiweeklySecondPeriod,
+							// 															endDateofBiweeklySecondPeriod
+							// 															)
+
+							// 	rows.push({
+							// 		'title': firstPeriodTitle,
+							// 		'param': 'start',
+							// 		'active': startDateofBiweeklyFirstPeriod,
+							// 		'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+							// 		'href': '/desk/#' + pathFirstPeriod
+							// 	}, {
+							// 		'title': secondPeriodTitle,
+							// 		'param': 'start',
+							// 		'active': startDateofBiweeklySecondPeriod,
+							// 		'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+							// 		'href': '/desk/#' + pathSecondPeriod
+							// 	})
+							// }
+
+							// // push to menu
+							// $scope.model.menu.push({
+							// 	'id': '5w-bi-weekly',
+							// 	'icon': 'date_range',
+							// 	'title': 'Biweekly',//'Report Week',
+							// 	'class': 'teal lighten-1 white-text',
+							// 	'rows': rows
+							// });
+
+
+							var report_types = [{ title: "ALL", active: 'all' }, { title: "MONTHLY", active: 'monthly' }, { title: "BIWEEKLY", active: 'bi-weekly' }];
+							var rows = []
+							for (i in report_types) {
+
+								var url = $scope.dashboard.getPath($scope.dashboard.cluster_id,
+									$scope.dashboard.activity_type_id,
+									$scope.dashboard.activity_description_id,
+									$scope.dashboard.organization_tag,
+									$scope.dashboard.admin1pcode,
+									$scope.dashboard.admin2pcode,
+									$scope.dashboard.hrp,
+									report_types[i].active
+								)
+								rows.push({
+									'title': report_types[i].title,
+									'param': 'report_type_id',
+									'active': report_types[i].active,
+									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
+									'href': '/desk/#' + url
+								})
+							}
+
+							// push to menu
+							$scope.model.menu.push({
+								'id': '5w-report-type',
+								'icon': 'date_range',
+								'title': 'Project Report Period',//'Report Week',
+								'class': 'teal lighten-1 white-text',
+								'rows': rows
+							});
+
+						};
+
 						if (($scope.dashboard.admin0pcode === 'af') && ($scope.dashboard.cluster_id === 'esnfi')){
-							setProjectReportPeriodMenu()
+							setProjectReportPeriodMenu();
+							
 						}
 
 
 					});
 
-					setProjectReportPeriodMenu = function() {
-
-						// rows
-						// var rows = [];
-
-						// // for each week
-						// for (var x = 0; x <= 11; x++) {
-						// 	var firstPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 1';
-						// 	var secondPeriodTitle = moment().month(x).format('MMM') + ' Biweekly Period 2';
-						// 	var startDateofBiweeklyFirstPeriod = moment().month(x).set('date', 1).format('YYYY-MM-DD');
-						// 	var endDateofBiweeklyFirstPeriod = moment().month(x).set('date', 14).format('YYYY-MM-DD');
-						// 	var startDateofBiweeklySecondPeriod = moment().month(x).set('date', 15).format('YYYY-MM-DD')
-						// 	var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
-						// 	var pathFirstPeriod = $scope.dashboard.getPathWithDate($scope.dashboard.cluster_id, 
-						// 														    $scope.dashboard.activity_type_id,
-						// 															$scope.dashboard.activity_description_id,
-						// 															$scope.dashboard.organization_tag,
-						// 															$scope.dashboard.admin1pcode,
-						// 															$scope.dashboard.admin2pcode,
-						// 															$scope.dashboard.hrp,
-						// 															startDateofBiweeklyFirstPeriod,
-						// 															endDateofBiweeklyFirstPeriod
-						// 															)
-							
-						// 	var pathSecondPeriod = $scope.dashboard.getPathWithDate($scope.dashboard.cluster_id, 
-						// 														    $scope.dashboard.activity_type_id,
-						// 															$scope.dashboard.activity_description_id,
-						// 															$scope.dashboard.organization_tag,
-						// 															$scope.dashboard.admin1pcode,
-						// 															$scope.dashboard.admin2pcode,
-						// 															$scope.dashboard.hrp,
-						// 															startDateofBiweeklySecondPeriod,
-						// 															endDateofBiweeklySecondPeriod
-						// 															)
-							
-						// 	rows.push({
-						// 		'title': firstPeriodTitle,
-						// 		'param': 'start',
-						// 		'active': startDateofBiweeklyFirstPeriod,
-						// 		'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-						// 		'href': '/desk/#' + pathFirstPeriod
-						// 	}, {
-						// 		'title': secondPeriodTitle,
-						// 		'param': 'start',
-						// 		'active': startDateofBiweeklySecondPeriod,
-						// 		'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-						// 		'href': '/desk/#' + pathSecondPeriod
-						// 	})
-						// }
-
-						// // push to menu
-						// $scope.model.menu.push({
-						// 	'id': '5w-bi-weekly',
-						// 	'icon': 'date_range',
-						// 	'title': 'Biweekly',//'Report Week',
-						// 	'class': 'teal lighten-1 white-text',
-						// 	'rows': rows
-						// });
-
-						
-						var report_types = [{ title: "ALL", active: 'all' }, { title: "MONTHLY", active: 'monthly' }, { title: "BIWEEKLY", active: 'bi-weekly' }];
-						var rows =[]
-						for(i in report_types){
-							
-							var url = $scope.dashboard.getPath($scope.dashboard.cluster_id,
-								$scope.dashboard.activity_type_id,
-								$scope.dashboard.activity_description_id,
-								$scope.dashboard.organization_tag,
-								$scope.dashboard.admin1pcode,
-								$scope.dashboard.admin2pcode,
-								$scope.dashboard.hrp,
-								report_types[i].active
-							)
-							rows.push({
-								'title': report_types[i].title,
-								'param': 'report_type_id',
-								'active': report_types[i].active,
-								'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
-								'href': '/desk/#' + url 
-							})
-						}
-
-						// push to menu
-						$scope.model.menu.push({
-							'id': '5w-report-type',
-							'icon': 'date_range',
-							'title': 'Project Report Period',//'Report Week',
-							'class': 'teal lighten-1 white-text',
-							'rows': rows
-						});
-
-					};
+					
 
 					
 
