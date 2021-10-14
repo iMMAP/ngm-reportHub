@@ -889,22 +889,25 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 
 				// validate form ( ng wash )
 				validateWashNgBeneficiariesForm: function( complete, display_modal ){
-					if (ngmClusterHelperNgWashValidation.validateActivities($scope.project.report.locations, $scope.detailBeneficiaries ) ){
-						if ( complete ) {
-							// $( '#complete-modal' ).openModal( { dismissible: false } );
-							$('#complete-modal').modal({ dismissible: false });
-							$('#complete-modal').modal('open');
-						} else if ( display_modal ) {
-							// $( '#save-modal' ).openModal( { dismissible: false } );
-							$('#save-modal').modal({ dismissible: false });
-							$('#save-modal').modal('open');
-						} else {
-							// arg1: set report status from 'todo' to 'complete' & re-direct
-							// arg2: save & re-direct
-							// arg3: alert admin via email of user edit of 'complete' report
-							$scope.project.save( false, false, false );
+					if (ngmClusterValidation.validateBeneficiaries($scope.project.report.locations, $scope.detailBeneficiaries, $scope.project.definition.admin0pcode, $scope.project.definition.project_hrp_project)){
+						if (ngmClusterHelperNgWashValidation.validateActivities($scope.project.report.locations, $scope.detailBeneficiaries)) {
+							if (complete) {
+								// $( '#complete-modal' ).openModal( { dismissible: false } );
+								$('#complete-modal').modal({ dismissible: false });
+								$('#complete-modal').modal('open');
+							} else if (display_modal) {
+								// $( '#save-modal' ).openModal( { dismissible: false } );
+								$('#save-modal').modal({ dismissible: false });
+								$('#save-modal').modal('open');
+							} else {
+								// arg1: set report status from 'todo' to 'complete' & re-direct
+								// arg2: save & re-direct
+								// arg3: alert admin via email of user edit of 'complete' report
+								$scope.project.save(false, false, false);
+							}
 						}
 					}
+					
 				},
 
 				// validate form ( ng wash )

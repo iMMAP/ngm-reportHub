@@ -138,9 +138,15 @@
 			<div class="col s12 m12 " ng-class="{'right-align': windowWidth > 600}" ng-style="(windowWidth < 600) && { 'margin-top': '10px' } || { 'margin-top': '-68px' }">
 				<button class="btn-floating waves-effect waves-light"
 									title="Save"
-									ng-if="!project.newProject && detailBeneficiaries[$locationIndex][$beneficiaryIndex] && project.canEdit && project.definition.project_status !== 'complete' &&	project.report.report_status !== 'complete'"
+									ng-if="!project.newProject && detailBeneficiaries[$locationIndex][$beneficiaryIndex] && project.canEdit && project.definition.project_status !== 'complete' &&	project.report.report_status !== 'complete' && project.definition.admin0pcode !== 'NG'"
 									ng-click="project.validateBeneficiariesDetailsForm( false, false )"
 									ng-disabled="!project.canEdit || project.isSaving || !project.checkActiveActivities(beneficiary)">
+					<i class="material-icons">save</i>
+				</button>
+				<button class="btn-floating waves-effect waves-light" title="Save"
+					ng-if="!project.newProject && detailBeneficiaries[$locationIndex][$beneficiaryIndex] && project.canEdit && project.definition.project_status !== 'complete' &&	project.report.report_status !== 'complete' && project.definition.admin0pcode === 'NG'"
+					ng-click="project.validateWashNgBeneficiariesForm( false, false );"
+					ng-disabled="!project.canEdit || project.isSaving || !project.checkActiveActivities(beneficiary)">
 					<i class="material-icons">save</i>
 				</button>
 				<button class="btn-floating red lighten-2 waves-effect waves-light"
@@ -265,7 +271,7 @@
 																		for a_t in project.definition.activity_type |
 																		filterActiveTypes:beneficiary | filterActiveDate: project.lists.activity_types"
 											ng-change="ngmClusterBeneficiaries.setActivity( project, $locationIndex, $beneficiaryIndex, beneficiary );
-											ngmClusterBeneficiaries.inputChange( 'ngm-activity_type_id-{{ $locationIndex }}-{{ $beneficiaryIndex }}' );"
+											ngmClusterBeneficiaries.inputChange( 'ngm-activity_type_id-{{ $locationIndex }}-{{ $beneficiaryIndex }}' );ngmClusterHelperNgWash.clearAssociations( beneficiary )"
 											ng-disabled="project.definition.project_status === 'complete' || project.report.report_status === 'complete' || !project.definition.activity_type"
 											required>
 							<option value="">{{ 'select' | translate }}</option>
@@ -319,7 +325,7 @@
 																		for a_t in project.definition.activity_type |
 																		filterActiveTypes:beneficiary | filterActiveDate: project.lists.activity_types"
 											ng-change="ngmClusterBeneficiaries.setActivity( project, $locationIndex, $beneficiaryIndex, beneficiary );
-												ngmClusterBeneficiaries.inputChange( 'ngm-activity_type_id-{{ $locationIndex }}-{{ $beneficiaryIndex }}' );"
+												ngmClusterBeneficiaries.inputChange( 'ngm-activity_type_id-{{ $locationIndex }}-{{ $beneficiaryIndex }}' );ngmClusterHelperNgWash.clearAssociations( beneficiary )"
 											ng-disabled="project.definition.project_status === 'complete' ||
 																		project.report.report_status === 'complete' ||
 																		!project.definition.activity_type"

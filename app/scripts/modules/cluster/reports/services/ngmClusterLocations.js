@@ -190,7 +190,7 @@ angular.module( 'ngmReportHub' )
       },
 
       // get sites
-      getAdminSites: function( lists, admin0pcode, pcode, $index, $data, target_location ){
+      getAdminSites: function( lists, admin0pcode, pcode, $index, $data, target_location, call_from ){
 
         // fetch
         $timeout(function(){
@@ -207,7 +207,7 @@ angular.module( 'ngmReportHub' )
                 var selected_admin3 = $filter('filter')( lists.admin3, { admin1pcode: target_location.admin1pcode }, true );
                 if ( !selected_admin3.length ){
                   lists.admin3 = lists.admin3.concat( result.data );
-                  ngmClusterLocations.adminOnChange( lists, pcode, $index, $data, target_location );
+                  ngmClusterLocations.adminOnChange(lists, pcode, $index, $data, target_location,call_from );
                 }
               });
             }
@@ -225,7 +225,7 @@ angular.module( 'ngmReportHub' )
                 var selected_admin4 = $filter('filter')( lists.admin4, { admin1pcode: target_location.admin1pcode }, true );
                 if ( !selected_admin4.length ){
                   lists.admin4 = lists.admin4.concat( result.data );
-                  ngmClusterLocations.adminOnChange( lists, pcode, $index, $data, target_location );
+                  ngmClusterLocations.adminOnChange( lists, pcode, $index, $data, target_location, call_from );
                 }
               });
             }
@@ -243,7 +243,7 @@ angular.module( 'ngmReportHub' )
                 var selected_admin5 = $filter('filter')( lists.admin5, { admin1pcode: target_location.admin1pcode }, true );
                 if ( !selected_admin5.length ){
                   lists.admin5 = lists.admin5.concat( result.data );
-                  ngmClusterLocations.adminOnChange( lists, pcode, $index, $data, target_location );
+                  ngmClusterLocations.adminOnChange( lists, pcode, $index, $data, target_location, call_from );
                 }
               });
             }
@@ -260,7 +260,7 @@ angular.module( 'ngmReportHub' )
               var selected_sites = $filter('filter')( lists.adminSites, { admin1pcode: target_location.admin1pcode }, true );
               if ( !selected_sites.length ){
                 lists.adminSites = lists.adminSites.concat( result.data );
-                ngmClusterLocations.adminOnChange( lists, pcode, $index, $data, target_location );
+                ngmClusterLocations.adminOnChange( lists, pcode, $index, $data, target_location, call_from );
               }
             });
           }
@@ -347,12 +347,14 @@ angular.module( 'ngmReportHub' )
 
 
       // on change
-      adminOnChange: function( lists, pcode, $index, $data, target_location ){
+      adminOnChange: function( lists, pcode, $index, $data, target_location, call_from ){
 
         // set to null
         var site_list = [];
-        target_location.site_id = null;
-        target_location.site_list_select_disabled = false;
+        if (call_from !== 'filter_location'){
+          target_location.site_id = null;
+          target_location.site_list_select_disabled = false;
+        }
 
         // clear selections
         switch( pcode ) {
@@ -771,7 +773,7 @@ angular.module( 'ngmReportHub' )
           project.lists.adminSitesSelect[$index] = ngmClusterLocations.adminSitesSelect[$index]
           lastAdminpcode = 'admin5pcode';
         }
-        ngmClusterLocations.getAdminSites(project.lists, project.definition.admin0pcode, lastAdminpcode, $index, location[lastAdminpcode], location);
+        ngmClusterLocations.getAdminSites(project.lists, project.definition.admin0pcode, lastAdminpcode, $index, location[lastAdminpcode], location,'filter_location');
       },
       // reset location property
       resetLocations: function (project, type, location) {
