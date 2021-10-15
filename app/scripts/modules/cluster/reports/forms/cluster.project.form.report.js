@@ -411,7 +411,7 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 
 				setBeneficiaryFromFile: function ($parent, beneficiary,$indexFile){
 					// set implementing if location has set implementing partner;
-					var beneficiary_default = ngmClusterBeneficiaries.addBeneficiary($scope.project, $scope.project.report.locations[$parent].beneficiaries);
+					var beneficiary_default = ngmClusterBeneficiaries.addBeneficiaryFromFile($scope.project, $scope.project.report.locations[$parent].beneficiaries);
 					delete beneficiary_default.cluster_id;
 					delete beneficiary_default.cluster;
 					delete beneficiary_default.activity_type_id;
@@ -614,6 +614,12 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 							
 							beneficiary.response = temp_response;
 						};
+					}
+
+					if (!ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['display_details']){
+						if(beneficiary.activity_detail_name && !beneficiary.activity_detail_id){
+							delete beneficiary.activity_detail_name;
+						}
 					}
 
 					ngmClusterBeneficiaries.updateBeneficiaires(beneficiary)
@@ -1154,6 +1160,9 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 						}
 						if (!isActivityStillExist.length){
 							active = false;
+						}
+						if(!active){
+							console.log(isActivityStillExist,active)
 						}
 					}
 					return active

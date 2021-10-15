@@ -1029,15 +1029,33 @@ angular.module( 'ngmReportHub' )
 							}
 						// }
 					}
-					$timeout(function(){
-						// put red mark on label
+					// $timeout(function(){
+					// 	put red mark on label
 						
-						// for(e in elements){
-						// 	$(elements[e]).addClass('error');
-						// };
-						$(elements[0]).addClass('error');
-						$(elements[0]).scrollHere();
-					},1000)
+					// 	for(e in elements){
+					// 		$(elements[e]).addClass('error');
+					// 	};
+					// 	$(elements[0]).addClass('error');
+					// 	$(elements[0]).scrollHere();
+					// },1000)
+					if (elements.length) {
+						// function to retry until the element is ready in HTML
+						function retryScroll(element) {
+							if (document.querySelector(element) === null) {
+								setTimeout(() => {
+									retryScroll(element)
+								}, 1000);
+							} else {
+								$(elements[0]).addClass('error');
+
+								$(elements[0]).scrollHere();
+							}
+
+						}
+						
+						retryScroll(elements[0])
+
+					}
 					return false;
 				} else {
 					return true;

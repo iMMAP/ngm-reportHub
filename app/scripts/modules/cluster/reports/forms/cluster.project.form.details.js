@@ -715,7 +715,7 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 
 				addBeneficiaryFromFile: function (beneficiary, $indexFile) {
 					// set implementing if location has set implementing partner;
-					var beneficiary_default = ngmClusterBeneficiaries.addBeneficiary($scope.project, $scope.project.definition.target_beneficiaries);
+					var beneficiary_default = ngmClusterBeneficiaries.addBeneficiaryFromFile($scope.project, $scope.project.definition.target_beneficiaries);
 
 					delete beneficiary_default.cluster_id;
 					delete beneficiary_default.cluster;

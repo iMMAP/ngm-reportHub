@@ -196,6 +196,15 @@
 								<i class="material-icons left">publish</i>Import Form File
 							</button> -->
 
+							<!-- REMOVE THIS After DONE fixing copy previouse month -->
+							<button
+								ng-hide="( project.report.admin0pcode !== 'AF') ||
+																														deactivedCopybutton ||
+																														( !project.canEdit || project.definition.project_status === 'complete' || project.report.report_status === 'complete' )"
+								class="btn waves-effect waves-light hide-on-small-only file-report-btn" style="right: 20px;"
+								title=" Import From File" ng-click="project.uploadFileReport.openModal('upload-monthly-file')" ng-disabled="">
+								<i class="material-icons left">publish</i>Import Form File
+							</button>
 						</div>
 
 						<!-- scroll -->
