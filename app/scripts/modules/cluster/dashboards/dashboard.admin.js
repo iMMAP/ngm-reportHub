@@ -255,6 +255,10 @@ angular.module('ngmReportHub')
 						request.query.organization_tag = $route.current.params.organization_tag;
 					}
 
+					
+					request.query.report_type_id = $scope.dashboard.report_period_type_id;
+					
+
 					//start date and end date params to filter by project_start_date an project_end_date
 
 					request.query.project_start_date = $route.current.params.start;
