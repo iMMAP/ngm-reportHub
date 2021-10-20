@@ -98,9 +98,10 @@ angular.module('ngmReportHub')
 
 				// add project code to subtitle?
 				var text = $filter('translate')('actual_monthly_beneficiaries_report_for')+' ' + $scope.report.project.project_title;
-				
+				donwload_hover_title_report = $filter('translate')('download_monthly_reports_as_csv');
 				if($scope.report.project.report_type_id === 'bi-weekly'){
 					text = 'Actual Biweekly Report for' + ' ' + $scope.report.project.project_title;
+					donwload_hover_title_report = 'Download Biweekly Reports as CSV'
 				};
 				var subtitle = $scope.report.project.project_code ?  $scope.report.project.project_code + ' - ' + text : text;
 
@@ -127,7 +128,7 @@ angular.module('ngmReportHub')
 								type: 'csv',
 								color: 'blue lighten-2',
 								icon: 'assignment',
-								hover: $filter('translate')('download_monthly_reports_as_csv'),
+								hover: donwload_hover_title_report,
 								request: {
 									method: 'POST',
 									url: ngmAuth.LOCATION + '/api/cluster/project/getProjectCsv',

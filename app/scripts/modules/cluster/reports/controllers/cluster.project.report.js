@@ -78,7 +78,7 @@ angular.module('ngmReportHub')
 
 				// set report for downloads
 				$scope.report.report = moment($scope.report.reporting_period).format('MMMM YYYY').replace(/\ /g, '_').toLowerCase() + '_' + $filter('limitTo')($scope.report.project.project_title.replace(/\ /g, '_'), 180) + '_extracted-' + moment().format( 'YYYY-MM-DDTHHmm' );
-
+				var donwload_hover_title_report = $filter('translate')('download_monthly_activity_report_as_csv')
 
 				// project title
 				if ( $scope.report.project.admin0name ) {
@@ -100,6 +100,8 @@ angular.module('ngmReportHub')
 					var number_date_of_reporting_period = moment.utc($scope.report.definition.reporting_period).format('D')
 					var biweeekly_period = (number_date_of_reporting_period <= 14 ? 'Biweekly Period 1' : 'Biweekly Period 2');
 					text = 'Actual Bi-weekly Report for' + ' ' + moment.utc($scope.report.definition.reporting_period).format('MMMM, YYYY') + ' ' + biweeekly_period;
+					donwload_hover_title_report = 'Download ' + moment.utc($scope.report.definition.reporting_period).format('MMMM, YYYY') + ' ' + biweeekly_period+' Activity Report as CSV';
+					$scope.report.report = (moment.utc($scope.report.definition.reporting_period).format('MMMM YYYY') + '_' + biweeekly_period).replace(/\ /g, '_').toLowerCase()+'_'+ $filter('limitTo')($scope.report.project.project_title.replace(/\ /g, '_'), 180) + '_extracted-' + moment().format('YYYY-MM-DDTHHmm');
 				};
 				var subtitle = $scope.report.project.project_code ?  $scope.report.project.project_code + ' - ' + text : text;
 
@@ -126,7 +128,7 @@ angular.module('ngmReportHub')
 								type: 'csv',
 								color: 'blue lighten-2',
 								icon: 'assignment',
-								hover: $filter('translate')('download_monthly_activity_report_as_csv'),
+								hover: donwload_hover_title_report,
 								request: {
 									method: 'POST',
 									url: ngmAuth.LOCATION + '/api/cluster/report/getReportCsv',
