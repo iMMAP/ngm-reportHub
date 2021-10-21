@@ -674,7 +674,7 @@ angular
 			})
 
 			// health dashboard
-			.when( '/cluster/5w/:adminRpcode/:admin0pcode/:admin1pcode/:admin2pcode/:cluster_id/:activity_type_id/:activity_description_id/:organization_tag/:beneficiaries/:start/:end/:hrp?', {
+			.when( '/cluster/5w/:adminRpcode/:admin0pcode/:admin1pcode/:admin2pcode/:cluster_id/:activity_type_id/:activity_description_id/:organization_tag/:beneficiaries/:start/:end/:hrp?/:response?', {
 				templateUrl: '/views/app/dashboard.html',
 				controller: 'DashboardClusterCtrl',
 				resolve: {

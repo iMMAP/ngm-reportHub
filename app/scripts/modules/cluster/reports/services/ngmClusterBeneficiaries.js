@@ -581,6 +581,19 @@ angular.module( 'ngmReportHub' )
 				// 	beneficiary.beneficiary_category_name = project.lists.beneficiary_categories[0].beneficiary_category_name;
 				// }
 
+				// if project is winterization and actity has a winterization response then put it winterization
+				if (project.definition.project_details && project.definition.project_details.length) {
+					var project_winter_index = project.definition.project_details.findIndex(x => x.project_detail_id === "winterization");
+				}
+				if (ngmClusterBeneficiaries.form[$parent][$index]['response'] && (project_winter_index > -1) && ngmClusterBeneficiaries.form[$parent][$index]['response'].length && !beneficiary.id) {
+					if (!beneficiary.response) { beneficiary.response = [] };
+					var winter = $filter('filter')(ngmClusterBeneficiaries.form[$parent][$index]['response'], { response_id: "winterization" }, true)
+
+					if (winter.length) {
+						beneficiary.response.push(winter[0])
+					}
+				}
+
 			},
 
 
