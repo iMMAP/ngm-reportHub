@@ -741,14 +741,14 @@ angular.module('ngmReportHub')
 								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, p.project_detail, 'all');
 								projectDetailRows.push({
 									'title': p.project_detail_title,
-									'param': 'response',
+									'param': 'project_detail',
 									'active': p.project_detail,
 									'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
 									'href': '/desk/#' + path
 								})
 							})
 							$scope.model.menu.push({
-								'icon': 'track_changes',
+								'icon': 'playlist_add_check',
 								'title': 'Project Detail',
 								'class': 'teal lighten-1 white-text',
 								'rows': projectDetailRows
