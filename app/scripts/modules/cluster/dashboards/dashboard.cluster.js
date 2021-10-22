@@ -141,6 +141,9 @@ angular.module('ngmReportHub')
 																	'/' + project_detail +
 																	'/' + response;
 																	'/' + hrp+'/'+report_type_id;
+																	'/' + hrp +
+																	'/' + project_detail +
+																	'/' + response+'/'+report_type_id;
 					} else {
 						var path = '/cluster/5w/' + $scope.dashboard.adminRpcode +
 																	'/' + $scope.dashboard.admin0pcode +
@@ -157,6 +160,9 @@ angular.module('ngmReportHub')
 																	'/' + project_detail +
 																	'/' + response;
 																	'/' + hrp+'/'+report_type_id;
+																	'/' + hrp +
+																	'/' + project_detail +
+																	'/' + response+'/'+report_type_id;
 					}
 
 					return path;
