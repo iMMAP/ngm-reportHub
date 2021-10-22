@@ -738,7 +738,7 @@ angular.module('ngmReportHub')
 							var project_detail_list = [{ project_detail: 'all', project_detail_title: 'ALL' }, { project_detail: 'winterization', project_detail_title: 'Winterization' }];
 							projectDetailRows = [];
 							angular.forEach(project_detail_list, function (p, i) {
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, p.project_detail, 'all');
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, p.project_detail, $scope.dashboard.response);
 								projectDetailRows.push({
 									'title': p.project_detail_title,
 									'param': 'project_detail',
@@ -748,8 +748,9 @@ angular.module('ngmReportHub')
 								})
 							})
 							$scope.model.menu.push({
+								'id': 'project_detail',
 								'icon': 'playlist_add_check',
-								'title': 'Project Detail',
+								'title': 'Project Response',
 								'class': 'teal lighten-1 white-text',
 								'rows': projectDetailRows
 							});
@@ -768,6 +769,7 @@ angular.module('ngmReportHub')
 							})
 
 							$scope.model.menu.push({
+								'id': 'activity_reponse',
 								'icon': 'track_changes',
 								'title': 'Activity Response',
 								'class': 'teal lighten-1 white-text',
