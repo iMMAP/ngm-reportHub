@@ -408,15 +408,15 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 						}
 					}
 					// if project is winterization and actity has a winterization response then put it winterization
-					if (ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'] && 
-						ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'].length &&
-						$scope.project.definition.project_details.length && 
-						$scope.project.definition.project_details.findIndex(x => x.project_detail_id === 'winterization') > -1) {
-						var winter = $filter('filter')(ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'], { response_id: "winterization" }, true);
-						if (winter.length && beneficiary.response.findIndex(x => x.response_id === 'winterization') <0) {
-							beneficiary.response.push(winter[0]);
-						}
-					}
+					// if (ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'] && 
+					// 	ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'].length &&
+					// 	$scope.project.definition.project_details.length && 
+					// 	$scope.project.definition.project_details.findIndex(x => x.project_detail_id === 'winterization') > -1) {
+					// 	var winter = $filter('filter')(ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'], { response_id: "winterization" }, true);
+					// 	if (winter.length && beneficiary.response.findIndex(x => x.response_id === 'winterization') <0) {
+					// 		beneficiary.response.push(winter[0]);
+					// 	}
+					// }
 				},
 
 				setBeneficiaryFromFile: function ($parent, beneficiary,$indexFile){

@@ -122,8 +122,9 @@ angular.module('ngmReportHub')
 				}],
 
 				// admin
-				getPath: function (cluster_id, activity_type_id, activity_description_id, organization_tag, admin1pcode, admin2pcode, hrp, project_detail,response ){
-				getPath: function (cluster_id, activity_type_id, activity_description_id, organization_tag, admin1pcode, admin2pcode, hrp,report_type_id ){
+				// getPath: function (cluster_id, activity_type_id, activity_description_id, organization_tag, admin1pcode, admin2pcode, hrp, project_detail,response ){
+				// getPath: function (cluster_id, activity_type_id, activity_description_id, organization_tag, admin1pcode, admin2pcode, hrp,report_type_id ){
+				getPath: function (cluster_id, activity_type_id, activity_description_id, organization_tag, admin1pcode, admin2pcode, hrp, project_detail, response, report_type_id) {
 
 					if ( cluster_id !== 'rnr_chapter' ) {
 						var path = '/cluster/5w/' + $scope.dashboard.adminRpcode +
@@ -137,10 +138,10 @@ angular.module('ngmReportHub')
 																	'/' + $scope.dashboard.beneficiaries.join('+') +
 																	'/' + $scope.dashboard.startDate +
 																	'/' + $scope.dashboard.endDate +
-																	'/' + hrp +
-																	'/' + project_detail +
-																	'/' + response;
-																	'/' + hrp+'/'+report_type_id;
+																	// '/' + hrp +
+																	// '/' + project_detail +
+																	// '/' + response;
+																	// '/' + hrp+'/'+report_type_id;
 																	'/' + hrp +
 																	'/' + project_detail +
 																	'/' + response+'/'+report_type_id;
@@ -156,10 +157,10 @@ angular.module('ngmReportHub')
 																	'/returnee_undocumented+returnee_documented+refugee_pakistani' +
 																	'/' + $scope.dashboard.startDate +
 																	'/' + $scope.dashboard.endDate+
-																	'/' + hrp +
-																	'/' + project_detail +
-																	'/' + response;
-																	'/' + hrp+'/'+report_type_id;
+																	// '/' + hrp +
+																	// '/' + project_detail +
+																	// '/' + response;
+																	// '/' + hrp+'/'+report_type_id;
 																	'/' + hrp +
 																	'/' + project_detail +
 																	'/' + response+'/'+report_type_id;
@@ -204,8 +205,8 @@ angular.module('ngmReportHub')
 				setUrl: function(){
 
 					// get url
-					var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail,$scope.dashboard.response );
-					var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id );
+					// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail,$scope.dashboard.response );
+					var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, $scope.dashboard.response, $scope.dashboard.report_type_id );
 
 					// if current location is not equal to path
 					if ( path !== $location.$$path ) {
@@ -234,14 +235,13 @@ angular.module('ngmReportHub')
 							hrp: $scope.dashboard.hrp,
 							hide_contact: $scope.dashboard.hide_contact_for_download,
 							project_detail: $scope.dashboard.project_detail,
-							response: $scope.dashboard.response
+							response: $scope.dashboard.response,
 							report_type_id: $scope.dashboard.report_type_id,
 							hide_contact: $scope.dashboard.hide_contact_for_download
 						}
 					}
 
 					request.data = angular.merge(request.data, obj);
-					console.log(request.data);
 					return request;
 				},
 
@@ -599,8 +599,9 @@ angular.module('ngmReportHub')
 						// clusters
 						$scope.dashboard.lists.clusters.unshift({ cluster_id: 'all', cluster: 'ALL' });
 						angular.forEach( $scope.dashboard.lists.clusters, function(d,i){
-							var path = $scope.dashboard.getPath(d.cluster_id, 'all', 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all');
-							var path = $scope.dashboard.getPath(d.cluster_id, 'all', 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id);
+							// var path = $scope.dashboard.getPath(d.cluster_id, 'all', 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all');
+							// var path = $scope.dashboard.getPath(d.cluster_id, 'all', 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id);
+							var path = $scope.dashboard.getPath(d.cluster_id, 'all', 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all', 'all', $scope.dashboard.report_type_id);
 							clusterRows.push({
 								'title': d.cluster,
 								'param': 'cluster_id',
@@ -659,8 +660,9 @@ angular.module('ngmReportHub')
 									});
 									angular.forEach(act, function (a, i) {
 										
-										var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, a.activity_type_id, 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, $scope.dashboard.response);
-										var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, a.activity_type_id, 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id);
+										// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, a.activity_type_id, 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, $scope.dashboard.response);
+										// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, a.activity_type_id, 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id);
+										var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, a.activity_type_id, 'all', $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, $scope.dashboard.response, $scope.dashboard.report_type_id);
 										
 										if(activityRows.findIndex(x => x.active === a.activity_type_id)<0){
 											activityRows.push({
@@ -688,8 +690,9 @@ angular.module('ngmReportHub')
 											activity_description_id: 'all',
 										});
 										angular.forEach(act_descr, function (a, i) {
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, a.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, $scope.dashboard.response);
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, a.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id);
+											// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, a.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, $scope.dashboard.response);
+											// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, a.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id);
+											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, a.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, $scope.dashboard.response, $scope.dashboard.report_type_id);
 											actDescriptionRows.push({
 												'title': a.activity_description_name,
 												'param': 'activity_description_id',
@@ -713,8 +716,9 @@ angular.module('ngmReportHub')
 						// organizations
 						organizations.forEach(function( d, i ){
 							if ( d ) {
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, d.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all' );
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, d.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id );
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, d.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all' );
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, d.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id );
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, d.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all', 'all', $scope.dashboard.report_type_id);
 								orgRows.push({
 									'title': d.organization,
 									'param': 'organization_tag',
@@ -749,8 +753,9 @@ angular.module('ngmReportHub')
 								admin1name: $filter('translate')('all_mayus'),
 							});
 							angular.forEach( admin1List, function(d,i){
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, d.admin1pcode, 'all', $scope.dashboard.hrp, 'all','all' );
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, d.admin1pcode, 'all', $scope.dashboard.hrp, $scope.dashboard.report_type_id );
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, d.admin1pcode, 'all', $scope.dashboard.hrp, 'all','all' );
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, d.admin1pcode, 'all', $scope.dashboard.hrp, $scope.dashboard.report_type_id );
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, d.admin1pcode, 'all', $scope.dashboard.hrp, 'all', 'all', $scope.dashboard.report_type_id);
 								provinceRows.push({
 									'title': d.inactive ? d.admin1name + ' (Old)' : d.admin1name,
 									'param': 'admin1pcode',
@@ -782,8 +787,9 @@ angular.module('ngmReportHub')
 								admin2name: $filter('translate')('all_mayus'),
 							});
 							angular.forEach( admin2List, function(d,i){
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, d.admin2pcode, $scope.dashboard.hrp, 'all','all' );
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, d.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id );
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, d.admin2pcode, $scope.dashboard.hrp, 'all','all' );
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, d.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.report_type_id );
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, d.admin2pcode, $scope.dashboard.hrp, 'all', 'all', $scope.dashboard.report_type_id);
 								districtRows.push({
 									'title': d.admin2name,
 									'param': 'admin2pcode',
@@ -808,7 +814,7 @@ angular.module('ngmReportHub')
 							var project_detail_list = [{ project_detail: 'all', project_detail_title: 'ALL' }, { project_detail: 'winterization', project_detail_title: 'Winterization' }];
 							projectDetailRows = [];
 							angular.forEach(project_detail_list, function (p, i) {
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, p.project_detail, $scope.dashboard.response);
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, p.project_detail, $scope.dashboard.response, $scope.dashboard.report_type_id);
 								projectDetailRows.push({
 									'title': p.project_detail_title,
 									'param': 'project_detail',
@@ -828,7 +834,7 @@ angular.module('ngmReportHub')
 
 							responseRows =[];
 							angular.forEach(response_list, function (r, i) {
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail,r.response);
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, $scope.dashboard.project_detail, r.response, $scope.dashboard.report_type_id);
 								responseRows.push({
 									'title': r.response_title,
 									'param': 'response',
@@ -850,8 +856,9 @@ angular.module('ngmReportHub')
 							var hrp_list = [{ hrp: true, hrp_title:'HRP'},{hrp:false, hrp_title:'TIMESTAMP'}]
 							hrpRows=[];
 							angular.forEach(hrp_list, function (h, i) {
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, h.hrp, $scope.dashboard.project_detail,$scope.dashboard.response);
-								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, h.hrp, $scope.dashboard.report_type_id);
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, h.hrp, $scope.dashboard.project_detail,$scope.dashboard.response);
+								// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, h.hrp, $scope.dashboard.report_type_id);
+								var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, h.hrp, $scope.dashboard.project_detail, $scope.dashboard.response, $scope.dashboard.report_type_id);
 								hrpRows.push({
 									'title': h.hrp_title,
 									'param': 'hrp',
@@ -940,6 +947,8 @@ angular.module('ngmReportHub')
 									$scope.dashboard.admin1pcode,
 									$scope.dashboard.admin2pcode,
 									$scope.dashboard.hrp,
+									$scope.dashboard.project_detail,
+									$scope.dashboard.response,
 									report_types[i].active
 								)
 								rows.push({
@@ -1105,9 +1114,9 @@ angular.module('ngmReportHub')
 					$scope.dashboard.hrp = $route.current.params.hrp ? $route.current.params.hrp : true;
 					$scope.dashboard.response = $route.current.params.response ? $route.current.params.response : 'all';
 					$scope.dashboard.project_detail = $route.current.params.project_detail ? $route.current.params.project_detail : 'all';
-					$scope.dashboard.report_type_id = $route.current.params.report_type_id ? $route.current.params.report_type_id : 'all';
+					// $scope.dashboard.report_type_id = $route.current.params.report_type_id ? $route.current.params.report_type_id : 'all';
 					$scope.dashboard.report_type_id = $route.current.params.report_type_id && $scope.dashboard.cluster_id === 'esnfi' ? $route.current.params.report_type_id : 'all';
-					console.log($scope.dashboard.report_type_id)
+					
 
 
 
@@ -1218,8 +1227,8 @@ angular.module('ngmReportHub')
 										if ( date !== $scope.dashboard.startDate ) {
 											// set new date
 											$scope.dashboard.startDate = date;
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all' );
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp,$scope.dashboard.report_type_id );
+											// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all' );
+											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all', 'all',$scope.dashboard.report_type_id );
 											$location.path( path );
 										}
 									}
@@ -1235,8 +1244,8 @@ angular.module('ngmReportHub')
 										if ( date !== $scope.dashboard.endDate ) {
 											// set new date
 											$scope.dashboard.endDate = date;
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all' );
-											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp,$scope.dashboard.report_type_id );
+											// var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all','all' );
+											var path = $scope.dashboard.getPath($scope.dashboard.cluster_id, $scope.dashboard.activity_type_id, $scope.dashboard.activity_description_id, $scope.dashboard.organization_tag, $scope.dashboard.admin1pcode, $scope.dashboard.admin2pcode, $scope.dashboard.hrp, 'all', 'all', $scope.dashboard.report_type_id );
 											$location.path( path );
 										}
 									}
