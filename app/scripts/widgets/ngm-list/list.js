@@ -128,6 +128,11 @@ angular.module('ngm.widget.list', ['ngm.provider'])
         $scope.list.data.forEach( function( d, i ){
           // add this to assist display / filtering
           $scope.list.data[i].reporting_period_title = $scope.list.monthlyTitleFormat( d.reporting_period );
+
+          if (config.report_type && config.report_type === 'bi-weekly'){
+            number_date_of_reporting_period = moment.utc(d.reporting_period).format('D')
+            $scope.list.data[i].reporting_period_title += ' ' + (number_date_of_reporting_period <= 14 ? 'Biweekly Period 1' :'Biweekly Period 2');
+          }
         });
 			}
 			// set event listener to update data

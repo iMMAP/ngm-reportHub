@@ -51,6 +51,9 @@ angular.module('ngmReportHub')
 				if ( $scope.report.project.admin0pcode === 'SO' ) {
 					tmpl = '/scripts/widgets/ngm-list/template/report_somalia.html';
 				}
+				if ($scope.report.project.report_type_id === 'bi-weekly'){
+					tmpl = '/scripts/widgets/ngm-list/template/report-biweekly.html';
+				}
 				return tmpl;
 			},
 
@@ -94,7 +97,12 @@ angular.module('ngmReportHub')
 				
 
 				// add project code to subtitle?
-				var text = $filter('translate')('actual_monthly_beneficiaries_report_for')+' ' + $scope.report.project.project_title
+				var text = $filter('translate')('actual_monthly_beneficiaries_report_for')+' ' + $scope.report.project.project_title;
+				donwload_hover_title_report = $filter('translate')('download_monthly_reports_as_csv');
+				if($scope.report.project.report_type_id === 'bi-weekly'){
+					text = 'Actual Biweekly Report for' + ' ' + $scope.report.project.project_title;
+					donwload_hover_title_report = 'Download Biweekly Reports as CSV'
+				};
 				var subtitle = $scope.report.project.project_code ?  $scope.report.project.project_code + ' - ' + text : text;
 
 				// report dashboard model
@@ -120,7 +128,7 @@ angular.module('ngmReportHub')
 								type: 'csv',
 								color: 'blue lighten-2',
 								icon: 'assignment',
-								hover: $filter('translate')('download_monthly_reports_as_csv'),
+								hover: donwload_hover_title_report,
 								request: {
 									method: 'POST',
 									url: ngmAuth.LOCATION + '/api/cluster/project/getProjectCsv',
@@ -175,6 +183,7 @@ angular.module('ngmReportHub')
 									templateUrl: $scope.report.getReportTemplate(),
 									orderBy: 'reporting_due_date',
 									format: true,
+									report_type: $scope.report.project.report_type_id === 'bi-weekly' ? $scope.report.project.report_type_id :'monthly',
 									request: {
 										method: 'POST',
 										url: ngmAuth.LOCATION + '/api/cluster/report/getReportsList',
@@ -205,6 +214,7 @@ angular.module('ngmReportHub')
 									templateUrl: $scope.report.getReportTemplate(),
 									orderBy: 'reporting_due_date',
 									format: true,
+									report_type: $scope.report.project.report_type_id === 'bi-weekly' ? $scope.report.project.report_type_id : 'monthly',
 									request: {
 										method: 'POST',
 										url: ngmAuth.LOCATION + '/api/cluster/report/getReportsList',

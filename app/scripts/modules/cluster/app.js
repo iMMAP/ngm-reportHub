@@ -512,7 +512,7 @@ angular
 			})
 
 			// ADMIN
-			.when( '/cluster/admin/:adminRpcode/:admin0pcode/:cluster_id/:activity_type_id/:organization_tag/:report_type/:start/:end', {
+			.when( '/cluster/admin/:adminRpcode/:admin0pcode/:cluster_id/:activity_type_id/:organization_tag/:report_type/:start/:end/:report_period_type_id?/:week?', {
 				templateUrl: '/views/app/dashboard.html',
 				controller: 'DashboardClusterAdminCtrl',
 				resolve: {
@@ -674,7 +674,9 @@ angular
 			})
 
 			// health dashboard
-			.when( '/cluster/5w/:adminRpcode/:admin0pcode/:admin1pcode/:admin2pcode/:cluster_id/:activity_type_id/:activity_description_id/:organization_tag/:beneficiaries/:start/:end/:hrp?/:project_detail?/:response?', {
+			// .when( '/cluster/5w/:adminRpcode/:admin0pcode/:admin1pcode/:admin2pcode/:cluster_id/:activity_type_id/:activity_description_id/:organization_tag/:beneficiaries/:start/:end/:hrp?/:project_detail?/:response?', {
+			// .when( '/cluster/5w/:adminRpcode/:admin0pcode/:admin1pcode/:admin2pcode/:cluster_id/:activity_type_id/:activity_description_id/:organization_tag/:beneficiaries/:start/:end/:hrp?/:report_type_id?', {
+			.when( '/cluster/5w/:adminRpcode/:admin0pcode/:admin1pcode/:admin2pcode/:cluster_id/:activity_type_id/:activity_description_id/:organization_tag/:beneficiaries/:start/:end/:hrp?/:project_detail?/:response?/:report_type_id?', {
 				templateUrl: '/views/app/dashboard.html',
 				controller: 'DashboardClusterCtrl',
 				resolve: {

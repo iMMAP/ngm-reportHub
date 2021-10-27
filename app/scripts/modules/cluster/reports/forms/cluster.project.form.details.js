@@ -282,6 +282,8 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				// upload
 				uploadUrl:'project-upload.html',
 
+				setReportDurationUrl:'duration-report.html',
+
 				// for import from file
 				text_input: '',
 				messageWarning: '',
@@ -708,6 +710,17 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 							beneficiary.response.push(winter[0]);
 						}
 					}
+					// if project is winterization and actity has a winterization response then put it winterization
+					// if (ngmClusterBeneficiaries.form[0][$scope.project.definition.target_beneficiaries.length - 1]['response'] &&
+					// 	ngmClusterBeneficiaries.form[0][$scope.project.definition.target_beneficiaries.length - 1]['response'].length &&
+					// 	$scope.project.definition.project_details.length &&
+					// 	$scope.project.definition.project_details.findIndex(x => x.project_detail_id === 'winterization') > -1) {
+					// 	var winter = $filter('filter')(ngmClusterBeneficiaries.form[0][$scope.project.definition.target_beneficiaries.length - 1]['response'], { response_id: "winterization" }, true);
+					// 	if (winter.length && beneficiary.response.findIndex(x => x.response_id === 'winterization') < 0) {
+					// 		beneficiary.response.push(winter[0]);
+					// 	}
+					// }
+
 				},
 
 				addBeneficiaryFromFile: function (beneficiary, $indexFile) {
@@ -3237,6 +3250,45 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				// },
 
 				// <++++++++++++++++++++++++++++++++++++++++++++++++++++++++> 
+
+				// set Reporting to bi weeekly
+				checkedReportbyPeriode:function(periode){
+					// for now periode issue to report it just bi-weekly
+					return $scope.project.definition.report_type_id === periode? true:false;
+				},
+				setReportbyPeriode: function (periode,id){
+					if (document.getElementById(id).checked) {
+						$("#change-reporting-period-duration-to-biweekly-modal").modal({ dismissible: false });
+						$("#change-reporting-period-duration-to-biweekly-modal").modal('open');
+						
+						$scope.project.definition.report_type_id = periode;
+					}else{
+						$scope.project.definition.report_type_id = 'monthly';
+					}
+					
+				},
+				resetReportbyPeriode:function(){
+					$scope.project.definition.report_type_id = 'monthly';
+				},
+				showBiweeklyCheckbox:function(){
+					var inter_cluster_activities = $scope.project.definition.inter_cluster_activities && $scope.project.definition.inter_cluster_activities.length ? $scope.project.definition.inter_cluster_activities.map(c=>c.cluster_id) : [];
+					var project_details_array = $scope.project.definition.project_details ? $scope.project.definition.project_details.map(d => d.project_detail_id) :[]
+					// if ($scope.project.definition.cluster_id === 'esnfi' || (inter_cluster_activities.length && (inter_cluster_activities.indexOf('esnfi')>-1))){
+					// 	if (project_details_array.indexOf('winterization')>-1){
+					// 		return true;
+					// 	}
+					// }
+					if ($scope.project.definition.cluster_id === 'esnfi') {
+						if (project_details_array.indexOf('winterization') > -1) {
+							return true;
+						} else {
+							if ($scope.project.newProject && $scope.project.definition.report_type_id && $scope.project.definition.report_type_id === 'bi-weekly') {
+								$scope.project.definition.report_type_id = 'monthly';
+							}
+						}
+					}
+					return false;
+				},
 
 
 

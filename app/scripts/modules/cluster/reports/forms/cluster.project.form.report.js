@@ -210,6 +210,12 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 					// Set limited amount of locations
 					$scope.paginated_monthly_locations = $scope.project.report.locations.slice($scope.startMonthlyLocation, $scope.endMonthlyLocation);
 
+					if ($scope.project.report.report_type_id === 'bi-weekly'){
+						var period_biweekly = (moment.utc($scope.project.report.reporting_period).format('D') <= 14) ? 'Biweekly Period 1' :'Biweekly Period 2';
+						$scope.project.monthlyTitleFormat += " "+ period_biweekly;
+					}
+					
+					
 				},
 
 				// sets title for each location / activity
@@ -401,6 +407,16 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 							beneficiary.response.push(winter[0]);
 						}
 					}
+					// if project is winterization and actity has a winterization response then put it winterization
+					// if (ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'] && 
+					// 	ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'].length &&
+					// 	$scope.project.definition.project_details.length && 
+					// 	$scope.project.definition.project_details.findIndex(x => x.project_detail_id === 'winterization') > -1) {
+					// 	var winter = $filter('filter')(ngmClusterBeneficiaries.form[$parent][$scope.project.report.locations[$parent].beneficiaries.length - 1]['response'], { response_id: "winterization" }, true);
+					// 	if (winter.length && beneficiary.response.findIndex(x => x.response_id === 'winterization') <0) {
+					// 		beneficiary.response.push(winter[0]);
+					// 	}
+					// }
 				},
 
 				setBeneficiaryFromFile: function ($parent, beneficiary,$indexFile){
@@ -956,6 +972,16 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 							report_year: $scope.project.report.report_year
 						}
 					}
+
+					if ($scope.project.report.report_type_id && $scope.project.report.report_type_id === 'bi-weekly'){
+						var number_date_of_reporting_period = moment.utc($scope.project.report.reporting_period).format('D')
+						params.report_month = (number_date_of_reporting_period <= 14 )? $scope.project.report.report_month - 1 : $scope.project.report.report_month;
+						var _period = (number_date_of_reporting_period <= 14) ? moment($scope.project.report.reporting_period).subtract(1, 'M').set('date', 15).format() : moment($scope.project.report.reporting_period).set('date', 1).format();
+						params.reporting_period = _period;
+						params.report_type_id = $scope.project.report.report_type_id
+					}
+
+
 
 					// setReportRequest
 					var get_prev_report = {
