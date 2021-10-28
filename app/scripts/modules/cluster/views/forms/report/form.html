@@ -2,7 +2,7 @@
 <!-- save modal -->
 <div id="save-modal" class="modal">
 	<div class="modal-content dialog">
-		<h4 class="header-modal teal lighten-1;"><i class="material-icons left small">done</i>Save Monthly Progress {{ project.monthlyTitleFormat }}</h4>
+		<h4 class="header-modal teal lighten-1;"><i class="material-icons left small">done</i>Save {{(project.report.report_type_id !== 'bi-weekly')?'Monthly':''}} Progress {{ project.monthlyTitleFormat }}</h4>
 		<p>{{'do_you_want_to_save'|translate}} {{ project.monthlyTitleFormat }}?</p>
 
 		<!-- <p>Project has been saved!</p> -->
@@ -205,8 +205,8 @@
 
 <div id="complete-modal" class="modal">
 	<div class="modal-content dialog">
-		<h4 class="header-modal teal lighten-1"><i class="material-icons small left">info_outline</i>{{'submit_monthly_progress_for'|translate}} {{ project.monthlyTitleFormat }}</h4>
-	 <p>{{'submit_monthly_progress_for'|translate}} {{ project.monthlyTitleFormat }}?</p>
+		<h4 class="header-modal teal lighten-1"><i class="material-icons small left">info_outline</i>{{(project.report.report_type_id === 'bi-weekly')?'Submit ':('submit_monthly_progress_for'|translate)}} {{ project.monthlyTitleFormat }}</h4>
+	 <p>{{(project.report.report_type_id === 'bi-weekly')?'Submit ':('submit_monthly_progress_for'|translate)}} {{ project.monthlyTitleFormat }}?</p>
 	</div>
 	<div class="modal-footer">
 		<a ng-click="project.save( true, false )" class=" modal-action modal-close waves-effect waves-green btn">{{'yes_submit_report'|translate}}!</a>
@@ -308,7 +308,7 @@
 											ng-click="project.validateBeneficiariesDetailsForm( true, false )"
 											ng-disabled="project.isSaving"
 											ng-cloak>
-							<i class="material-icons left">assignment_turned_in</i>{{'submit_monthly_progress'|translate}}
+							<i class="material-icons left">assignment_turned_in</i>{{(project.report.report_type_id === 'bi-weekly') ? "Submit Progress":('submit_monthly_progress'|translate)  }}
 
 						</button>
 
