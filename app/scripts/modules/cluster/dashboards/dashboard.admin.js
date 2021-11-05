@@ -685,8 +685,8 @@ angular.module('ngmReportHub')
 								var firstPeriodTitle = moment().month(x).year(obj_biweekly_init[w].year).format('MMM') + ' Biweekly Period 1' ;
 								var secondPeriodTitle = moment().month(x).year(obj_biweekly_init[w].year).format('MMM') + ' Biweekly Period 2';
 								var startDateofBiweeklyFirstPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 1).format('YYYY-MM-DD');
-								var endDateofBiweeklyFirstPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 14).format('YYYY-MM-DD');
-								var startDateofBiweeklySecondPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 15).format('YYYY-MM-DD')
+								var endDateofBiweeklyFirstPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 15).format('YYYY-MM-DD');
+								var startDateofBiweeklySecondPeriod = moment().month(x).year(obj_biweekly_init[w].year).set('date', 16).format('YYYY-MM-DD')
 								var endDateofBiweeklySecondPeriod = moment(startDateofBiweeklySecondPeriod).endOf('month').format('YYYY-MM-DD');
 								var weekFirstPeriod = moment().month(x).year(obj_biweekly_init[w].year).format('M') + '-01';
 								var weekSecondPeriod = moment().month(x).year(obj_biweekly_init[w].year).format('M') + '-02';

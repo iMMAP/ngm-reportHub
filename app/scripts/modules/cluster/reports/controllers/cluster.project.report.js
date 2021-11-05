@@ -98,7 +98,7 @@ angular.module('ngmReportHub')
 				var text = $filter('translate')('actual_monthly_progress_for') + ' ' + moment.utc( $scope.report.definition.reporting_period ).format('MMMM, YYYY');
 				if ($scope.report.project.report_type_id === 'bi-weekly') {
 					var number_date_of_reporting_period = moment.utc($scope.report.definition.reporting_period).format('D')
-					var biweeekly_period = (number_date_of_reporting_period <= 14 ? 'Biweekly Period 1' : 'Biweekly Period 2');
+					var biweeekly_period = (number_date_of_reporting_period <= 15 ? 'Biweekly Period 1' : 'Biweekly Period 2');
 					text = 'Actual Bi-weekly Report for' + ' ' + moment.utc($scope.report.definition.reporting_period).format('MMMM, YYYY') + ' ' + biweeekly_period;
 					donwload_hover_title_report = 'Download ' + moment.utc($scope.report.definition.reporting_period).format('MMMM, YYYY') + ' ' + biweeekly_period+' Activity Report as CSV';
 					$scope.report.report = (moment.utc($scope.report.definition.reporting_period).format('MMMM YYYY') + '_' + biweeekly_period).replace(/\ /g, '_').toLowerCase()+'_'+ $filter('limitTo')($scope.report.project.project_title.replace(/\ /g, '_'), 180) + '_extracted-' + moment().format('YYYY-MM-DDTHHmm');
