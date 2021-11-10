@@ -204,7 +204,7 @@
                   </a>
 
                 </td>
-                <td  data-title="'Email Reminder'" ng-if="(table.user.roles.indexOf('CLUSTER')>-1) && (table.headerTitle === 'Reports Pending') && table.showTitle">
+                <td  data-title="'Email Reminder'" ng-if="(table.user.roles.indexOf('CLUSTER')>-1 || table.user.roles.indexOf('CLUSTER_OBSERVER')>-1) && (table.headerTitle === 'Reports Pending') && table.showTitle">
                   <button class="btn waves-effect waves-teal tooltip send-email-btn-tooltip" title="Send Email Request to Submit Pending Report" style="font-size: 12px;height: 30px; line-height: 30px"
                     ng-click="table.sendEmailforPendingReport(row,table)" ng-disabled="table.sendEmailButtonDisabled || table.checkDisableSendEmailButton(row,table)">
                     Send Email
