@@ -90,6 +90,8 @@ angular.module('ngmReportHub')
 				var nonProjectDates = moment.utc($scope.report.project.project_start_date).startOf('month') > moment.utc($scope.report.definition.reporting_period).startOf('month')
 													 		|| moment.utc($scope.report.project.project_end_date).endOf('month')	< moment.utc($scope.report.definition.reporting_period).startOf('month');
 				var monthlyTitleFormat =  moment.utc( [ $scope.report.definition.report_year, $scope.report.definition.report_month, 1 ] ).format('MMMM, YYYY');
+				$scope.report.canEdit = ngmAuth.canDo('EDIT', { adminRpcode: $scope.report.project.adminRpcode, admin0pcode: $scope.report.project.admin0pcode, cluster_id: $scope.report.project.cluster_id, organization_tag: $scope.report.project.organization_tag }),
+				console.log($scope.report.canEdit)
 				// report dashboard model
 				$scope.model = {
 					name: 'cluster_project_report_list',
@@ -216,6 +218,7 @@ angular.module('ngmReportHub')
 									notesUrl: 'notes.html',
 									uploadUrl: 'report-upload.html',
 									templateUrl: '/scripts/modules/cluster/views/forms/report/report.group.html',
+									canEdit: $scope.report.canEdit
 								}
 							}]
 						}]
