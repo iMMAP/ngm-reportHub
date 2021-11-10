@@ -37,7 +37,7 @@
 	</div>
 </div>
 
-<div class="row remove">
+<div class="row remove" ng-if="panel.canEdit">
 
 	<div class="col s12">
 
@@ -68,7 +68,7 @@
 
 </div>
 
-<div class="row remove" ng-if="panel.report.report_status !== 'complete'">
+<div class="row remove" ng-if="panel.report.report_status !== 'complete' && panel.canEdit">
 
 	<div class="col s12">
 		<div class="widget card-panel">
