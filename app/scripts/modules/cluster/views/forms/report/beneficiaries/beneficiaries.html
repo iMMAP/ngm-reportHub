@@ -1449,7 +1449,7 @@
 					<!-- HHs / FAMILIES-->
 
 					<!-- HHs -->
-					<div class="row" ng-if="ngmClusterBeneficiaries.form[ $locationIndex ][ $beneficiaryIndex ][ 'households' ]">
+					<div class="row" ng-if="ngmClusterBeneficiaries.form[ $locationIndex ][ $beneficiaryIndex ][ 'households' ] && !project.isNeedAssessedHouseholds">
 
 						<!-- households -->
 						<div class="input-field col s12">
@@ -1466,6 +1466,36 @@
 							<label for="ngm-households-{{ $locationIndex }}-{{ $beneficiaryIndex }}" class="active">{{ 'households' | translate }}</label>
 						</div>
 
+					</div>
+
+
+					<!-- HHs -->
+					<div class="row" ng-if="ngmClusterBeneficiaries.form[ $locationIndex ][ $beneficiaryIndex ][ 'households' ] && project.isNeedAssessedHouseholds">
+					
+						<!-- assessed households -->
+						<div class="input-field col s6">
+							<input id="ngm-assessed_households-{{ $locationIndex }}-{{ $beneficiaryIndex }}"
+								name="ngm-assessed_households-{{ $locationIndex }}-{{ $beneficiaryIndex }}" type="number" class="validate" min="0"
+								ng-model="beneficiary.assessed_households"
+								ng-change="ngmCbBeneficiaries.setBeneficiary( 'assessed_households', beneficiary );
+																								ngmClusterBeneficiaries.inputChange( 'ngm-assessed_households-{{ $locationIndex }}-{{ $beneficiaryIndex }}' );ngmClusterBeneficiaries.updateTotalTransferedAmount(beneficiary)"
+								ng-disabled="project.definition.project_status === 'complete' || project.report.report_status === 'complete'"
+								required />
+							<label for="ngm-assessed_households-{{ $locationIndex }}-{{ $beneficiaryIndex }}" class="active"> Assessed Households</label>
+						</div>
+						<!-- households -->
+						<div class="input-field col s6">
+							<input id="ngm-households-{{ $locationIndex }}-{{ $beneficiaryIndex }}"
+								name="ngm-households-{{ $locationIndex }}-{{ $beneficiaryIndex }}" type="number" class="validate" min="0"
+								ng-model="beneficiary.households"
+								ng-change="ngmCbBeneficiaries.setBeneficiary( 'households', beneficiary );
+																		ngmClusterBeneficiaries.inputChange( 'ngm-households-{{ $locationIndex }}-{{ $beneficiaryIndex }}' );ngmClusterBeneficiaries.updateTotalTransferedAmount(beneficiary)"
+								ng-disabled="project.definition.project_status === 'complete' || project.report.report_status === 'complete' || !ngmClusterBeneficiaries.form[ $locationIndex ][ $beneficiaryIndex ][ 'households' ]"
+								required />
+							<label for="ngm-households-{{ $locationIndex }}-{{ $beneficiaryIndex }}" class="active">{{ 'households' |
+								translate }}</label>
+						</div>
+					
 					</div>
 
 
