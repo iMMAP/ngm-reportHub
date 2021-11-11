@@ -112,6 +112,7 @@ angular.module( 'ngmReportHub' )
 					sessions:0,
 					cash_amount:0,
 					households:0,
+					assessed_households: 0,
 					families:0,
 					boys_0_5:0,
 					boys_0_12:0,

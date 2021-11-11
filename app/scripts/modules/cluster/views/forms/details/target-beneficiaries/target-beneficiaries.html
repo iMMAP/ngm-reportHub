@@ -1094,7 +1094,7 @@
 								<!-- HHs / FAMILIES -->
 
 								<!-- HHs -->
-								<div class="row" ng-if="ngmClusterBeneficiaries.form[ 0 ][ $index ][ 'households' ]">
+								<div class="row" ng-if="ngmClusterBeneficiaries.form[ 0 ][ $index ][ 'households' ] && !project.isNeedAssessedHouseholds">
 
 									<!-- households -->
 									<div class="input-field col s12">
@@ -1110,6 +1110,32 @@
 										<label for="ngm-households-{{ $index }}" class="active">{{ 'households' | translate }}</label>
 									</div>
 
+								</div>
+
+
+
+								<div class="row" ng-if="ngmClusterBeneficiaries.form[ 0 ][ $index ][ 'households' ] && project.isNeedAssessedHouseholds">
+
+									<!-- assessed households -->
+									<div class="input-field col s6">
+										<input id="ngm-assessed_households-{{ $index }}" name="ngm-assessed_households-{{ $index }}" type="number" class="validate" min="0"
+											ng-model="beneficiary.assessed_households"
+											ng-change="ngmCbBeneficiaries.setBeneficiary( 'assessed_households', beneficiary );ngmClusterBeneficiaries.inputChange( 'ngm-assessed_households-{{ $index }}' );ngmClusterBeneficiaries.updateTotalTransferedAmount(beneficiary)"
+											ng-disabled="project.definition.project_status === 'complete'"
+											required />
+										<label for="ngm-assessed_households-{{ $index }}" class="active">Assessed Households</label>
+									</div>
+								
+									<!-- households -->
+									<div class="input-field col s6">
+										<input id="ngm-households-{{ $index }}" name="ngm-households-{{ $index }}" type="number" class="validate"
+											min="0" ng-model="beneficiary.households"
+											ng-change="ngmCbBeneficiaries.setBeneficiary( 'households', beneficiary );ngmClusterBeneficiaries.inputChange( 'ngm-households-{{ $index }}' );ngmClusterBeneficiaries.updateTotalTransferedAmount(beneficiary)"
+											ng-disabled="project.definition.project_status === 'complete' || !ngmClusterBeneficiaries.form[ 0 ][ $index ][ 'households' ]"
+											required />
+										<label for="ngm-households-{{ $index }}" class="active">{{ 'households' | translate }}</label>
+									</div>
+								
 								</div>
 
 

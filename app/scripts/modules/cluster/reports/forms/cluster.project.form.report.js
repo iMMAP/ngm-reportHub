@@ -216,6 +216,14 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 					}
 					
 					
+					// for assessed_households field to activate
+					
+					if ($scope.project.definition.project_details.length){
+						var winter_index = $scope.project.definition.project_details.findIndex(x => x.project_detail_id === "winterization");
+						$scope.project.isNeedAssessedHouseholds = winter_index > -1 && $scope.project.definition.cluster_id === 'esnfi'? true:false;
+					}else{
+						$scope.project.isNeedAssessedHouseholds = false;
+					}
 				},
 
 				// sets title for each location / activity
@@ -930,7 +938,7 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 				// validate form ( ng wash )
 				validateBeneficiariesDetailsForm: function( complete, display_modal ){
 					if ($scope.project.checkActiveAllActivities()){
-						if(ngmClusterValidation.validateBeneficiaries($scope.project.report.locations, $scope.detailBeneficiaries, $scope.project.definition.admin0pcode, $scope.project.definition.project_hrp_project)){
+						if (ngmClusterValidation.validateBeneficiaries($scope.project.report.locations, $scope.detailBeneficiaries, $scope.project.definition.admin0pcode, $scope.project.definition.project_hrp_project, $scope.project.isNeedAssessedHouseholds)){
 							if ( complete ) {
 								// $( '#complete-modal' ).openModal( { dismissible: false } );
 								$('#complete-modal').modal({ dismissible: false });

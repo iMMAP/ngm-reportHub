@@ -583,6 +583,13 @@ angular.module( 'ngmReportHub' )
 						complete = false;
 					}
 				}
+				
+				if (project.isNeedAssessedHouseholds && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === '')) {
+					id = "label[for='" + 'ngm-assessed_households-' + i + "']";
+					$(id).addClass('error');
+					validation.divs.push(id);
+					complete = false;
+				}
 				// console.log('targetbeneficiary-complete15');
 				// console.log(complete);
 
@@ -992,7 +999,7 @@ angular.module( 'ngmReportHub' )
 				}
 			},
 
-			validateBeneficiaries:function(location,detail,admin0pcode, hrp_project_status){
+			validateBeneficiaries:function(location,detail,admin0pcode, hrp_project_status, assessed_households){
 				var elements = [];
 				var notDetailOpen =[];
 				beneficiaryRow=0;
@@ -1000,7 +1007,7 @@ angular.module( 'ngmReportHub' )
 				angular.forEach(location, function (l, i) {
 					angular.forEach(l.beneficiaries, function (b, j) {
 						beneficiaryRow ++;
-						result = ngmClusterValidation.validateBeneficiary(b, i, j, detail, admin0pcode, hrp_project_status);
+						result = ngmClusterValidation.validateBeneficiary(b, i, j, detail, admin0pcode, hrp_project_status, assessed_households);
 						elements = result.divs.length ? elements.concat(result.divs) : elements;
 						// angular.merge(elements, result.divs);
 
@@ -1063,7 +1070,7 @@ angular.module( 'ngmReportHub' )
 				}
 			},
 
-			validateBeneficiary: function (b, i, j, d, admin0pcode, hrp_project_status){
+			validateBeneficiary: function (b, i, j, d, admin0pcode, hrp_project_status, assessed_households){
 				// valid
 				var id;
 				var complete = true;
@@ -1253,6 +1260,13 @@ angular.module( 'ngmReportHub' )
 						validation.divs.push(id);
 						complete = false;
 					}
+				}
+
+				if (assessed_households &&(b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === '')) {
+					id = "label[for='" + 'ngm-assessed_households-' + i + '-' + j + "']";
+					$(id).addClass('error');
+					validation.divs.push(id);
+					complete = false;
 				}
 				// console.log( 'complete15' );
 				// console.log( complete );
