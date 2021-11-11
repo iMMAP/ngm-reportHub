@@ -584,7 +584,7 @@ angular.module( 'ngmReportHub' )
 					}
 				}
 				
-				if (project.isNeedAssessedHouseholds && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === '')) {
+				if (ngmClusterBeneficiaries.form[0][i] && ngmClusterBeneficiaries.form[0][i]['households'] && project.isNeedAssessedHouseholds && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === '')) {
 					id = "label[for='" + 'ngm-assessed_households-' + i + "']";
 					$(id).addClass('error');
 					validation.divs.push(id);
@@ -1262,7 +1262,7 @@ angular.module( 'ngmReportHub' )
 					}
 				}
 
-				if (assessed_households &&(b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === '')) {
+				if (ngmClusterBeneficiaries.form[i] && (ngmClusterBeneficiaries.form[i][j] && ngmClusterBeneficiaries.form[i][j]['households'] && assessed_households &&(b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === ''))) {
 					id = "label[for='" + 'ngm-assessed_households-' + i + '-' + j + "']";
 					$(id).addClass('error');
 					validation.divs.push(id);
