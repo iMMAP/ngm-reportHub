@@ -378,6 +378,7 @@ angular.module( 'ngmReportHub' )
 				var id;
 				var complete = true;
 				var validation = { count: 0, divs: [] };
+				var assessed_households_minimum = 0;
 
 				if (!b.activity_type_id) {
 					id = "label[for='" + 'ngm-activity_type_id-' + i + "']";
@@ -584,7 +585,7 @@ angular.module( 'ngmReportHub' )
 					}
 				}
 				
-				if (ngmClusterBeneficiaries.form[0][i] && ngmClusterBeneficiaries.form[0][i]['households'] && project.isNeedAssessedHouseholds && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === '')) {
+				if (ngmClusterBeneficiaries.form[0][i] && ngmClusterBeneficiaries.form[0][i]['households'] && project.isNeedAssessedHouseholds && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < assessed_households_minimum || b.assessed_households === '')) {
 					id = "label[for='" + 'ngm-assessed_households-' + i + "']";
 					$(id).addClass('error');
 					validation.divs.push(id);
@@ -1005,6 +1006,9 @@ angular.module( 'ngmReportHub' )
 				beneficiaryRow=0;
 				beneficiaryRowComplete =0;
 				angular.forEach(location, function (l, i) {
+					if (assessed_households){
+						ngmClusterValidation.targetReferencelocationlist.push({ index: i, target_location_reference_id: l.target_location_reference_id});
+					}
 					angular.forEach(l.beneficiaries, function (b, j) {
 						beneficiaryRow ++;
 						result = ngmClusterValidation.validateBeneficiary(b, i, j, detail, admin0pcode, hrp_project_status, assessed_households);
@@ -1075,6 +1079,15 @@ angular.module( 'ngmReportHub' )
 				var id;
 				var complete = true;
 				var validation = { count: 0, divs: [] };
+				var assessed_households_minimum =0;
+				if (ngmClusterValidation.targetReferencelocationlist.length  && ngmClusterValidation.beneficiariesPreviouseReport.length && assessed_households){
+					var _indexTargetLocationReference = ngmClusterValidation.targetReferencelocationlist.findIndex(x => x.index === i);
+					var _targetLocationReference = ngmClusterValidation.targetReferencelocationlist[_indexTargetLocationReference].target_location_reference_id;
+					var _indexbeneficiaries = ngmClusterValidation.beneficiariesPreviouseReport.findIndex(x => x.target_location_reference_id === _targetLocationReference);
+					prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport[_indexbeneficiaries].beneficiaries, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					assessed_households_minimum = prev_beneficiary.length ? (prev_beneficiary[0].assessed_households ? prev_beneficiary[0].assessed_households:0 ) : 0;
+				}
+				
 
 				// DEFAULT
 				if (!b.activity_type_id) {
@@ -1261,10 +1274,11 @@ angular.module( 'ngmReportHub' )
 						complete = false;
 					}
 				}
-
-				if (ngmClusterBeneficiaries.form[i] && (ngmClusterBeneficiaries.form[i][j] && ngmClusterBeneficiaries.form[i][j]['households'] && assessed_households &&(b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < 0 || b.assessed_households === ''))) {
-					id = "label[for='" + 'ngm-assessed_households-' + i + '-' + j + "']";
+				
+				if (ngmClusterBeneficiaries.form[i] && (ngmClusterBeneficiaries.form[i][j] && ngmClusterBeneficiaries.form[i][j]['households'] && assessed_households && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < assessed_households_minimum || b.assessed_households === ''))) {
+					id = "label[for='" + 'ngm-assessed_households-' + i + '-' + j + "']";					
 					$(id).addClass('error');
+					$(id).text("Assessed Households (Assessed households >= "+assessed_households_minimum+")")
 					validation.divs.push(id);
 					complete = false;
 				}
@@ -3085,7 +3099,9 @@ angular.module( 'ngmReportHub' )
 					'admin2': 'Admin2 Pcode or Admin2 Name'
 				}
 				return field;
-			}
+			},
+			beneficiariesPreviouseReport:[],
+			targetReferencelocationlist:[]
 
 		};
 

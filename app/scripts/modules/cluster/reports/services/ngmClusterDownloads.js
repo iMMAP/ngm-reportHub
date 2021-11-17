@@ -173,6 +173,7 @@ angular.module( 'ngmReportHub' )
 					{ header: 'Cash Delivery Types', key: 'mpc_delivery_type_name', width: 20 },
 					{ header: 'Cash Mechanism Types', key: 'mpc_mechanism_type_name', width: 20 },
 					{ header: 'Package Type', key: 'package_type_name', width: 20 },
+					{ header: 'Assessed Households', key: 'assessed_households'},
 					{ header: 'Households', key: 'households', width: 20 },
 					{ header: 'Families', key: 'families', width: 20 },
 					{ header: 'Boys', key: 'boys', width: 20 },

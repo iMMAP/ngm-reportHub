@@ -398,8 +398,8 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 									&& $scope.project.lists.project_details && $scope.project.lists.project_details.length < 1) {
 						$scope.project.lists.project_details = angular.copy($scope.project.definition.project_details);
 					}
-
-					if ($scope.project.definition.project_details.length) {
+					
+					if (($scope.project.definition.project_status !== 'new') && $scope.project.definition.project_details.length && $scope.project.definition.admin0pcode === 'AF') {
 						var winter_index = $scope.project.definition.project_details.findIndex(x => x.project_detail_id === "winterization");
 						$scope.project.isNeedAssessedHouseholds = winter_index > -1 && $scope.project.definition.cluster_id === 'esnfi'? true : false;
 						$scope.project.definition.isNeedAssessedHouseholds = $scope.project.isNeedAssessedHouseholds
@@ -407,7 +407,6 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 						$scope.project.isNeedAssessedHouseholds = false;
 						$scope.project.definition.isNeedAssessedHouseholds = $scope.project.isNeedAssessedHouseholds
 					}
-					console.log($scope.project.isNeedAssessedHouseholds,$scope.project.definition.isNeedAssessedHouseholds)
 				},
 				// Push objects, in chunk of 10s to the location array to make rendering easy
 				addMoreItems: function(){
@@ -574,7 +573,7 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 						}
 					}
 					// assessed_households field to activate
-					if ($scope.project.definition.project_details.length) {
+					if ($scope.project.definition.project_details.length && $scope.project.definition.admin0pcode === 'AF') {
 						var winter_index = $scope.project.definition.project_details.findIndex(x => x.project_detail_id === "winterization");
 						$scope.project.isNeedAssessedHouseholds = winter_index > -1 && $scope.project.definition.cluster_id === 'esnfi' ? true : false;
 						$scope.project.definition.isNeedAssessedHouseholds = $scope.project.isNeedAssessedHouseholds

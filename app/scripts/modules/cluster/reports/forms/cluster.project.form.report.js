@@ -218,9 +218,53 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 					
 					// for assessed_households field to activate
 					
-					if ($scope.project.definition.project_details.length){
+					if ($scope.project.definition.project_details && $scope.project.definition.project_details.length && $scope.project.definition.admin0pcode === 'AF'){
 						var winter_index = $scope.project.definition.project_details.findIndex(x => x.project_detail_id === "winterization");
 						$scope.project.isNeedAssessedHouseholds = winter_index > -1 && $scope.project.definition.cluster_id === 'esnfi'? true:false;
+
+						// get assessed households from previous report
+						if ($scope.project.report.report_month < 1) {
+							var params = {
+								project_id: $route.current.params.project,
+								report_month: 11,
+								report_year: $scope.project.report.report_year - 1
+							}
+						} else {
+							var params = {
+								project_id: $route.current.params.project,
+								report_month: $scope.project.report.report_month - 1,
+								report_year: $scope.project.report.report_year
+							}
+						}
+
+						if ($scope.project.report.report_type_id && $scope.project.report.report_type_id === 'bi-weekly') {
+							var number_date_of_reporting_period = moment.utc($scope.project.report.reporting_period).format('D')
+							params.report_month = (number_date_of_reporting_period <= 14) ? $scope.project.report.report_month - 1 : $scope.project.report.report_month;
+							var _period = (number_date_of_reporting_period <= 14) ? moment($scope.project.report.reporting_period).subtract(1, 'M').set('date', 15).format() : moment($scope.project.report.reporting_period).set('date', 1).format();
+							params.reporting_period = _period;
+							params.report_type_id = $scope.project.report.report_type_id
+						}
+
+
+
+						// setReportRequest
+						var get_prev_report = {
+							method: 'POST',
+							url: ngmAuth.LOCATION + '/api/cluster/report/getReport',
+							data: params
+						}
+
+						if ($scope.project.isNeedAssessedHouseholds){
+							// get
+							ngmData.get(get_prev_report).then(function (prev_report) {
+								if(!prev_report.err){
+									var lists_beneficiaries_prev_report = prev_report.locations.map((x) => {return {target_location_reference_id:x.target_location_reference_id, beneficiaries: x.beneficiaries}})
+									ngmClusterValidation.beneficiariesPreviouseReport = lists_beneficiaries_prev_report;
+								}
+								
+							}).catch(function (err) {
+							})
+						}
 					}else{
 						$scope.project.isNeedAssessedHouseholds = false;
 					}
@@ -928,7 +972,7 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 								// arg1: set report status from 'todo' to 'complete' & re-direct
 								// arg2: save & re-direct
 								// arg3: alert admin via email of user edit of 'complete' report
-								$scope.project.save(false, false, false);
+								// $scope.project.save(false, false, false);
 							}
 						}
 					}
