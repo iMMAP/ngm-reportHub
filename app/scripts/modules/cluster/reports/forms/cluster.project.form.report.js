@@ -223,46 +223,67 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 						$scope.project.isNeedAssessedHouseholds = winter_index > -1 && $scope.project.definition.cluster_id === 'esnfi'? true:false;
 
 						// get assessed households from previous report
-						if ($scope.project.report.report_month < 1) {
-							var params = {
-								project_id: $route.current.params.project,
-								report_month: 11,
-								report_year: $scope.project.report.report_year - 1
-							}
-						} else {
-							var params = {
-								project_id: $route.current.params.project,
-								report_month: $scope.project.report.report_month - 1,
-								report_year: $scope.project.report.report_year
-							}
-						}
+						// if ($scope.project.report.report_month < 1) {
+						// 	var params = {
+						// 		project_id: $route.current.params.project,
+						// 		report_month: 11,
+						// 		report_year: $scope.project.report.report_year - 1
+						// 	}
+						// } else {
+						// 	var params = {
+						// 		project_id: $route.current.params.project,
+						// 		report_month: $scope.project.report.report_month - 1,
+						// 		report_year: $scope.project.report.report_year
+						// 	}
+						// }
 
-						if ($scope.project.report.report_type_id && $scope.project.report.report_type_id === 'bi-weekly') {
-							var number_date_of_reporting_period = moment.utc($scope.project.report.reporting_period).format('D')
-							params.report_month = (number_date_of_reporting_period <= 14) ? $scope.project.report.report_month - 1 : $scope.project.report.report_month;
-							var _period = (number_date_of_reporting_period <= 14) ? moment($scope.project.report.reporting_period).subtract(1, 'M').set('date', 15).format() : moment($scope.project.report.reporting_period).set('date', 1).format();
-							params.reporting_period = _period;
-							params.report_type_id = $scope.project.report.report_type_id
-						}
+						// if ($scope.project.report.report_type_id && $scope.project.report.report_type_id === 'bi-weekly') {
+						// 	var number_date_of_reporting_period = moment.utc($scope.project.report.reporting_period).format('D')
+						// 	params.report_month = (number_date_of_reporting_period <= 14) ? $scope.project.report.report_month - 1 : $scope.project.report.report_month;
+						// 	var _period = (number_date_of_reporting_period <= 14) ? moment($scope.project.report.reporting_period).subtract(1, 'M').set('date', 15).format() : moment($scope.project.report.reporting_period).set('date', 1).format();
+						// 	params.reporting_period = _period;
+						// 	params.report_type_id = $scope.project.report.report_type_id
+						// }
 
 
 
 						// setReportRequest
-						var get_prev_report = {
-							method: 'POST',
-							url: ngmAuth.LOCATION + '/api/cluster/report/getReport',
-							data: params
-						}
+						// var get_prev_report = {
+						// 	method: 'POST',
+						// 	url: ngmAuth.LOCATION + '/api/cluster/report/getReport',
+						// 	data: params
+						// }
 
-						if ($scope.project.isNeedAssessedHouseholds){
-							// get
-							ngmData.get(get_prev_report).then(function (prev_report) {
-								if(!prev_report.err){
-									var lists_beneficiaries_prev_report = prev_report.locations.map((x) => {return {target_location_reference_id:x.target_location_reference_id, beneficiaries: x.beneficiaries}})
-									ngmClusterValidation.beneficiariesPreviouseReport = lists_beneficiaries_prev_report;
-								}
+						// if ($scope.project.isNeedAssessedHouseholds){
+						// 	// get
+						// 	ngmData.get(get_prev_report).then(function (prev_report) {
+						// 		if(!prev_report.err){
+						// 			var lists_beneficiaries_prev_report = prev_report.locations.map((x) => {return {target_location_reference_id:x.target_location_reference_id, beneficiaries: x.beneficiaries}})
+						// 			ngmClusterValidation.beneficiariesPreviouseReport = lists_beneficiaries_prev_report;
+						// 		}
 								
-							}).catch(function (err) {
+						// 	}).catch(function (err) {
+						// 	})
+						// }
+						if ($scope.project.isNeedAssessedHouseholds) {
+							var params = {
+								project_id: $route.current.params.project,
+								reporting_period: $scope.project.report.reporting_period
+							}
+							if ($scope.project.report.report_type_id && $scope.project.report.report_type_id === 'bi-weekly') {
+								params.report_type_id = $scope.project.report.report_type_id
+							}
+
+							var ss = {
+								method: 'POST',
+								url: ngmAuth.LOCATION + '/api/cluster/report/getAssessedHouseholds',
+								data: params
+							}
+							ngmData.get(ss).then(function (assessed) {
+								ngmClusterValidation.beneficiariesPreviouseReport = assessed;
+								console.log(assessed);
+							}).catch(function () {
+	
 							})
 						}
 					}else{

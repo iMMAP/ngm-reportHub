@@ -1083,8 +1083,17 @@ angular.module( 'ngmReportHub' )
 				if (ngmClusterValidation.targetReferencelocationlist.length  && ngmClusterValidation.beneficiariesPreviouseReport.length && assessed_households){
 					var _indexTargetLocationReference = ngmClusterValidation.targetReferencelocationlist.findIndex(x => x.index === i);
 					var _targetLocationReference = ngmClusterValidation.targetReferencelocationlist[_indexTargetLocationReference].target_location_reference_id;
-					var _indexbeneficiaries = ngmClusterValidation.beneficiariesPreviouseReport.findIndex(x => x.target_location_reference_id === _targetLocationReference);
-					prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport[_indexbeneficiaries].beneficiaries, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					//var _indexbeneficiaries = ngmClusterValidation.beneficiariesPreviouseReport.findIndex(x => x.target_location_reference_id === _targetLocationReference);
+					// prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport[_indexbeneficiaries].beneficiaries, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					
+					var prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					if(prev_beneficiary.length>1){
+						prev_beneficiary = prev_beneficiary.filter(x => x.assessed_households > -1);
+						if(prev_beneficiary.length){
+							prev_beneficiary = $filter('orderBy')(prev_beneficiary, ['report_year', 'report_month','reporting_period','assessed_households'],true)
+						}
+					}
+					console.log(prev_beneficiary)
 					assessed_households_minimum = prev_beneficiary.length ? (prev_beneficiary[0].assessed_households ? prev_beneficiary[0].assessed_households:0 ) : 0;
 				}
 				
