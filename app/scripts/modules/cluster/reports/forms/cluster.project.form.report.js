@@ -282,8 +282,8 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 							ngmData.get(ss).then(function (assessed) {
 								ngmClusterValidation.beneficiariesPreviouseReport = assessed;
 								console.log(assessed);
-							}).catch(function () {
-	
+							}).catch(function (err) {
+								
 							})
 						}
 					}else{
