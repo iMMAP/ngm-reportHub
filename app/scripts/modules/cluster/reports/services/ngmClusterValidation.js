@@ -1086,7 +1086,13 @@ angular.module( 'ngmReportHub' )
 					//var _indexbeneficiaries = ngmClusterValidation.beneficiariesPreviouseReport.findIndex(x => x.target_location_reference_id === _targetLocationReference);
 					// prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport[_indexbeneficiaries].beneficiaries, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
 					
-					var prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					// var prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					var _findBeneficiary = { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id };
+					// check if hrp beneficiary type is active
+					if (admin0pcode === 'AF' && (!ngmClusterBeneficiaries.form[i][j]['hrp_beneficiary_type_id'] && hrp_project_status && b.hrp_beneficiary_type_id)){
+						_findBeneficiary.hrp_beneficiary_type_id = b.hrp_beneficiary_type_id;
+					}
+					var prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport, _findBeneficiary , true);
 					if(prev_beneficiary.length>1){
 						prev_beneficiary = prev_beneficiary.filter(x => x.assessed_households > -1);
 						if(prev_beneficiary.length){
