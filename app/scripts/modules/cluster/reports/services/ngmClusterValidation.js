@@ -378,6 +378,7 @@ angular.module( 'ngmReportHub' )
 				var id;
 				var complete = true;
 				var validation = { count: 0, divs: [] };
+				var assessed_households_minimum = 0;
 
 				if (!b.activity_type_id) {
 					id = "label[for='" + 'ngm-activity_type_id-' + i + "']";
@@ -582,6 +583,13 @@ angular.module( 'ngmReportHub' )
 						validation.divs.push(id);
 						complete = false;
 					}
+				}
+				
+				if (ngmClusterBeneficiaries.form[0][i] && ngmClusterBeneficiaries.form[0][i]['households'] && project.isNeedAssessedHouseholds && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < assessed_households_minimum || b.assessed_households === '')) {
+					id = "label[for='" + 'ngm-assessed_households-' + i + "']";
+					$(id).addClass('error');
+					validation.divs.push(id);
+					complete = false;
 				}
 				// console.log('targetbeneficiary-complete15');
 				// console.log(complete);
@@ -992,15 +1000,18 @@ angular.module( 'ngmReportHub' )
 				}
 			},
 
-			validateBeneficiaries:function(location,detail,admin0pcode, hrp_project_status){
+			validateBeneficiaries:function(location,detail,admin0pcode, hrp_project_status, assessed_households){
 				var elements = [];
 				var notDetailOpen =[];
 				beneficiaryRow=0;
 				beneficiaryRowComplete =0;
 				angular.forEach(location, function (l, i) {
+					if (assessed_households){
+						ngmClusterValidation.targetReferencelocationlist.push({ index: i, target_location_reference_id: l.target_location_reference_id});
+					}
 					angular.forEach(l.beneficiaries, function (b, j) {
 						beneficiaryRow ++;
-						result = ngmClusterValidation.validateBeneficiary(b, i, j, detail, admin0pcode, hrp_project_status);
+						result = ngmClusterValidation.validateBeneficiary(b, i, j, detail, admin0pcode, hrp_project_status, assessed_households);
 						elements = result.divs.length ? elements.concat(result.divs) : elements;
 						// angular.merge(elements, result.divs);
 
@@ -1063,11 +1074,29 @@ angular.module( 'ngmReportHub' )
 				}
 			},
 
-			validateBeneficiary: function (b, i, j, d, admin0pcode, hrp_project_status){
+			validateBeneficiary: function (b, i, j, d, admin0pcode, hrp_project_status, assessed_households){
 				// valid
 				var id;
 				var complete = true;
 				var validation = { count: 0, divs: [] };
+				var assessed_households_minimum =0;
+				if (ngmClusterValidation.targetReferencelocationlist.length  && ngmClusterValidation.beneficiariesPreviouseReport.length && assessed_households){
+					var _indexTargetLocationReference = ngmClusterValidation.targetReferencelocationlist.findIndex(x => x.index === i);
+					var _targetLocationReference = ngmClusterValidation.targetReferencelocationlist[_indexTargetLocationReference].target_location_reference_id;
+					//var _indexbeneficiaries = ngmClusterValidation.beneficiariesPreviouseReport.findIndex(x => x.target_location_reference_id === _targetLocationReference);
+					// prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport[_indexbeneficiaries].beneficiaries, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					
+					var prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport, { target_location_reference_id: _targetLocationReference, activity_type_id: b.activity_type_id, activity_description_id: b.activity_description_id, activity_detail_id: b.activity_detail_id, indicator_id: b.indicator_id, beneficiary_type_id: b.beneficiary_type_id, beneficiary_category_id: b.beneficiary_category_id }, true)
+					if(prev_beneficiary.length>1){
+						prev_beneficiary = prev_beneficiary.filter(x => x.assessed_households > -1);
+						if(prev_beneficiary.length){
+							prev_beneficiary = $filter('orderBy')(prev_beneficiary, ['report_year', 'report_month','reporting_period','assessed_households'],true)
+						}
+					}
+					console.log(prev_beneficiary)
+					assessed_households_minimum = prev_beneficiary.length ? (prev_beneficiary[0].assessed_households ? prev_beneficiary[0].assessed_households:0 ) : 0;
+				}
+				
 
 				// DEFAULT
 				if (!b.activity_type_id) {
@@ -1253,6 +1282,14 @@ angular.module( 'ngmReportHub' )
 						validation.divs.push(id);
 						complete = false;
 					}
+				}
+				
+				if (ngmClusterBeneficiaries.form[i] && (ngmClusterBeneficiaries.form[i][j] && ngmClusterBeneficiaries.form[i][j]['households'] && assessed_households && (b.assessed_households === null || b.assessed_households === undefined || b.assessed_households === NaN || b.assessed_households < assessed_households_minimum || b.assessed_households === ''))) {
+					id = "label[for='" + 'ngm-assessed_households-' + i + '-' + j + "']";					
+					$(id).addClass('error');
+					$(id).text("Assessed Households (Assessed households >= "+assessed_households_minimum+")")
+					validation.divs.push(id);
+					complete = false;
 				}
 				// console.log( 'complete15' );
 				// console.log( complete );
@@ -3071,7 +3108,9 @@ angular.module( 'ngmReportHub' )
 					'admin2': 'Admin2 Pcode or Admin2 Name'
 				}
 				return field;
-			}
+			},
+			beneficiariesPreviouseReport:[],
+			targetReferencelocationlist:[]
 
 		};
 

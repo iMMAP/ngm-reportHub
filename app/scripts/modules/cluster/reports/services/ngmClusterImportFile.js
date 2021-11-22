@@ -229,6 +229,7 @@ angular.module('ngmReportHub')
                                 'Cash Delivery Type': 'mpc_delivery_type_name',
                                 'Cash Mechanism Type': 'mpc_mechanism_type_name',
                                 'Package Type': 'package_type_name',
+                                'Assessed Households':'assessed_households',
                                 'Households': 'households',
                                 'Families': 'families',
                                 'Boys': 'boys',
@@ -296,6 +297,7 @@ angular.module('ngmReportHub')
                                  'Cash Delivery Types': 'mpc_delivery_type_name',
                                  'Cash Mechanism Types': 'mpc_mechanism_type_name',
                                  'Package Type': 'package_type_name',
+                                 'Assessed Households': 'assessed_households',
                                  'Households': 'households',
                                  'Families': 'families',
                                  'Boys': 'boys',
@@ -349,6 +351,7 @@ angular.module('ngmReportHub')
                                     array[0][z] === 'Cash Transfers' ||
                                     array[0][z] === 'Amount' ||
                                     array[0][z] === 'Households' ||
+                                    array[0][z] === 'Assessed Households' ||
                                     array[0][z] === 'families' ||
                                     array[0][z] === 'boys' ||
                                     array[0][z] === 'girls' ||
@@ -360,6 +363,7 @@ angular.module('ngmReportHub')
                                     array[0][z] === 'transfer_type_value' ||
                                     array[0][z] === 'units' ||
                                     array[0][z] === 'households' ||
+                                    array[0][z] === 'assessed_households' ||
                                     array[0][z] === 'site_population' ||
                                     array[0][z] === 'Total Transferred'||
                                     // financial
