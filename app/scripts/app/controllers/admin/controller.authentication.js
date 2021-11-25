@@ -259,7 +259,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 
 					});
 					}
-					// sort 
+					// sort
 					$scope.panel.organizations = $filter('orderBy')($scope.panel.organizations, 'organization');
 					// reset model when change country for new register user 
 					if ($scope.panel.user && !$scope.panel.user.id){
@@ -412,14 +412,14 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 						// register
 						ngmAuth
 							.updateProfile({ user: $scope.panel.user }).then(function( result ) {
-	
+
 								// db error!
 								if( result.data.err || result.data.summary ){
 									var msg = result.data.msg ? result.data.msg : 'error!';
 									// Materialize.toast( msg, 6000, msg );
 									M.toast({ html: msg, displayLength: 6000, classes: 'error' });
 								}
-	
+
 								// success
 								if ( result.data.success ){
 									// set user and localStorage (if updating own profile)
@@ -428,9 +428,8 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 										ngmUser.set( $scope.panel.user );
 									}
 									// success message
-	
+
 									$timeout( function(){
-	
 										//
 										if (config.user.organization_tag !== $scope.panel.user.organization_tag){
 											// Materialize.toast('Organization changed to ' + orgUpdatedTo, 6000, 'success');
@@ -440,12 +439,15 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 											// Materialize.toast('Cluster changed to ' + clusterUpdatedTo, 6000, 'success');
 											M.toast({ html: 'Cluster changed to ' + clusterUpdatedTo, displayLength: 6000, classes: 'success' });
 										}
+										if(config.user.api_key !== $scope.panel.user.api_key) {
+											M.toast({ html: 'Generating API Key' + '...', displayLength: 6000, classes: 'note' });
+										}
 										// Materialize.toast( $filter('translate')('success')+' '+$filter('translate')('profile_updated'), 6000, 'success' );
 										M.toast({ html: $filter('translate')('success') + ' ' + $filter('translate')('profile_updated'), displayLength: 6000, classes: 'success' });
-	
+
 										// activate btn
 										$scope.panel.btnDisabled = false;
-	
+
 										// redirect to team view and page refresh
 										if ( reload ) {
 											var path = ( ngmUser.get().organization === 'iMMAP' && ( ngmUser.get().admin0pcode === 'CD' || ngmUser.get().admin0pcode === 'ET' ) ) ? '/immap/team' : '/team';
@@ -460,7 +462,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 										}
 									}, 200 );
 								}
-	
+
 							});
 					}
 				},
@@ -770,7 +772,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 						$scope.panel.user.cluster_contact = false;
 					}
 					M.toast({ html: 'Please Click Update Button to Save Change...', displayLength: 4000, classes: 'note' });
-				
+
 
 				},
 				showClusterContact:function(){
@@ -802,7 +804,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 							access = true;
 						}
 					};
-					
+
 					return access;
 				},
 				validateUpdateProfile:function(user){
@@ -917,12 +919,12 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 					return !($scope.panel.isPasswordSafe && $scope.panel.matchPassword && $scope.panel.usernameSafe);
 				},
 				checkPhoneNumber:function(){
-					$scope.panel.isPhoneNumberOk =false 
+					$scope.panel.isPhoneNumberOk =false
 					var regex_phone = /^\+?\d*$/;
 					if ($scope.panel.user && regex_phone.test($scope.panel.user.phone)){
-						
+
 						if ($scope.panel.user && $scope.panel.user.phone !== undefined && $scope.panel.user.phone !== '') {
-							
+
 							document.getElementById("ngm-phone").classList.remove("invalid", "ng-invalid");
 							document.getElementById("ngm-phone").classList.add("valid", "ng-valid");
 							$('label[for=' + 'ngm-phone' + ']').removeClass('error');
