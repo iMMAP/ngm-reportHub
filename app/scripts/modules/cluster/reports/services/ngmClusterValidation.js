@@ -1095,6 +1095,7 @@ angular.module( 'ngmReportHub' )
 					var prev_beneficiary = $filter('filter')(ngmClusterValidation.beneficiariesPreviouseReport, _findBeneficiary , true);
 					if(prev_beneficiary.length>1){
 						prev_beneficiary = prev_beneficiary.filter(x => x.assessed_households > -1);
+						// sort by 'report_year', 'report_month','reporting_period','assessed_households'
 						if(prev_beneficiary.length){
 							prev_beneficiary = $filter('orderBy')(prev_beneficiary, ['report_year', 'report_month','reporting_period','assessed_households'],true)
 						}
