@@ -1473,8 +1473,8 @@ angular.module('ngmReportHub')
 											$scope.dashboard.startDate = start_date;
 											$scope.dashboard.endDate = end_date;
 											// set path
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all','all');
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all', 'all' );
+											var path = $scope.dashboard.getPath($route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all', 'all', 'all', 'all');
+											// var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all', 'all','all' );
 											// update new date
 											$location.path( path );
 										},
@@ -1486,8 +1486,8 @@ angular.module('ngmReportHub')
 											$scope.dashboard.startDate = start_date;
 											$scope.dashboard.endDate = end_date;
 											// set path
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all','all');
-											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all', 'all' );
+											var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all','all','all', 'all');
+											// var path = $scope.dashboard.getPath( $route.current.params.cluster_id, $scope.dashboard.activity_type_id, $route.current.params.report_type, $route.current.params.organization_tag, 'all', 'all' );
 											// update new date
 											$location.path( path );
 										},
