@@ -173,7 +173,7 @@ angular.module( 'ngmReportHub' )
 					{ header: 'Cash Delivery Types', key: 'mpc_delivery_type_name', width: 20 },
 					{ header: 'Cash Mechanism Types', key: 'mpc_mechanism_type_name', width: 20 },
 					{ header: 'Package Type', key: 'package_type_name', width: 20 },
-					{ header: 'Assessed Households', key: 'assessed_households'},
+					// { header: 'Assessed Households', key: 'assessed_households'},
 					{ header: 'Households', key: 'households', width: 20 },
 					{ header: 'Families', key: 'families', width: 20 },
 					{ header: 'Boys', key: 'boys', width: 20 },
@@ -184,6 +184,37 @@ angular.module( 'ngmReportHub' )
 					{ header: 'Elderly Women', key: 'elderly_women', width: 20 },
 					{ header: 'Total', key: 'total_beneficiaries', width: 20 },
 				];
+				if (project_copy.admin0pcode === 'AF' && project_copy.cluster_id === 'esnfi') {
+
+					worksheetTargetBeneficiaries.columns = [
+						{ header: 'Cluster', key: 'cluster', width: 10 },
+						{ header: 'Activity Type', key: 'activity_type_name', width: 30 },
+						{ header: 'Activity Description', key: 'activity_description_name', width: 30 },
+						{ header: 'Activity Details', key: 'activity_detail_name', width: 30 },
+						{ header: 'Indicator', key: 'indicator_name', width: 60 },
+						{ header: 'Beneficiary Type', key: 'beneficiary_type_name', width: 50 },
+						{ header: 'HRP Beneficiary Type', key: 'hrp_beneficiary_type_name', width: 50 },
+						{ header: 'Beneficiary Category', key: 'beneficiary_category_name', width: 50 },
+						{ header: 'Activity Response', key: 'response', width: 50 },
+						{ header: 'Amount', key: 'units', width: 20 },
+						{ header: 'Unit Types', key: 'unit_type_name', width: 20 },
+						{ header: 'Cash Transfers', key: 'transfer_type_value', width: 20 },
+						{ header: 'Cash Delivery Types', key: 'mpc_delivery_type_name', width: 20 },
+						{ header: 'Cash Mechanism Types', key: 'mpc_mechanism_type_name', width: 20 },
+						{ header: 'Package Type', key: 'package_type_name', width: 20 },
+						{ header: 'Assessed Households', key: 'assessed_households' },
+						{ header: 'Households', key: 'households', width: 20 },
+						{ header: 'Families', key: 'families', width: 20 },
+						{ header: 'Boys', key: 'boys', width: 20 },
+						{ header: 'Girls', key: 'girls', width: 20 },
+						{ header: 'Men', key: 'men', width: 20 },
+						{ header: 'Women', key: 'women', width: 20 },
+						{ header: 'Elderly Men', key: 'elderly_men', width: 20 },
+						{ header: 'Elderly Women', key: 'elderly_women', width: 20 },
+						{ header: 'Total', key: 'total_beneficiaries', width: 20 },
+					];
+
+				}
 				boldHeader(worksheetTargetBeneficiaries);
 
 				worksheetTargetLocations.columns = [
