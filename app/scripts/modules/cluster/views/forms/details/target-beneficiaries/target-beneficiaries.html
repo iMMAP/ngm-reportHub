@@ -1159,6 +1159,18 @@
 
 								</div>
 
+								<div class=" row" ng-if="project.isNeedAssessedHouseholds">
+									<div class="input-field col s12 m12 l12">
+										<label class="active" for="ngm-beneficiaries_reached-{{ $index }}">
+											Beneficiaries Reached</label>
+									</div>
+									<div class="input-field col s12 m12 l12" ng-if="beneficiary.total_beneficiaries>0 && beneficiary.households < 1">
+										<label class="active"
+											for="ngm-beneficiaries_reached_warning-{{ $index }}">Households/Households
+											Reached is 0. Please, set all beneficairies(boys, girls, men, woment etc.) to 0</label>
+									</div>
+								</div>
+
 								<!-- tag diabilties for now only for AF Cluster Protection-->
 								<div class="row" ng-if="(beneficiary.cluster_id === 'protection') && (project.definition.admin0pcode === 'AF') && beneficiary.beneficiary_category_id && beneficiary.beneficiary_category_id === 'persons_with_disabilities'" style="margin-bottom: 10px;">
 									<div class="input-field col s12 m6 l6">
