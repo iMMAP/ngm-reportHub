@@ -1133,7 +1133,7 @@
 											ng-change="ngmCbBeneficiaries.setBeneficiary( 'households', beneficiary );ngmClusterBeneficiaries.inputChange( 'ngm-households-{{ $index }}' );ngmClusterBeneficiaries.updateTotalTransferedAmount(beneficiary)"
 											ng-disabled="project.definition.project_status === 'complete' || !ngmClusterBeneficiaries.form[ 0 ][ $index ][ 'households' ]"
 											required />
-										<label for="ngm-households-{{ $index }}" class="active">{{ 'households' | translate }} Reached</label>
+										<label for="ngm-households-{{ $index }}" class="active">{{ 'households' | translate }} Targeted</label>
 									</div>
 								
 								</div>
@@ -1162,13 +1162,13 @@
 								<div class=" row" ng-if="project.isNeedAssessedHouseholds">
 									<div class="input-field col s12 m12 l12">
 										<label class="active" for="ngm-beneficiaries_reached-{{ $index }}">
-											Beneficiaries Reached</label>
+											Beneficiaries Targeted</label>
 									</div>
-									<div class="input-field col s12 m12 l12" ng-if="beneficiary.total_beneficiaries>0 && beneficiary.households < 1">
+									<!-- <div class="input-field col s12 m12 l12" ng-if="beneficiary.total_beneficiaries>0 && beneficiary.households < 1">
 										<label class="active"
 											for="ngm-beneficiaries_reached_warning-{{ $index }}">Households/Households
-											Reached is 0. Please, set all beneficairies(boys, girls, men, woment etc.) to 0</label>
-									</div>
+											Target is 0. Please, set all beneficairies(boys, girls, men, woment etc.) to 0</label>
+									</div> -->
 								</div>
 
 								<!-- tag diabilties for now only for AF Cluster Protection-->
