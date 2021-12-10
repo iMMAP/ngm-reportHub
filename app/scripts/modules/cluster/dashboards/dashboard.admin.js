@@ -389,6 +389,18 @@ angular.module('ngmReportHub')
 						},
 						metrics: $scope.dashboard.getMetrics( 'target_locations', 'csv' )
 					},{
+						id:'location_empty_beneficiary',
+						type: 'csv',
+						color: 'blue lighten-2',
+						icon: 'location_off',
+						hover: 'Download  Locations With Empty Beneficiary as CSV',
+						request: {
+							method: 'POST',
+							url: ngmAuth.LOCATION + '/api/cluster/admin/indicator',
+							data: angular.merge($scope.dashboard.getRequest('location_empty_beneficiary', true), { report: $scope.dashboard.cluster_id_filename + '_' + $scope.dashboard.report_type + '_location_empty_beneficiary_' + _type + $scope.dashboard.startDate + '-to-' + $scope.dashboard.endDate + '-extracted-' + moment().format('YYYY-MM-DDTHHmm'), csv: true } )
+						},
+						metrics: $scope.dashboard.getMetrics( 'location_empty_beneficiary', 'csv' )
+					},{
 						id:'reports_due',
 						type: 'csv',
 						color: 'blue lighten-2',
