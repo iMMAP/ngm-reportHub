@@ -366,15 +366,25 @@ form {
 
 		      <div class="row" ng-if="panel.user.api_key">
 		        <div class="input-field col s12">
+							<div style="position: absolute;right: 0;">
+								<button
+									class="btn btn-small"
+									ng-click="panel.copyToClipboard(panel.user.api_key)"
+								>
+								<i class="material-icons left">content_copy</i>
+									Copy
+								</button>
+							</div>
 		        	<i class="material-icons prefix">link</i>
 							<input id="ngm-api" type="tel" class="validate"
 								ng-model="panel.user.api_key"
 								ng-disabled="true"
 								disabled>
 		        </div>
+
 		      </div>
 					<div class="row" ng-if="!panel.user.api_key">
-					<div class="input-field col s12">
+						<div class="input-field col s12">
 							<button
 									ng-if="!panel.user.api_key"
 									class="btn btn-large waves-effect waves-teal"
@@ -383,7 +393,7 @@ form {
 									ng-disabled="ngmProfileForm.$invalid || panel.btnDisabled">
 									<i class="material-icons left">link</i>Generate API Key
 							</button>
-							</div>
+						</div>
 					</div>
 
 				</div>
