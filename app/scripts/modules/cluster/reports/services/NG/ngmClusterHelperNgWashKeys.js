@@ -763,6 +763,15 @@ angular.module( 'ngmReportHub' )
 						details: [{ quantity: 0 }]
 					}
 				},
+				'mhm_kit_distribution': {
+					template: 'kits.html',
+					association: 'hygiene',
+					measurement: {
+						quantity_measurement_id: 'kits_distributed',
+						quantity_measurement_name: 'Kits Distributed',
+						details: [{ quantity: 0 }]
+					}
+				},
 				'post_distribution_monitoring': {
 					template: 'kits.html',
 					association: 'hygiene',

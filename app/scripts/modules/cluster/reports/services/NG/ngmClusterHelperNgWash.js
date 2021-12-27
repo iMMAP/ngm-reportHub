@@ -79,6 +79,20 @@ angular.module( 'ngmReportHub' )
 					keys: [ 'quantity' ],
 					beneficiaries: 6
 				},
+				mhm_kits:{
+					keys: ['quantity'],
+					beneficiaries: 1,
+					ratios:{
+						hhs: 1,
+						boys: 0,
+						girls: 0,
+						men: 0,
+						women: 1,
+						elderly_men: 0,
+						elderly_women: 0,
+						beneficiaries: 1,
+					}
+				},
 				monitoring:{
 					keys: [ 'quantity' ],
 					beneficiaries: 1
@@ -350,8 +364,9 @@ angular.module( 'ngmReportHub' )
 			// CALCULATIONS
 
 			// get sadd breakdowns
-			bSadd: function( b ){
-				var ratios = ngmClusterHelperNgWash.ratios;
+			bSadd: function( b, key ){
+				// var ratios = ngmClusterHelperNgWash.ratios;
+				var ratios = ngmClusterHelperNgWash.ratios[key].ratios ? ngmClusterHelperNgWash.ratios[key].ratios : ngmClusterHelperNgWash.ratios;
 				// sadd
 				b.households = Math.round( b.total_beneficiaries * ratios.hhs );
 				b.boys = Math.round( b.total_beneficiaries * ratios.boys );
@@ -390,7 +405,7 @@ angular.module( 'ngmReportHub' )
 					// times ratio
 					b.total_beneficiaries *= ngmClusterHelperNgWash.ratios[ key ].beneficiaries;
 					// make it sadd
-					ngmClusterHelperNgWash.bSadd( b );
+					ngmClusterHelperNgWash.bSadd( b,key );
 					// calculate beneficairy totals
 					ngmClusterHelperNgWash.setActivityBeneficiaries( locations );
 				}

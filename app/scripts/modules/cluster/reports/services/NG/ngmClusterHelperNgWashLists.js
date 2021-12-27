@@ -1150,6 +1150,28 @@ angular.module( 'ngmReportHub' )
 					detail_type_id:'other',
 					detail_type_name:'Other'
 				}],
+				mhm_kit_distribution: [{
+					detail_type_id: 'bath_soap',
+					detail_type_name: 'Bathing Soap, 250 Grams'
+				}, {
+					detail_type_id: 'clothepins_silver',
+					detail_type_name: 'Clothes Pins Silver'
+				}, {
+					detail_type_id: 'female_underwear',
+					detail_type_name: 'Female Undergarments, Medium Size'
+				}, {
+					detail_type_id: 'feminine_hygiene',
+					detail_type_name: 'Feminine Hygiene (Napkins, Tampons)'
+				},  {
+					detail_type_id: 'nylon_rope',
+					detail_type_name: 'Nylon Rope'
+				},{
+					detail_type_id: 'reusable_sanit_pad',
+					detail_type_name: 'Reusable Sanitary Pad Set (2 Holders, 3 Winged Pads, 2 Straight Pads)'
+				}, {
+					detail_type_id: 'other',
+					detail_type_name: 'Other'
+				}],
 				post_distribution_monitoring:[{
 					detail_type_id:'hk_cultural_good',
 					detail_type_name:'Cultural Appropriateness'

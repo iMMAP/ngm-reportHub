@@ -278,8 +278,8 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				// target locations
 				// locationsUrl: config.project.admin0pcode === 'CB' ? 'target-locations/CB/locations.html' : 'target-locations/locations.html',
 				// locationsUrl: config.project.admin0pcode === 'CB' ? 'target-locations/CB/locations.html' : ( config.project.admin0pcode === 'AF' || config.project.admin0pcode === 'ET' ? 'target-locations/locations-reform.html' : 'target-locations/locations.html'),
-				locationsUrl: config.project.admin0pcode === 'CB' ? 'target-locations/CB/locations.html' : (config.project.admin0pcode !== 'NG' ? 'target-locations/locations-reform.html' : 'target-locations/locations.html'),
-				// locationsUrl: config.project.admin0pcode === 'CB' ? 'target-locations/CB/locations.html' : 'target-locations/locations-reform.html',
+				// locationsUrl: config.project.admin0pcode === 'CB' ? 'target-locations/CB/locations.html' : (config.project.admin0pcode !== 'NG' ? 'target-locations/locations-reform.html' : 'target-locations/locations.html'),
+				locationsUrl: config.project.admin0pcode === 'CB' ? 'target-locations/CB/locations.html' : 'target-locations/locations-reform.html',
 				// upload
 				uploadUrl:'project-upload.html',
 

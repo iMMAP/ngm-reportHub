@@ -28,7 +28,7 @@
 
 				<!-- kits -->
 				<input id="ngm-quantity-{{ $locationIndex }}-{{ $beneficiaryIndex }}-{{ $kitIndex }}"
-								ng-if="beneficiary.activity_detail_id !== 'post_distribution_monitoring'"
+								ng-if="beneficiary.activity_detail_id !== 'post_distribution_monitoring' && beneficiary.activity_detail_id !== 'mhm_kit_distribution'"
 								name="quantity"
 								type="number" 
 								class="validate" 
@@ -39,6 +39,17 @@
 								ng-disabled="project.report.report_status === 'complete' "
 								required>
 
+				<input id="ngm-quantity-{{ $locationIndex }}-{{ $beneficiaryIndex }}-{{ $kitIndex }}"
+								ng-if="beneficiary.activity_detail_id === 'mhm_kit_distribution'"
+								name="quantity"
+								type="number" 
+								class="validate" 
+								min="0"
+								ng-model="kit.quantity"
+								ng-change="ngmClusterHelperNgWash.indicatorOutput( project.report.locations, kit, 'mhm_kits' );
+														ngmClusterHelperNgWash.inputChange( 'ngm-quantity-{{ $locationIndex }}-{{ $beneficiaryIndex }}-{{ $kitIndex }}' )"
+								ng-disabled="project.report.report_status === 'complete' "
+								required>
 				<!-- kits -->
 				<label ng-if="beneficiary.activity_detail_id !== 'post_distribution_monitoring'"
 								for="ngm-quantity-{{ $locationIndex }}-{{ $beneficiaryIndex }}-{{ $kitIndex }}"

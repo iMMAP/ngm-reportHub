@@ -9464,33 +9464,43 @@ angular.module( 'ngmReportHub' )
 				// ng
 				if ( admin0pcode === 'NG' ) {
 					site_types = [{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'multiple_sites',
 						site_type_name: 'Multiple Sites'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'host_community',
 						site_type_name: 'Host Community'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'settlement',
 						site_type_name: 'Settlement'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'collective_settlement',
 						site_type_name: 'Collective Settlement/Centre'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'transitional_centre',
 						site_type_name: 'Transitional Centre'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'idp_site',
 						site_type_name: 'IDP Site'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'hospital',
 						site_type_name: 'Hospital'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'health_center',
 						site_type_name: 'Health Center'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'nutrition_center',
 						site_type_name: 'Nutrition Center'
 					},{
+						cluster_id: ngmClusterLists.all_sectors,
 						site_type_id: 'school',
 						site_type_name: 'School'
 					}];
