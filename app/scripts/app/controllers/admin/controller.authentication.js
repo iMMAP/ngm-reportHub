@@ -261,7 +261,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 					}
 					// sort
 					$scope.panel.organizations = $filter('orderBy')($scope.panel.organizations, 'organization');
-					// reset model when change country for new register user 
+					// reset model when change country for new register user
 					if ($scope.panel.user && !$scope.panel.user.id){
 						delete $scope.panel.user.cluster_id;
 						delete $scope.panel.user.organization;
@@ -358,6 +358,16 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 						}
 
 					});
+				},
+				// copy To Clipboard
+				copyToClipboard: function(apikey){
+					if(apikey == null || apikey == ''){
+						M.toast({ html: 'Copy To Clipboard Error (not api key found)', displayLength: 6000, classes: 'error' });
+
+					} else {
+						navigator.clipboard.writeText(apikey);
+						M.toast({ html: 'Copied Successfully', displayLength: 3000, classes: 'success' });
+					}
 				},
 
 				// update profile
