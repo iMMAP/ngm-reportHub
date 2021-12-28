@@ -423,6 +423,21 @@ angular.module( 'ngmReportHub' )
           if(location.admin0pcode === 'ET' && location.site_name === undefined){
             location.site_name ='';
           }
+          // clean if admin3lat,admin4lng,admin4lat,admin5lng,admin5lat,admin5lng is empty
+          var cleanLatLng =[
+          'admin3lng',
+          'admin3lat',
+          'admin4lng',
+          'admin4lat',
+          'admin5lng',
+          'admin5lat'
+          ]
+          angular.forEach(cleanLatLng,function(a){
+            if (typeof location[a] === 'string' && location[a]=== ''){
+              delete location[a]
+            }
+          });
+          
         });
 
         // return clean location

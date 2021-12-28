@@ -261,6 +261,12 @@ angular.module( 'ngmReportHub' )
               var selected_sites = $filter('filter')( lists.adminSites, { admin1pcode: target_location.admin1pcode }, true );
               if ( !selected_sites.length ){
                 lists.adminSites = lists.adminSites.concat( result.data );
+                // set site_id to string if the type is still number
+                lists.adminSites.forEach((x)=>{
+                  if (x.site_id && typeof x.site_id ==='number'){
+                    x.site_id = x.site_id.toString();
+                  }
+                })
                 if(init){
                   var obj_siteadmin = { admin1pcode: target_location.admin1pcode};
                   obj_siteadmin[pcode] = target_location[pcode];
@@ -425,14 +431,16 @@ angular.module( 'ngmReportHub' )
         site_list = $filter('filter')( lists.adminSitesSelect[ $index ], search_site, true );
 
         // set site selected
-        if ( site_list && site_list.length && target_location.site_type_id ) {
-          target_location.site_list_select_id = 'yes';
-          target_location.site_list_select_name = 'Yes';
-          target_location.site_list_select_disabled = false;
-        } else {
-          target_location.site_list_select_id = 'no';
-          target_location.site_list_select_name = 'No';
-          target_location.site_list_select_disabled = true;
+        if( !init){
+          if ( site_list && site_list.length && target_location.site_type_id ) {
+            target_location.site_list_select_id = 'yes';
+            target_location.site_list_select_name = 'Yes';
+            target_location.site_list_select_disabled = false;
+          } else {
+            target_location.site_list_select_id = 'no';
+            target_location.site_list_select_name = 'No';
+            target_location.site_list_select_disabled = true;
+          }
         }
 
       },
