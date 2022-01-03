@@ -1155,7 +1155,7 @@ angular.module( 'ngmReportHub' )
 					detail_type_name: 'Bathing Soap, 250 Grams'
 				}, {
 					detail_type_id: 'clothepins_silver',
-					detail_type_name: 'Clothes Pins Silver'
+					detail_type_name: 'Clothespins, silver'
 				}, {
 					detail_type_id: 'female_underwear',
 					detail_type_name: 'Female Undergarments, Medium Size'
