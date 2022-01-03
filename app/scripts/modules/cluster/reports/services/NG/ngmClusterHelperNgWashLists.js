@@ -1160,14 +1160,11 @@ angular.module( 'ngmReportHub' )
 					detail_type_id: 'female_underwear',
 					detail_type_name: 'Female Undergarments, Medium Size'
 				}, {
-					detail_type_id: 'feminine_hygiene',
-					detail_type_name: 'Feminine Hygiene (Napkins, Tampons)'
-				},  {
 					detail_type_id: 'nylon_rope',
 					detail_type_name: 'Nylon Rope'
 				},{
-					detail_type_id: 'reusable_sanit_pad',
-					detail_type_name: 'Reusable Sanitary Pad Set (2 Holders, 3 Winged Pads, 2 Straight Pads)'
+					detail_type_id: 'feminine_hygiene_reusable_sanit_pad',
+					detail_type_name: 'Feminine hygiene (napkins, tampons) Reusable sanitary pad set (2 holders, 3 winged pads, 2 straight pads and 18 wrappers)'
 				}, {
 					detail_type_id: 'other',
 					detail_type_name: 'Other'
