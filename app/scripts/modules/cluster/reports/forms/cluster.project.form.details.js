@@ -3522,6 +3522,8 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 			$scope.project.toggle_for_explain = function (prop, value) {
 				$scope.project[prop] = !$scope.project[prop];
 			}
+
+			$scope.project.noteYear = moment().year();
 	}
 
 ]);
