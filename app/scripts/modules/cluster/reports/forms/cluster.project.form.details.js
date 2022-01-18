@@ -247,6 +247,7 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 							var userscopy = $scope.project.lists.users;
 							$scope.project.lists = ngmClusterLists.setLists(config.project, $scope.project.definition.project_start_date, $scope.project.definition.project_end_date, 30);
 							$scope.project.lists.users = userscopy;
+							$scope.project.noteBasedYear = moment($scope.project.definition.project_start_date).year() >= 2022 || moment($scope.project.definition.project_end_date).year() >= 2022 ? moment().year() : 2021;
 						}, 0)
 					}
 				},
@@ -3523,7 +3524,7 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 				$scope.project[prop] = !$scope.project[prop];
 			}
 
-			$scope.project.noteYear = moment().year();
+			$scope.project.noteBasedYear = moment(config.project.project_start_date).year() >= 2022 || moment(config.project.project_end_date).year() >= 2022 ? moment().year():2021;
 	}
 
 ]);
