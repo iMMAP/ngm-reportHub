@@ -9872,6 +9872,15 @@ angular.module( 'ngmReportHub' )
 								cluster_id: ngmClusterLists.all_sectors,
 								hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
 								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+							},{
+								cluster_id: ngmClusterLists.all_sectors,
+								hrp_beneficiary_type_id: 'non_hrp',
+								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+							},
+							{
+								cluster_id: ['fsac'],
+								hrp_beneficiary_type_id: 'carryover_hrp_2021',
+								hrp_beneficiary_type_name: 'HRP 2021 Carryover'
 							}
 					],
 						2020: [{
@@ -9958,12 +9967,12 @@ angular.module( 'ngmReportHub' )
 							},
 							{
 								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_cross-border_returnees_border_or_ec_2022',
+								hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
 								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at border or EC)'
 							},
 							{
 								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_cross-border_returnees_province_2022',
+								hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
 								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at province of return)'
 							},
 							{
@@ -9980,6 +9989,16 @@ angular.module( 'ngmReportHub' )
 								cluster_id: ngmClusterLists.all_sectors,
 								hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
 								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+							},
+							{
+								cluster_id: ngmClusterLists.all_sectors,
+								hrp_beneficiary_type_id: 'non_hrp',
+								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+							},
+							{
+								cluster_id: ['fsac'],
+								hrp_beneficiary_type_id: 'carryover_hrp_2021',
+								hrp_beneficiary_type_name: 'HRP 2021 Carryover'
 							}
 							
 						]
