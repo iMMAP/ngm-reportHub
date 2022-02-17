@@ -155,7 +155,8 @@ angular.module('ngmReportHub')
 										}
 										return show;
 
-									})()
+									})(),
+									accountOwner: $scope.dashboard.username === $scope.dashboard.user.username? true: false
 								}
 							}]
 						}]

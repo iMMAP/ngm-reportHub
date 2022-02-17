@@ -357,9 +357,9 @@ form {
 
 				</div>
 
-				<!-- API Key -->
-
-				<div class="card z-depth-1" style="padding:5% 20% 5% !important;">
+				<!-- API Key only user that can see API key-->
+				
+				<div ng-if="panel.accountOwner" class="card z-depth-1" style="padding:5% 20% 5% !important;">
 
 		    	<!-- btn as title! -->
 		   	 	<a class="btn button-label" style="left:-1px;position:absolute;pointer-events:none;">API Key</a>
@@ -397,6 +397,7 @@ form {
 					</div>
 
 				</div>
+
 
 
 				<!-- CONTACT -->
