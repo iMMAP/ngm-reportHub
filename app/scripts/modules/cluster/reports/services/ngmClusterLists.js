@@ -745,6 +745,9 @@ angular.module( 'ngmReportHub' )
 					},{
 						cluster_id: 'wash',
 						cluster: 'WASH'
+					},{
+						cluster_id: 'cccm',
+						cluster: 'CCCM'
 					}];
 				} else if ( admin0pcode.toLowerCase() === 'cb' ) {
 					clusters = [{
@@ -9999,7 +10002,47 @@ angular.module( 'ngmReportHub' )
 								cluster_id: ['fsac'],
 								hrp_beneficiary_type_id: 'carryover_hrp_2021',
 								hrp_beneficiary_type_name: 'HRP 2021 Carryover'
-							}
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: 'new_idp_2022',
+								hrp_beneficiary_type_name: 'New IDPs in 2022'
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
+								hrp_beneficiary_type_name: 'New returnees in 2022 (at border or EC)'
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
+								hrp_beneficiary_type_name: 'New returnees in 2022 (at place of return)'
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: 'natural_disaster_affected_2022_non_displaced',
+								hrp_beneficiary_type_name: 'Natural disaster-affected in 2022 (non-displaced)'
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: "confict_affected_2022",
+								hrp_beneficiary_type_name: "Conflict-affected in 2022 (non-displaced)"
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: 'refugees',
+								hrp_beneficiary_type_name: 'Refugees'
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+							},
+							{
+								cluster_id: ['cccm'],
+								hrp_beneficiary_type_id: 'non_hrp',
+								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+							},
 							
 						]
 					};
@@ -10010,7 +10053,7 @@ angular.module( 'ngmReportHub' )
 				var hrp_beneficiaries = beneficiaries[year] ? beneficiaries[year] : beneficiaries['all'];
 
 				if (hrp_beneficiaries && hrp_beneficiaries.length) {
-					hrp_beneficiaries = ngmClusterLists.filterDuplicates(hrp_beneficiaries, ['hrp_beneficiary_type_id'])
+					hrp_beneficiaries = ngmClusterLists.filterDuplicates(hrp_beneficiaries, ['cluster_id','hrp_beneficiary_type_id'])
 					hrp_beneficiaries = $filter('orderBy')(hrp_beneficiaries, 'hrp_beneficiary_type_name');
 				}
 
