@@ -9994,7 +9994,7 @@ angular.module( 'ngmReportHub' )
 								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors,
+								cluster_id: ngmClusterLists.all_sectors_minus_protection,
 								hrp_beneficiary_type_id: 'non_hrp',
 								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
 							},
