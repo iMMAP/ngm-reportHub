@@ -21,17 +21,18 @@ angular.module( 'ngmReportHub' )
 		var ngmClusterLists = {
 
 			// comphrensive list of all sectors - ever
-			all_sectors: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter','wash','child_protection','gbv' ],
-			all_sectors_minus_protection: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','rnr_chapter','wash' ],
-			all_sectors_minus_smsd: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','nutrition','protection','rnr_chapter','wash' ],
-			all_sectors_minus_esnfi: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter','wash','child_protection' ],
-			all_sectors_minus_health: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','smsd','nutrition','protection','rnr_chapter','wash' ],
-			all_sectors_minus_health_smsd: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','nutrition','protection','rnr_chapter','wash' ],
-			all_sectors_minus_wash: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter' ],
-			all_sectors_minus_wash_health: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','smsd','nutrition','protection','rnr_chapter' ],
-			all_sectors_minus_wash_health_smsd: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','nutrition','protection','rnr_chapter' ],
-			all_sectors_minus_wash_education: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter' ],
+			all_sectors: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter','wash','child_protection','gbv', 'cccm' ],
+			all_sectors_minus_protection: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','rnr_chapter','wash', 'cccm' ],
+			all_sectors_minus_smsd: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','nutrition','protection','rnr_chapter','wash', 'cccm' ],
+			all_sectors_minus_esnfi: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter','wash','child_protection', 'cccm' ],
+			all_sectors_minus_health: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','smsd','nutrition','protection','rnr_chapter','wash', 'cccm' ],
+			all_sectors_minus_health_smsd: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','nutrition','protection','rnr_chapter','wash', 'cccm' ],
+			all_sectors_minus_wash: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter', 'cccm' ],
+			all_sectors_minus_wash_health: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','smsd','nutrition','protection','rnr_chapter', 'cccm' ],
+			all_sectors_minus_wash_health_smsd: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','education','eiewg','emergency_telecommunications','esnfi','fsac','fss','logistics','nutrition','protection','rnr_chapter', 'cccm' ],
+			all_sectors_minus_wash_education: [ 'cvwg','agriculture','cccm_esnfi','cwcwg','coordination','eiewg','emergency_telecommunications','esnfi','fsac','fss','health','logistics','smsd','nutrition','protection','rnr_chapter', 'cccm' ],
 			all_sectors_col: ['smsd','education','alojamientos_asentamientos','san','health','recuperacion_temprana','protection','wash','ningún_cluster','coordinación_información'],
+			all_sectors_minus_cccm: ['cvwg', 'agriculture', 'cccm_esnfi', 'cwcwg', 'coordination', 'education', 'eiewg', 'emergency_telecommunications', 'esnfi', 'fsac', 'fss', 'health', 'logistics', 'smsd', 'nutrition', 'protection', 'rnr_chapter', 'wash', 'child_protection', 'gbv'],
 
 
 			// lists ( project, mpc transfers )
@@ -9969,22 +9970,22 @@ angular.module( 'ngmReportHub' )
 								hrp_beneficiary_type_name: 'New IDPs in 2022'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors,
+								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
 								hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
 								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at border or EC)'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors,
+								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
 								hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
 								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at province of return)'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors,
+								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
 								hrp_beneficiary_type_id: 'natural_disaster_affected_2022',
 								hrp_beneficiary_type_name: 'Natural disaster-affected 2022 (sudden-onset, non-displaced)'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors,
+								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
 								hrp_beneficiary_type_id: 'refugees_asylum_seekers',
 								hrp_beneficiary_type_name: 'Refugees and Asylum Seekers'
 							},
@@ -10003,11 +10004,11 @@ angular.module( 'ngmReportHub' )
 								hrp_beneficiary_type_id: 'carryover_hrp_2021',
 								hrp_beneficiary_type_name: 'HRP 2021 Carryover'
 							},
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: 'new_idp_2022',
-								hrp_beneficiary_type_name: 'New IDPs in 2022'
-							},
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: 'new_idp_2022',
+							// 	hrp_beneficiary_type_name: 'New IDPs in 2022'
+							// },
 							{
 								cluster_id: ['cccm'],
 								hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
@@ -10033,16 +10034,16 @@ angular.module( 'ngmReportHub' )
 								hrp_beneficiary_type_id: 'refugees',
 								hrp_beneficiary_type_name: 'Refugees'
 							},
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-							},
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: 'non_hrp',
-								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-							},
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+							// 	hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+							// },
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: 'non_hrp',
+							// 	hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+							// },
 							
 						]
 					};
