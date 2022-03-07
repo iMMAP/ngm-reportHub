@@ -1472,7 +1472,7 @@
 											ng-model="beneficiary.households"
 											ng-change="ngmCbBeneficiaries.setBeneficiary( 'households', beneficiary );
 													ngmClusterBeneficiaries.inputChange( 'ngm-households-{{ $locationIndex }}-{{ $beneficiaryIndex }}' );ngmClusterBeneficiaries.updateTotalTransferedAmount(beneficiary)"
-											ng-disabled="project.definition.project_status === 'complete' || project.report.report_status === 'complete' || (project.definition.admin0pcode === 'NG' && beneficiary.cluster_id === 'wash') || !ngmClusterBeneficiaries.form[ $locationIndex ][ $beneficiaryIndex ][ 'households' ]"
+											ng-disabled="project.definition.project_status === 'complete' || project.report.report_status === 'complete' || (project.definition.admin0pcode === 'NG' && beneficiary.cluster_id === 'wash' && beneficiary.activity_detail_id !== 'cleaning_campaigns') || !ngmClusterBeneficiaries.form[ $locationIndex ][ $beneficiaryIndex ][ 'households' ]"
 											required />
 							<label for="ngm-households-{{ $locationIndex }}-{{ $beneficiaryIndex }}" class="active">{{ 'households' | translate }}</label>
 						</div>
