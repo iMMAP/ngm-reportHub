@@ -428,6 +428,9 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 									var msg = result.data.msg ? result.data.msg : 'error!';
 									// Materialize.toast( msg, 6000, msg );
 									M.toast({ html: msg, displayLength: 6000, classes: 'error' });
+									$timeout(function () {
+										$scope.panel.btnDisabled = false;
+									}, 3000)
 								}
 
 								// success
@@ -821,6 +824,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 					var scrollDiv;
 					var valid = true;
 					var field = '';
+					$scope.panel.whiteSpaceUsername()
 					if(!user.organization_tag){
 						$('label[for=' + 'ngm-organization' + ']').addClass('error');
 						scrollDiv = $('#ngm-organization');
@@ -833,7 +837,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 						field="Sector";
 						valid = false;
 					}
-					if(!user.username){
+					if (!user.username || !$scope.panel.usernameSafe){
 						$('label[for=' + 'ngm-username' + ']').addClass('error');
 						scrollDiv = $('#ngm-username');
 						field ="Username";
@@ -855,7 +859,11 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 					if(!valid){
 						scrollDiv.scrollHere();
 						$timeout(function(){
-							M.toast({ html: field+' is Missing!', displayLength: 6000, classes: 'error' });
+							if (!$scope.panel.usernameSafe){
+								M.toast({ html: 'Please remove white space from username!', displayLength: 6000, classes: 'error' });
+							}else{
+								M.toast({ html: field+' is Missing!', displayLength: 6000, classes: 'error' });
+							}
 						},300)
 					}
 					return valid
