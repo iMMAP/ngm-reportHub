@@ -9970,22 +9970,22 @@ angular.module( 'ngmReportHub' )
 								hrp_beneficiary_type_name: 'New IDPs in 2022'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
+								cluster_id: ngmClusterLists.all_sectors,
 								hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
 								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at border or EC)'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
+								cluster_id: ngmClusterLists.all_sectors,
 								hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
 								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at province of return)'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
+								cluster_id: ngmClusterLists.all_sectors,
 								hrp_beneficiary_type_id: 'natural_disaster_affected_2022',
 								hrp_beneficiary_type_name: 'Natural disaster-affected 2022 (sudden-onset, non-displaced)'
 							},
 							{
-								cluster_id: ngmClusterLists.all_sectors_minus_cccm,
+								cluster_id: ngmClusterLists.all_sectors,
 								hrp_beneficiary_type_id: 'refugees_asylum_seekers',
 								hrp_beneficiary_type_name: 'Refugees and Asylum Seekers'
 							},
@@ -10009,31 +10009,31 @@ angular.module( 'ngmReportHub' )
 							// 	hrp_beneficiary_type_id: 'new_idp_2022',
 							// 	hrp_beneficiary_type_name: 'New IDPs in 2022'
 							// },
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
-								hrp_beneficiary_type_name: 'New returnees in 2022 (at border or EC)'
-							},
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
-								hrp_beneficiary_type_name: 'New returnees in 2022 (at place of return)'
-							},
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: 'natural_disaster_affected_2022_non_displaced',
-								hrp_beneficiary_type_name: 'Natural disaster-affected in 2022 (non-displaced)'
-							},
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: "confict_affected_2022",
-								hrp_beneficiary_type_name: "Conflict-affected in 2022 (non-displaced)"
-							},
-							{
-								cluster_id: ['cccm'],
-								hrp_beneficiary_type_id: 'refugees',
-								hrp_beneficiary_type_name: 'Refugees'
-							},
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
+							// 	hrp_beneficiary_type_name: 'New returnees in 2022 (at border or EC)'
+							// },
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
+							// 	hrp_beneficiary_type_name: 'New returnees in 2022 (at place of return)'
+							// },
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: 'natural_disaster_affected_2022_non_displaced',
+							// 	hrp_beneficiary_type_name: 'Natural disaster-affected in 2022 (non-displaced)'
+							// },
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: "confict_affected_2022",
+							// 	hrp_beneficiary_type_name: "Conflict-affected in 2022 (non-displaced)"
+							// },
+							// {
+							// 	cluster_id: ['cccm'],
+							// 	hrp_beneficiary_type_id: 'refugees',
+							// 	hrp_beneficiary_type_name: 'Refugees'
+							// },
 							// {
 							// 	cluster_id: ['cccm'],
 							// 	hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
