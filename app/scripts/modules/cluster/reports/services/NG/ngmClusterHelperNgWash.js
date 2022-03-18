@@ -379,8 +379,11 @@ angular.module( 'ngmReportHub' )
 
 			// get sadd breakdowns
 			bSadd: function( b, key ){
-				// var ratios = ngmClusterHelperNgWash.ratios;
-				var ratios = ngmClusterHelperNgWash.ratios[key].ratios ? ngmClusterHelperNgWash.ratios[key].ratios : ngmClusterHelperNgWash.ratios;
+				var ratios = ngmClusterHelperNgWash.ratios;
+				if(key){
+					var ratios = ngmClusterHelperNgWash.ratios[key].ratios ? ngmClusterHelperNgWash.ratios[key].ratios : ngmClusterHelperNgWash.ratios;
+				}
+				
 				// sadd
 				b.households = Math.round( b.total_beneficiaries * ratios.hhs );
 				b.boys = Math.round( b.total_beneficiaries * ratios.boys );
@@ -485,6 +488,7 @@ angular.module( 'ngmReportHub' )
 				b.elderly_men = l.elderly_men;
 				b.elderly_women = l.elderly_women;
 				b.total_beneficiaries = l.site_population;
+
 
 				// each association
 				angular.forEach( b, function( d, k ){
