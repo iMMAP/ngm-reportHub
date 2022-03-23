@@ -425,6 +425,8 @@ angular.module('ngmReportHub')
 			FORBIDDEN: 403,
 			LOCATION: $location.protocol() + '://' + $location.host() + ':' + $location.port(),
 			APP: $location.path().split('/')[1],
+			// variable to store URL, if the user goes to a certain URL but the user, has not logged in yet
+			redirectToUrlAfterLogin:'',
 
 			// guest
 			GUEST: {
@@ -693,6 +695,10 @@ angular.module('ngmReportHub')
 				if (ngmUser.get() && !ngmUser.get().guest) {
 					deferred.resolve(ngmAuth.OK);
 				} else {
+					// set redirectToUrlAfterLogin
+					if ($location.path() !== '/cluster/login' || $location.path() !== 'login'){
+						ngmAuth.redirectToUrlAfterLogin = $location.path();
+					}
 					deferred.reject(ngmAuth.UNAUTHORIZED);
 				}
 
