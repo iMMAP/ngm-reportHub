@@ -293,13 +293,19 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 								// success
 								if ( !result.data.err && !result.data.summary ){
 
-									// go to default org page
-									$location.path( result.data.app_home );
+									// go to default org page or ngmAuth.redirectToUrlAfterLogin
+									// $location.path( result.data.app_home );
+									ngmAuth.redirectToUrlAfterLogin !== '' ? $location.path(ngmAuth.redirectToUrlAfterLogin) : $location.path(result.data.app_home);
 									$timeout( function(){
-
 										// Materialize.toast( $filter('translate')('welcome_back')+' ' + result.username + '!', 6000, 'note' );
 										M.toast({ html: $filter('translate')('welcome_back') + ' ' + result.data.username + '!', displayLength: 6000, classes: 'note' });
 									}, 2000);
+
+									if (ngmAuth.redirectToUrlAfterLogin !== '') {
+										M.toast({ html: 'Redirecting...', displayLength: 3000, classes: 'success' });
+										// set redirectToUrlAfterLogin to '';
+										ngmAuth.redirectToUrlAfterLogin = '';
+									}
 								}
 
 							})
