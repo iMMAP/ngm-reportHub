@@ -659,6 +659,10 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 									return l.stock_warehouse_id === id
 								});
 								if ($loc){
+                  // remove cluster_id and cluster 
+                  delete $loc.cluster_id
+                  delete $loc.cluster
+
 									var copy_report = $scope.report.report;
 									$scope.inserted =
 										ngmClusterHelper.getCleanStocks($scope.report.report, $loc, $scope.inserted);
