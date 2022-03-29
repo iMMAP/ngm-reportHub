@@ -270,6 +270,11 @@ angular.module( 'ngmReportHub' )
 					getBeneficiaryTypes: {
 						method: 'GET',
 						url: ngmAuth.LOCATION + '/api/cluster/list/beneficiarytypes?admin0pcode=' + user.admin0pcode
+					},
+					// hrpbeneficiarytypes
+					getHRPBeneficiaryTypes: {
+						method: 'GET',
+						url: ngmAuth.LOCATION + '/api/cluster/list/hrpbeneficiarytypes?admin0pcode=' + user.admin0pcode
 					}
 
 				}
@@ -290,7 +295,8 @@ angular.module( 'ngmReportHub' )
 						indicatorsList: [],
 						stockItemsList: [],
 						organizationsList: [],
-						beneficiaryTypeList:[]
+						beneficiaryTypeList:[],
+						hrpBeneficiaryTypeList:[]
 					};
 
 					// storage
@@ -309,26 +315,28 @@ angular.module( 'ngmReportHub' )
 								url: ngmAuth.LOCATION + '/api/cluster/list/activities?adminRpcode=' + region
 							}
 							requests.getActivities = getActivitiesBasedOnRole;
-							// get all donors if superadmin
+							
 							if(max_role === 'SUPERADMIN'){
+								// get all donors if superadmin
 								var getDonorsAll= {
 									method: 'GET',
 									url: ngmAuth.LOCATION + '/api/cluster/list/donorsnew?admin0pcode=ALL'
 								}
 								requests.getDonors = getDonorsAll;
-							}
-							
-
-
-
-
-
-							if (max_role === 'SUPERADMIN') {
+	
+								// get all beneficiarytypes if superadmin
 								var getBeneficiaryTypesAll = {
 									method: 'GET',
 									url: ngmAuth.LOCATION + '/api/cluster/list/beneficiarytypes'
 								}
 								requests.getBeneficiaryTypes = getBeneficiaryTypesAll;
+
+								// get all hrpbeneficiarytypes if superadmin
+								var getHRPBeneficiaryTypesAll = {
+									method: 'GET',
+									url: ngmAuth.LOCATION + '/api/cluster/list/hrpbeneficiarytypes'
+								}
+								requests.getHRPBeneficiaryTypes = getHRPBeneficiaryTypesAll;
 							}
 						}
 					}
@@ -345,7 +353,8 @@ angular.module( 'ngmReportHub' )
 						$http( requests.getIndicators ),
 						$http( requests.getStockItems ),
 						$http( requests.getOrganizations),
-						$http(requests.getBeneficiaryTypes)
+						$http( requests.getBeneficiaryTypes),
+						$http( requests.getHRPBeneficiaryTypes)
 
 						 ] ).then( function( results ){
 
@@ -362,7 +371,9 @@ angular.module( 'ngmReportHub' )
 								indicatorsList: results[8].data,
 								stockItemsList: results[9].data,
 								organizationsList: results[10].data,
-								beneficiaryTypeList: results[11].data
+								beneficiaryTypeList: results[11].data,
+								hrpBeneficiaryTypeList: results[12].data,
+
 
 							};
 							// storage
@@ -9757,6 +9768,7 @@ angular.module( 'ngmReportHub' )
 
 			// HRP benefeciaries
 			getHrpBeneficiaries: function(admin0pcode,start_date,end_date){
+				
 				// check suitable year
 				var start_year = moment(start_date).year();
 					end_year = moment(end_date).year();
@@ -9766,299 +9778,316 @@ angular.module( 'ngmReportHub' )
 					 year = 'all';
 				}
 				// default
-				if (admin0pcode === 'AF') {
-					var beneficiaries = {
-						//if not find in the year this 'all' can be used, 'all' accumulate hrp benficiary type from previous year
-						all: [{
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_idp_2021',
-							hrp_beneficiary_type_name: 'New IDPs in 2021'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_returnees_2021_border_or_ec',
-							hrp_beneficiary_type_name: 'New returnees in 2021 (at border or EC)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_returnees_2021_place_of_return',
-							hrp_beneficiary_type_name: 'New returnees in 2021 (at place of return)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'natural_disaster_affected_2021',
-							hrp_beneficiary_type_name: 'Natural disaster-affected in 2021 (non-displaced)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'confict_affected_2021',
-							hrp_beneficiary_type_name: 'Conflict-affected in 2021 (non-displaced)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'refugees',
-							hrp_beneficiary_type_name: 'Refugees'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-							hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'non_hrp',
-							hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-						}, {
-							cluster_id: ['fsac'],
-							hrp_beneficiary_type_id: 'carryover_hrp_2020',
-							hrp_beneficiary_type_name: 'HRP 2020 Carryover'
-						},
+				// if (admin0pcode === 'AF') {
+				// 	var beneficiaries = {
+				// 		//if not find in the year this 'all' can be used, 'all' accumulate hrp benficiary type from previous year
+				// 		all: [{
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_idp_2021',
+				// 			hrp_beneficiary_type_name: 'New IDPs in 2021'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_returnees_2021_border_or_ec',
+				// 			hrp_beneficiary_type_name: 'New returnees in 2021 (at border or EC)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_returnees_2021_place_of_return',
+				// 			hrp_beneficiary_type_name: 'New returnees in 2021 (at place of return)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'natural_disaster_affected_2021',
+				// 			hrp_beneficiary_type_name: 'Natural disaster-affected in 2021 (non-displaced)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'confict_affected_2021',
+				// 			hrp_beneficiary_type_name: 'Conflict-affected in 2021 (non-displaced)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'refugees',
+				// 			hrp_beneficiary_type_name: 'Refugees'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+				// 			hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'non_hrp',
+				// 			hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+				// 		}, {
+				// 			cluster_id: ['fsac'],
+				// 			hrp_beneficiary_type_id: 'carryover_hrp_2020',
+				// 			hrp_beneficiary_type_name: 'HRP 2020 Carryover'
+				// 		},
 
-						//2020
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_idp_2020',
-								hrp_beneficiary_type_name: 'New IDPs in 2020'
-							}, {
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_returnees_2020_border_or_ec',
-								hrp_beneficiary_type_name: 'New returnees in 2020 (at border or EC)'
-							}, {
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_returnees_2020_place_of_return',
-								hrp_beneficiary_type_name: 'New returnees in 2020 (at place of return)'
-							}, {
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'natural_disaster_affected_2020',
-								hrp_beneficiary_type_name: 'Natural disaster-affected in 2020 (non-displaced)'
-							}, {
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'confict_affected_2020',
-								hrp_beneficiary_type_name: 'Conflict-affected in 2020 (non-displaced)'
-							}, {
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'refugees',
-								hrp_beneficiary_type_name: 'Refugees'
-							}, {
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-							}, {
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'non_hrp',
-								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-							}, {
-								cluster_id: ['fsac'],
-								hrp_beneficiary_type_id: 'carryover_hrp_2019',
-								hrp_beneficiary_type_name: 'HRP 2019 Carryover'
-							},
+				// 		//2020
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_idp_2020',
+				// 				hrp_beneficiary_type_name: 'New IDPs in 2020'
+				// 			}, {
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_returnees_2020_border_or_ec',
+				// 				hrp_beneficiary_type_name: 'New returnees in 2020 (at border or EC)'
+				// 			}, {
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_returnees_2020_place_of_return',
+				// 				hrp_beneficiary_type_name: 'New returnees in 2020 (at place of return)'
+				// 			}, {
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'natural_disaster_affected_2020',
+				// 				hrp_beneficiary_type_name: 'Natural disaster-affected in 2020 (non-displaced)'
+				// 			}, {
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'confict_affected_2020',
+				// 				hrp_beneficiary_type_name: 'Conflict-affected in 2020 (non-displaced)'
+				// 			}, {
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'refugees',
+				// 				hrp_beneficiary_type_name: 'Refugees'
+				// 			}, {
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+				// 				hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+				// 			}, {
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'non_hrp',
+				// 				hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+				// 			}, {
+				// 				cluster_id: ['fsac'],
+				// 				hrp_beneficiary_type_id: 'carryover_hrp_2019',
+				// 				hrp_beneficiary_type_name: 'HRP 2019 Carryover'
+				// 			},
 
-						// 2022
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_idp_2022',
-								hrp_beneficiary_type_name: 'New IDPs in 2022'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_cross-border_returnees_border_or_ec_2022',
-								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at border or EC)'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_cross-border_returnees_province_2022',
-								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at province of return)'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'natural_disaster_affected_2022',
-								hrp_beneficiary_type_name: 'Natural disaster-affected 2022 (sudden-onset, non-displaced)'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'refugees_asylum_seekers',
-								hrp_beneficiary_type_name: 'Refugees and Asylum Seekers'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-							},{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'non_hrp',
-								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-							},
-							{
-								cluster_id: ['fsac'],
-								hrp_beneficiary_type_id: 'carryover_hrp_2021',
-								hrp_beneficiary_type_name: 'HRP 2021 Carryover'
-							}
-					],
-						2020: [{
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_idp_2020',
-							hrp_beneficiary_type_name: 'New IDPs in 2020'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_returnees_2020_border_or_ec',
-							hrp_beneficiary_type_name: 'New returnees in 2020 (at border or EC)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_returnees_2020_place_of_return',
-							hrp_beneficiary_type_name: 'New returnees in 2020 (at place of return)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'natural_disaster_affected_2020',
-							hrp_beneficiary_type_name: 'Natural disaster-affected in 2020 (non-displaced)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'confict_affected_2020',
-							hrp_beneficiary_type_name: 'Conflict-affected in 2020 (non-displaced)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'refugees',
-							hrp_beneficiary_type_name: 'Refugees'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-							hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'non_hrp',
-							hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-						}, {
-							cluster_id: ['fsac'],
-							hrp_beneficiary_type_id: 'carryover_hrp_2019',
-							hrp_beneficiary_type_name: 'HRP 2019 Carryover'
-						}
-						],
-						2021: [{
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_idp_2021',
-							hrp_beneficiary_type_name: 'New IDPs in 2021'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_returnees_2021_border_or_ec',
-							hrp_beneficiary_type_name: 'New returnees in 2021 (at border or EC)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'new_returnees_2021_place_of_return',
-							hrp_beneficiary_type_name: 'New returnees in 2021 (at place of return)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'natural_disaster_affected_2021',
-							hrp_beneficiary_type_name: 'Natural disaster-affected in 2021 (non-displaced)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'confict_affected_2021',
-							hrp_beneficiary_type_name: 'Conflict-affected in 2021 (non-displaced)'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'refugees',
-							hrp_beneficiary_type_name: 'Refugees'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-							hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-						}, {
-							cluster_id: ngmClusterLists.all_sectors,
-							hrp_beneficiary_type_id: 'non_hrp',
-							hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-						}, {
-							cluster_id: ['fsac'],
-							hrp_beneficiary_type_id: 'carryover_hrp_2020',
-							hrp_beneficiary_type_name: 'HRP 2020 Carryover'
-						}
-						],
-						2022:[
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_idp_2022',
-								hrp_beneficiary_type_name: 'New IDPs in 2022'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
-								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at border or EC)'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
-								hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at province of return)'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'natural_disaster_affected_2022',
-								hrp_beneficiary_type_name: 'Natural disaster-affected 2022 (sudden-onset, non-displaced)'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'refugees_asylum_seekers',
-								hrp_beneficiary_type_name: 'Refugees and Asylum Seekers'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors,
-								hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-								hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-							},
-							{
-								cluster_id: ngmClusterLists.all_sectors_minus_protection,
-								hrp_beneficiary_type_id: 'non_hrp',
-								hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-							},
-							{
-								cluster_id: ['fsac'],
-								hrp_beneficiary_type_id: 'carryover_hrp_2021',
-								hrp_beneficiary_type_name: 'HRP 2021 Carryover'
-							},
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: 'new_idp_2022',
-							// 	hrp_beneficiary_type_name: 'New IDPs in 2022'
-							// },
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
-							// 	hrp_beneficiary_type_name: 'New returnees in 2022 (at border or EC)'
-							// },
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
-							// 	hrp_beneficiary_type_name: 'New returnees in 2022 (at place of return)'
-							// },
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: 'natural_disaster_affected_2022_non_displaced',
-							// 	hrp_beneficiary_type_name: 'Natural disaster-affected in 2022 (non-displaced)'
-							// },
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: "confict_affected_2022",
-							// 	hrp_beneficiary_type_name: "Conflict-affected in 2022 (non-displaced)"
-							// },
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: 'refugees',
-							// 	hrp_beneficiary_type_name: 'Refugees'
-							// },
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
-							// 	hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
-							// },
-							// {
-							// 	cluster_id: ['cccm'],
-							// 	hrp_beneficiary_type_id: 'non_hrp',
-							// 	hrp_beneficiary_type_name: 'Response activity outside of the HRP'
-							// },
+				// 		// 2022
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_idp_2022',
+				// 				hrp_beneficiary_type_name: 'New IDPs in 2022'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_cross-border_returnees_border_or_ec_2022',
+				// 				hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at border or EC)'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_cross-border_returnees_province_2022',
+				// 				hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at province of return)'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'natural_disaster_affected_2022',
+				// 				hrp_beneficiary_type_name: 'Natural disaster-affected 2022 (sudden-onset, non-displaced)'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'refugees_asylum_seekers',
+				// 				hrp_beneficiary_type_name: 'Refugees and Asylum Seekers'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+				// 				hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+				// 			},{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'non_hrp',
+				// 				hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+				// 			},
+				// 			{
+				// 				cluster_id: ['fsac'],
+				// 				hrp_beneficiary_type_id: 'carryover_hrp_2021',
+				// 				hrp_beneficiary_type_name: 'HRP 2021 Carryover'
+				// 			}
+				// 	],
+				// 		2020: [{
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_idp_2020',
+				// 			hrp_beneficiary_type_name: 'New IDPs in 2020'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_returnees_2020_border_or_ec',
+				// 			hrp_beneficiary_type_name: 'New returnees in 2020 (at border or EC)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_returnees_2020_place_of_return',
+				// 			hrp_beneficiary_type_name: 'New returnees in 2020 (at place of return)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'natural_disaster_affected_2020',
+				// 			hrp_beneficiary_type_name: 'Natural disaster-affected in 2020 (non-displaced)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'confict_affected_2020',
+				// 			hrp_beneficiary_type_name: 'Conflict-affected in 2020 (non-displaced)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'refugees',
+				// 			hrp_beneficiary_type_name: 'Refugees'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+				// 			hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'non_hrp',
+				// 			hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+				// 		}, {
+				// 			cluster_id: ['fsac'],
+				// 			hrp_beneficiary_type_id: 'carryover_hrp_2019',
+				// 			hrp_beneficiary_type_name: 'HRP 2019 Carryover'
+				// 		}
+				// 		],
+				// 		2021: [{
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_idp_2021',
+				// 			hrp_beneficiary_type_name: 'New IDPs in 2021'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_returnees_2021_border_or_ec',
+				// 			hrp_beneficiary_type_name: 'New returnees in 2021 (at border or EC)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'new_returnees_2021_place_of_return',
+				// 			hrp_beneficiary_type_name: 'New returnees in 2021 (at place of return)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'natural_disaster_affected_2021',
+				// 			hrp_beneficiary_type_name: 'Natural disaster-affected in 2021 (non-displaced)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'confict_affected_2021',
+				// 			hrp_beneficiary_type_name: 'Conflict-affected in 2021 (non-displaced)'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'refugees',
+				// 			hrp_beneficiary_type_name: 'Refugees'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+				// 			hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+				// 		}, {
+				// 			cluster_id: ngmClusterLists.all_sectors,
+				// 			hrp_beneficiary_type_id: 'non_hrp',
+				// 			hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+				// 		}, {
+				// 			cluster_id: ['fsac'],
+				// 			hrp_beneficiary_type_id: 'carryover_hrp_2020',
+				// 			hrp_beneficiary_type_name: 'HRP 2020 Carryover'
+				// 		}
+				// 		],
+				// 		2022:[
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_idp_2022',
+				// 				hrp_beneficiary_type_name: 'New IDPs in 2022'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
+				// 				hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at border or EC)'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
+				// 				hrp_beneficiary_type_name: 'New cross-border returnees in 2022 (at province of return)'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'natural_disaster_affected_2022',
+				// 				hrp_beneficiary_type_name: 'Natural disaster-affected 2022 (sudden-onset, non-displaced)'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'refugees_asylum_seekers',
+				// 				hrp_beneficiary_type_name: 'Refugees and Asylum Seekers'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors,
+				// 				hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+				// 				hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+				// 			},
+				// 			{
+				// 				cluster_id: ngmClusterLists.all_sectors_minus_protection,
+				// 				hrp_beneficiary_type_id: 'non_hrp',
+				// 				hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+				// 			},
+				// 			{
+				// 				cluster_id: ['fsac'],
+				// 				hrp_beneficiary_type_id: 'carryover_hrp_2021',
+				// 				hrp_beneficiary_type_name: 'HRP 2021 Carryover'
+				// 			},
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: 'new_idp_2022',
+				// 			// 	hrp_beneficiary_type_name: 'New IDPs in 2022'
+				// 			// },
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: 'new_returnees_2022_border_or_ec',
+				// 			// 	hrp_beneficiary_type_name: 'New returnees in 2022 (at border or EC)'
+				// 			// },
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: 'new_returnees_2022_place_of_return',
+				// 			// 	hrp_beneficiary_type_name: 'New returnees in 2022 (at place of return)'
+				// 			// },
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: 'natural_disaster_affected_2022_non_displaced',
+				// 			// 	hrp_beneficiary_type_name: 'Natural disaster-affected in 2022 (non-displaced)'
+				// 			// },
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: "confict_affected_2022",
+				// 			// 	hrp_beneficiary_type_name: "Conflict-affected in 2022 (non-displaced)"
+				// 			// },
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: 'refugees',
+				// 			// 	hrp_beneficiary_type_name: 'Refugees'
+				// 			// },
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: 'vulnerable_people_humanitarian_needs',
+				// 			// 	hrp_beneficiary_type_name: 'Vulnerable people with humanitarian needs'
+				// 			// },
+				// 			// {
+				// 			// 	cluster_id: ['cccm'],
+				// 			// 	hrp_beneficiary_type_id: 'non_hrp',
+				// 			// 	hrp_beneficiary_type_name: 'Response activity outside of the HRP'
+				// 			// },
 							
-						]
-					};
-				} else {
-					var beneficiaries = { all: [] }
-				}
+				// 		]
+				// 	};
+				// } else {
+				// 	var beneficiaries = { all: [] }
+				// }
 				// return beneficiaries[year] ? beneficiaries[year]: beneficiaries['all'];
-				var hrp_beneficiaries = beneficiaries[year] ? beneficiaries[year] : beneficiaries['all'];
+				// var hrp_beneficiaries = beneficiaries[year] ? beneficiaries[year] : beneficiaries['all'];
 
-				if (hrp_beneficiaries && hrp_beneficiaries.length) {
-					hrp_beneficiaries = ngmClusterLists.filterDuplicates(hrp_beneficiaries, ['cluster_id','hrp_beneficiary_type_id'])
-					hrp_beneficiaries = $filter('orderBy')(hrp_beneficiaries, 'hrp_beneficiary_type_name');
+				// if (hrp_beneficiaries && hrp_beneficiaries.length) {
+				// 	hrp_beneficiaries = ngmClusterLists.filterDuplicates(hrp_beneficiaries, ['cluster_id','hrp_beneficiary_type_id'])
+				// 	hrp_beneficiaries = $filter('orderBy')(hrp_beneficiaries, 'hrp_beneficiary_type_name');
+				// }
+				// return hrp_beneficiaries;
+
+				// get data from DB 
+				hrp_beneficiariesDB = ngmLists.getObject('lists').hrpBeneficiaryTypeList
+				// filter by admin0pcode
+				hrp_beneficiaries_filterby_admin0pcode = hrp_beneficiariesDB.filter(b => (b.admin0pcode === admin0pcode));
+
+				// if not use HRP return empty array
+				if (!hrp_beneficiaries_filterby_admin0pcode.length) return []
+
+				// filter based on date
+				hrp_beneficiaries_date = ngmClusterLists.filterActiveDate(hrp_beneficiaries_filterby_admin0pcode, start_date, end_date);
+				// filter for specific year;
+				if(year !=='all'){
+					hrp_beneficiaries_date = hrp_beneficiaries_date.filter(h=>h.year === year);
 				}
-
-				return hrp_beneficiaries;
+				hrp_beneficiaries_date = ngmClusterLists.filterDuplicates(hrp_beneficiaries_date, ['cluster_id', 'hrp_beneficiary_type_id'])
+				hrp_beneficiaries_date = $filter('orderBy')(hrp_beneficiaries_date, 'hrp_beneficiary_type_name');
+				return hrp_beneficiaries_date;
 
 			},
 			// Project Details
