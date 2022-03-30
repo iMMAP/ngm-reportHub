@@ -248,6 +248,38 @@ angular.module('ngmReportHub')
 										    $location.path( '/cluster/projects/list' );
 											// Materialize.toast( $filter('translate')('project_deleted')+'!', 6000, 'success');
 											M.toast({ html: $filter('translate')('project_deleted') + '!', displayLength: 6000, classes: 'success' });
+
+												var notification_delete_project = $http({
+													method: 'POST',
+													url: ngmAuth.LOCATION + '/api/send-notification-success-delete-project',
+													data: {
+														admin: $scope.report.user.username,
+														admin_fullname: $scope.report.user.name,
+														admin_email: $scope.report.user.email,
+														organization_tag: $scope.report.project.organization_tag,
+														project_title: $scope.report.project.project_title,
+														admin0pcode: $scope.report.project.admin0pcode,
+														admin0name: $scope.report.project.admin0name,
+														focal_point: $scope.report.project.name,
+														focal_point_username: $scope.report.project.username,
+														focal_point_email: $scope.report.project.email
+													}
+												});
+	
+												notification_delete_project.then(function (result) {
+
+													$timeout(function () {
+														M.toast({ html: 'Send Email to Focal Point Project', displayLength: 3000, classes: 'success' });
+													}, 400);
+												}).catch(function (err) {
+
+													$timeout(function () {;
+														M.toast({ html: err.msg, displayLength: 6000, classes: 'error' });
+													}, 400);
+												});
+											
+											
+
 									    }
 									  }).catch(function(err){
 									    // redirect on success
