@@ -748,9 +748,10 @@ angular.module('ngmReportHub')
 							// admin1
 							var admin1List = $filter( 'filter' )( $scope.dashboard.lists.admin1, { admin0pcode: $scope.dashboard.admin0pcode.toUpperCase() }, true );
 							
-							// if((moment($scope.dashboard.startDate).year())>= 2022 && admin1List.length){
-							// 	admin1List = admin1List.filter(a=>a.inactive !== true);
-							// }
+							// remove out old admin1 code
+							if((moment($scope.dashboard.startDate).year())>= 2022 && admin1List.length){
+								admin1List = admin1List.filter(a=>a.inactive !== true);
+							}
 							// add all
 							admin1List.unshift({
 								admin1pcode: 'all',
@@ -786,9 +787,10 @@ angular.module('ngmReportHub')
 							// admin1
 							var admin2List = $filter( 'filter' )( $scope.dashboard.lists.admin2, { admin1pcode: $scope.dashboard.admin1pcode.toUpperCase() }, true );
 							
-							// if ((moment($scope.dashboard.startDate).year()) >= 2022 && admin2List.length) {
-							// 	admin2List = admin2List.filter(a => a.inactive !== true);
-							// }
+							// remove out old admin2 code
+							if ((moment($scope.dashboard.startDate).year()) >= 2022 && admin2List.length) {
+								admin2List = admin2List.filter(a => a.inactive !== true);
+							}
 							// add all
 							admin2List.unshift({
 								admin2pcode: 'all',
