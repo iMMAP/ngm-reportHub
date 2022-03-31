@@ -458,9 +458,7 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 											// Materialize.toast('Cluster changed to ' + clusterUpdatedTo, 6000, 'success');
 											M.toast({ html: 'Cluster changed to ' + clusterUpdatedTo, displayLength: 6000, classes: 'success' });
 										}
-										if(config.user.api_key !== $scope.panel.user.api_key) {
-											M.toast({ html: 'Generating API Key' + '...', displayLength: 6000, classes: 'note' });
-										}
+
 										// Materialize.toast( $filter('translate')('success')+' '+$filter('translate')('profile_updated'), 6000, 'success' );
 										M.toast({ html: $filter('translate')('success') + ' ' + $filter('translate')('profile_updated'), displayLength: 6000, classes: 'success' });
 
@@ -962,6 +960,49 @@ angular.module('ngm.widget.form.authentication', ['ngm.provider'])
 						}
 						$scope.panel.isPhoneNumberOk = false
 					}
+				},
+				setApiKey:function(){
+					
+					$scope.panel.btnDisabled = true;
+					M.toast({ html: $filter('translate')('processing') + '...', displayLength: 6000, classes: 'note' });
+					if ($scope.panel.user['api_key'] === undefined || $scope.panel.user['api_key'] === '') {
+						function uniqueApiKey() {
+							return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+								var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+								return v.toString(16);
+							});
+						}
+						$scope.panel.user['api_key'] = uniqueApiKey();
+					}
+					
+					ngmAuth
+						.updateProfile({ user: $scope.panel.user }).then(function (result) {
+
+							// db error!
+							if (result.data.err || result.data.summary) {
+								var msg = result.data.msg ? result.data.msg : 'error!';
+								M.toast({ html: msg, displayLength: 6000, classes: 'error' });
+								$scope.panel.btnDisabled = false;
+							}
+
+							// success
+							if (result.data.success) {
+								if ($scope.panel.user.id === ngmUser.get().id) {
+									$scope.panel.user = angular.merge({}, $scope.panel.user, result.data.user);
+									ngmUser.set($scope.panel.user);
+								}
+								// success message
+								$timeout(function () {
+									M.toast({ html: $filter('translate')('success') + ' Generate API Key', displayLength: 6000, classes: 'success' });
+									$scope.panel.btnDisabled = false;
+									// refresh page;
+									$location.path('/profile/' + $scope.panel.user.username);
+								}, 200);
+								
+
+							}
+
+						});
 				}
 
 			}
