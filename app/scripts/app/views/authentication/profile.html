@@ -389,7 +389,7 @@ form {
 									ng-if="!panel.user.api_key"
 									class="btn btn-large waves-effect waves-teal"
 									type="submit"
-									ng-click="panel.update( false )"
+									ng-click="panel.setApiKey()"
 									ng-disabled="ngmProfileForm.$invalid || panel.btnDisabled">
 									<i class="material-icons left">link</i>Generate API Key
 							</button>
