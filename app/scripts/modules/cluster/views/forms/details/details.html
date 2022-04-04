@@ -868,7 +868,8 @@
 		$( '#ngm-project-budget' ).focus();
 		$( '#ngm-project-name' ).focus();
 		// $( 'select' ).material_select();
-		$( 'textarea' ).height( $('textarea')[0].scrollHeight );
+		// $( 'textarea' ).height( $('textarea')[0].scrollHeight );
+		M.textareaAutoResize($('#ngm-project-description'));
 		M.updateTextFields();
 		$( '.search-select' ).on('keydown', function(ev) { ev.stopPropagation(); });
 	}, 600 );
