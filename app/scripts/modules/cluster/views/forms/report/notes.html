@@ -3,7 +3,8 @@
 
   // init textarea
   setTimeout(function(){
-		$( 'textarea' ).height( $('textarea')[0].scrollHeight );
+		// $( 'textarea' ).height( $('textarea')[0].scrollHeight );
+		M.textareaAutoResize($('#ngm-project-notes'));
 		M.updateTextFields();
   });
 
