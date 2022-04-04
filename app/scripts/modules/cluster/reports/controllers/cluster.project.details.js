@@ -338,10 +338,11 @@ angular.module('ngmReportHub')
 						$('.fixed-action-btn').floatingActionButton({ direction: 'left' });
 					}, 0);
 
+					M.toast({ html: 'Redirecting...', displayLength: 6000, classes: 'success' });
 					// send them away
 					$timeout(function() {
 						$location.path( '/cluster/projects/list' );
-					}, 11500 );
+					}, 8000 );
 
 				}
 

@@ -22,7 +22,11 @@ angular.module('ngmReportHub')
 			}
 		}).then(function(data){
 			// assign data
-			$scope.report.setProjectSummary( data );
+			if(data.id){
+				$scope.report.setProjectSummary( data );
+			}else{
+				$scope.report.notfound();
+			}
 		});
 
 		// init empty model
@@ -367,6 +371,71 @@ angular.module('ngmReportHub')
 					}]
 				};
 
+				// assign to ngm app scope
+				$scope.report.ngm.dashboard.model = $scope.model;
+
+			}, notfound: function () {
+
+				var project_not_found = {
+					name: 'project_not_found',
+					header: {
+						div: {
+							'class': 'col s12 m12 l12 report-header',
+							style: 'border-bottom: 3px ' + $scope.report.ngm.style.defaultPrimaryColor + ' solid;'
+						},
+						title: {
+							'class': 'col s12 m12 l12 report-title report-title',
+							style: 'color: ' + $scope.report.ngm.style.defaultPrimaryColor,
+							title: 'Project'
+
+						},
+						subtitle: {
+							'class': 'col s12 m12 l12 report-subtitle',
+							html: true,
+							title: 'Project Not Found',
+						}
+					},
+					rows: [{
+						columns: [{
+							styleClass: 's12 m12 l12',
+							widgets: [{
+								type: 'html',
+								card: 'white grey-text text-darken-2',
+								style: 'padding: 20px;',
+								config: {
+									html: '<a class="btn-flat waves-effect waves-teal left" href="' + $scope.report.getProjectsHref() + '"><i class="material-icons mirror left">keyboard_return</i>' + ($scope.report.user.admin0pcode === 'AF' ? $filter('translate')('back_to_activity_plans') : $filter('translate')('back_to_projects')) + '</a>'
+								}
+							}]
+						}]
+					}, {
+						columns: [{
+							styleClass: 's12 m12 l12',
+							widgets: [{
+								type: 'html',
+								card: 'white grey-text text-darken-2',
+								style: 'padding: 20px;',
+								config: {
+									username: "Project",
+									templateUrl: '/scripts/modules/cluster/views/cluster.project.summary.not.found.html',
+								}
+							}]
+						}]
+					}, {
+						columns: [{
+							styleClass: 's12 m12 l12',
+							widgets: [{
+								type: 'html',
+								card: 'card-panel',
+								style: 'padding:0px; height: 90px; padding-top:10px;',
+								config: {
+									html: $scope.report.ngm.footer
+								}
+							}]
+						}]
+					}]
+				}
+
+				$scope.model = project_not_found;
 				// assign to ngm app scope
 				$scope.report.ngm.dashboard.model = $scope.model;
 
