@@ -115,6 +115,22 @@
 		</div>
 	</div>
 </div>
+<!-- remove all beneficiary modal -->
+<div id="delete-all-beneficiary-modal" class="modal">
+	<div class="modal-content dialog">
+		<h4 class="header-modal red lighten-2"><i class="material-icons left small">delete_forever</i>Delete All Activities</h4>
+		<p style="font-weight: 500;">Are you sure you want to DELETE ALL ACTIVITIES in {{ project.monthlyTitleFormat }} Report ?</p>
+		<p
+			style="font-weight:400;background-color: #dcdcdc; border-radius: 5px; font-style: italic;  font-size: 14px;margin: 20px 50px 10px 20px;">
+			Once you delete the activities, Any of the lost data will not be accessible anymore and this action can't be recovered
+			by the ReportHub Team.
+		</p>
+	</div>
+	<div class="modal-footer">
+		<a ng-click="project.removeAllBeneficiary()" class=" modal-action modal-close waves-effect waves-red btn red lighten-2">Yes Remove All!</a>
+		<a class=" modal-action modal-close waves-effect waves-green btn-flat">No</a>
+	</div>
+</div>
 <!-- bind html -->
 <div class="row">
 	<div class="col s12 m12 l12">
@@ -194,6 +210,12 @@
 								class="btn waves-effect waves-light hide-on-small-only file-report-btn" title=" Import From File"
 								ng-click="project.uploadFileReport.openModal('upload-monthly-file')" ng-disabled="">
 								<i class="material-icons left">publish</i>Import Form File
+							</button>
+							<button
+								ng-if="deactivedCopybutton  && (project.canDeleteAllActivities ) && (project.definition.project_status !== 'complete' && project.report.report_status !== 'complete')"
+								class="btn waves-effect waves-light red lighten-1 hide-on-small-only edit-report-btn" title="Remove All"
+								ng-click="project.removeAllBeneficiaryModal()" ng-disabled="">
+								<i class="material-icons left">delete_forever</i>Delete All Activities
 							</button>
 
 							<!-- REMOVE THIS After DONE fixing copy previouse month -->

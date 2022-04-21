@@ -811,6 +811,49 @@ angular.module( 'ngmReportHub' )
 				});
 			},
 
+			removeAllBeneficiary:function (project,data,url) {
+
+				// update
+				$http({
+					method: 'POST',
+					url: ngmAuth.LOCATION + '/api/cluster/report/removeAllBeneficiary',
+					data: data
+				}).then(function (result) {
+					if (result.data.err) {
+						// Materialize.toast( 'Error! Please correct the ROW and try again', 4000, 'error' );
+						M.toast({ html: 'Error! Please correct the ROW and try again', displayLength: 4000, classes: 'error' });
+					}
+					if (!result.data.err) {
+						var set_metrics = {
+							method: 'POST',
+							url: ngmAuth.LOCATION + '/api/metrics/set',
+							data: {
+								organization: project.user.organization,
+								username: project.user.username,
+								email: project.user.email,
+								dashboard: project.definition.project_title,
+								theme: 'delete_all_beneficiary_' + project.report.id,
+								format: '/api/cluster/report/removeAllBeneficiary',
+								url: url
+							}
+						};
+
+						$http(set_metrics).then(function(resutl){
+							if (result.data.err) M.toast({ html: 'Error! Cannot set metrics', displayLength: 4000, classes: 'error' });
+						})
+						
+						 M.toast({ html: 'All beneficiary activities has been deleted', displayLength: 2000, classes: 'note' });
+						project.activePrevReportButton();
+						 $timeout(function(){
+							 project.save(false, false);
+						 },3000) 
+						}
+				}).catch(function (err) {
+					// Materialize.toast( 'Error!', 4000, 'error' );
+					M.toast({ html: 'Error!', displayLength: 4000, classes: 'error' });
+				});
+			},
+
 			// remove report request
 			removeReport: function (project, report_id, cb) {
 				// update
