@@ -353,7 +353,7 @@
 								project.validateBeneficiariesDetailsForm( arg1, arg2 )
 							 -->
 						<button
-							ng-show="deactivedCopybutton  && canDeleteAllActivities && (project.definition.project_status !== 'complete' || project.report.report_status !== 'complete')"
+							ng-show="deactivedCopybutton  && project.canDeleteAllActivities && (project.definition.project_status !== 'complete' && project.report.report_status !== 'complete')"
 							class="btn waves-effect waves-light red lighten-1 hide-on-small-only" title="Remove All"
 							ng-click="project.removeAllBeneficiaryModal()" ng-disabled="">
 							<i class="material-icons left">delete_forever</i>Delete All Activities
