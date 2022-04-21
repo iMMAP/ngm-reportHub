@@ -245,6 +245,19 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 					}else{
 						$scope.project.isNeedAssessedHouseholds = false;
 					}
+
+					// for button delete all activities to show
+					$scope.project.canDeleteAllActivities = false;
+					if(
+						// focal point
+						($scope.project.user.username === $scope.project.definition.username) ||
+						// ORG admin
+						($scope.project.user.roles.includes('ORG') && ($scope.project.user.organization_tag === $scope.project.definition.organization_tag))||
+						//  ADMIN
+						($scope.project.user.email === 'nsadaqatzada@immap.org' || $scope.project.user.email === 'finka.mail@gmail.com' || $scope.project.user.email === 'farifin@immap.org')
+						){
+						$scope.project.canDeleteAllActivities = true;
+						}
 				},
 
 				// sets title for each location / activity
@@ -696,6 +709,54 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 					if (ngmClusterHelperNgWashLists.details && ngmClusterHelperNgWashLists.details[$scope.project.locationIndex] && ngmClusterHelperNgWashLists.details[$scope.project.locationIndex][$scope.project.beneficiaryIndex]) {
 						ngmClusterHelperNgWashLists.details[$scope.project.locationIndex].splice($scope.project.beneficiaryIndex, 1);
 					}
+				},
+
+				// remove beneficiary from all location in report
+				removeAllBeneficiaryModal: function(){
+					$('#delete-all-beneficiary-modal').modal({ dismissible: false });
+					$('#delete-all-beneficiary-modal').modal('open');
+				},
+				removeAllBeneficiary:function(){
+
+					var remove_in_db= false;
+					count_beneficiaries = 0;
+					count_unsaved_beneficiaries =0;
+					M.toast({ html: 'Removing...', displayLength: 2000, classes: 'note' });
+					// first remove beneficiary activities that not saved to db 
+					angular.forEach($scope.project.report.locations,function(location,location_index){
+						if(location.beneficiaries.length){
+							count_beneficiaries += location.beneficiaries.length;
+							count_unsaved_beneficiaries += (location.beneficiaries.filter(b=> !b.id).length);
+							// remove beneficiaries
+							$scope.project.report.locations[location_index].beneficiaries = [] 
+						}
+					});
+		
+					
+					if (count_beneficiaries > count_unsaved_beneficiaries){
+						var remove_benef_data = {
+							project_id: config.project.id,
+							report_id: config.report.id,
+							group: false
+						}
+						
+						// if group by admin1pcode or admin2pcode or custom
+						if ($scope.project.definition.location_groups_check) {
+							remove_benef_data.group = true;
+							remove_benef_data.groupby = $scope.project.definition.location_grouping_by;
+							remove_benef_data.groupby_code = $route.current.params.location_group;
+						};
+						
+						var url = $location.$$path;
+						ngmClusterBeneficiaries.removeAllBeneficiary($scope.project,remove_benef_data,url);
+					}else{
+						$timeout(function () {
+							M.toast({ html: 'All beneficiary activities has been deleted', displayLength: 2000, classes: 'note' });
+							$scope.project.activePrevReportButton();
+						},2000)
+					}
+					
+					
 				},
 
 
@@ -2375,6 +2436,7 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 								} else {
 									// reset when edit saved report
 									ngmClusterBeneficiaries.setLocationsForm( $scope.project.lists, $scope.project.report.locations );
+									$scope.project.activePrevReportButton();
 								}
 
 							} else {
