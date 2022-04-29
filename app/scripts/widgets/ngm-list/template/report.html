@@ -37,6 +37,36 @@
 	  background-color: #009688;
 	}
 
+.report_out{
+	width: 25%;
+	border: 2px solid;
+	padding-inline: 0.5rem;
+	font-weight: 500;
+	color: red;
+	border-radius: 5px;
+	display: inline;
+	margin-inline: 10px;
+}
+.report_out:hover:after{
+    background: #333;
+    background: rgba(0,0,0,.8);
+    border-radius: 5px;
+    color: #fff;
+    /* content: 'TESSS' ; */
+    content: attr(title);
+    top: 50px;
+    left: 50px;
+    padding: 1em;
+    position: absolute;
+    z-index: 98;
+    width: 50ch;
+    font-size: 1rem;
+    line-height: 5px;
+    text-transform: capitalize;
+    opacity: 0.9;
+	text-align: center;
+	font-weight: 600;
+}
 </style>
 
 <!-- bind html -->
@@ -74,6 +104,9 @@
 				<a href="{{ list.report_url }}/{{ item.project_id }}/{{ item.id }}" title="{{ list.hoverTitle }} {{ item.reporting_period_title }} Report">
 					<i class="material-icons circle white teal-text">{{ list.icon }}</i>
 					<span class="title">{{ item.reporting_period_title }}</span>
+					<div ng-if="item.out_bound_report_tag" class="report_out" title=" Report outside the project duration ">OUT BOND REPORT
+						<i class="material-icons" style="font-size: 1em !important;">error</i>
+					</div>
 					<span class="right" style="padding-top:20px; color:#616161;font-weight:400;" ng-style="($root.rtl) && { 'padding-left':'40px' } || { 'padding-right':'40px' }" ng-hide="windowWidth < 992">{{ list.reportFormat( item ) }}</span>
 					<p align="justify" style="padding:10px 0px 10px 0px;">
 						{{'monthly_beneficiaries_report_for' | translate}} {{ item.reporting_period_title }}

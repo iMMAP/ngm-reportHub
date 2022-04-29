@@ -184,6 +184,10 @@ angular.module('ngmReportHub')
 									orderBy: 'reporting_due_date',
 									format: true,
 									report_type: $scope.report.project.report_type_id === 'bi-weekly' ? $scope.report.project.report_type_id :'monthly',
+									project_date_duration: {
+										start: $scope.report.project.project_start_date,
+										end: $scope.report.project.project_end_date
+									},
 									request: {
 										method: 'POST',
 										url: ngmAuth.LOCATION + '/api/cluster/report/getReportsList',
@@ -215,6 +219,10 @@ angular.module('ngmReportHub')
 									orderBy: 'reporting_due_date',
 									format: true,
 									report_type: $scope.report.project.report_type_id === 'bi-weekly' ? $scope.report.project.report_type_id : 'monthly',
+									project_date_duration: {
+										start: $scope.report.project.project_start_date,
+										end: $scope.report.project.project_end_date
+									},
 									request: {
 										method: 'POST',
 										url: ngmAuth.LOCATION + '/api/cluster/report/getReportsList',

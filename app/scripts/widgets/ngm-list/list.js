@@ -133,6 +133,13 @@ angular.module('ngm.widget.list', ['ngm.provider'])
             number_date_of_reporting_period = moment.utc(d.reporting_period).format('D')
             $scope.list.data[i].reporting_period_title += ' ' + (number_date_of_reporting_period <= 15 ? 'Biweekly Period 1' :'Biweekly Period 2');
           }
+          if (config.report_type && config.project_date_duration){
+            $scope.list.data[i].out_bound_report_tag = false;
+            if (moment.utc(config.project_date_duration.start).startOf('month') > moment.utc($scope.list.data[i].reporting_period).startOf('month')
+                || moment.utc(config.project_date_duration.end).endOf('month') < moment.utc($scope.list.data[i].reporting_period).startOf('month')){
+              $scope.list.data[i].out_bound_report_tag= true;
+              }
+          }
         });
 			}
 			// set event listener to update data
