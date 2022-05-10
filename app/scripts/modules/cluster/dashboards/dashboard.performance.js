@@ -163,13 +163,13 @@ angular.module('ngmReportHub')
                            'title': 'HRP/Timestamp',
                            'class': 'teal lighten-1 white-text',
                            'rows': [{
-                               'title': 'TRUE',
+                               'title': 'HRP',
                                'param': 'hrp',
                                'active': 'true',
                                'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
                                'href': '/desk/#/performance/'+$scope.dashboard.admin0pcode+'/' +'true/' + $scope.dashboard.startDate + '/' + $scope.dashboard.endDate
                            }, {
-                               'title': 'FALSE',
+                               'title': 'TIMESTAMP',
                                'param': 'hrp',
                                'active': 'false',
                                'class': 'grey-text text-darken-2 waves-effect waves-teal waves-teal-lighten-4',
