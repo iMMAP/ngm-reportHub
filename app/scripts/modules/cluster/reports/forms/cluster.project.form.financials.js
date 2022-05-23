@@ -683,7 +683,8 @@ angular.module( 'ngm.widget.project.financials', [ 'ngm.provider' ])
 
                   read.onloadend = function () {
                     var csv_string = read.result
-                    csv_array = Papa.parse(csv_string).data;
+                    // csv_array = Papa.parse(csv_string).data;
+                    csv_array = Papa.parse(csv_string, { skipEmptyLines: true }).data;
                     if (csv_array[0].indexOf('Activity Type') < 0) {
                       var previews = document.querySelectorAll(".dz-preview");
                       previews.forEach(function (preview) {
@@ -1008,7 +1009,8 @@ angular.module( 'ngm.widget.project.financials', [ 'ngm.provider' ])
             $("#switch_btn_text").attr("disabled", true);
             attribute_headers_obj = ngmClusterImportFile.listheaderAttributeInFile('financial');//$scope.project.uploadFileReport.obj_header;
             if ($scope.project.text_input) {
-              csv_array = Papa.parse($scope.project.text_input).data;
+              // csv_array = Papa.parse($scope.project.text_input).data;
+              csv_array = Papa.parse($scope.project.text_input, { skipEmptyLines: true }).data;
               if (csv_array[0].indexOf('Activity Type') < 0) {
 
 

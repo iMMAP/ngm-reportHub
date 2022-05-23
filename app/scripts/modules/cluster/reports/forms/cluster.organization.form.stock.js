@@ -819,7 +819,10 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
 
                   read.onloadend = function () {
                     var csv_string = read.result
-                    csv_array = Papa.parse(csv_string).data;
+                    // csv_array = Papa.parse(csv_string).data;
+                    
+                    // skip if there are empty row
+                    csv_array = Papa.parse(csv_string, { skipEmptyLines: true }).data;
 
                     if (csv_array[0].indexOf('Stock Type') < 0) {
                       var previews = document.querySelectorAll(".dz-preview");
@@ -1166,7 +1169,8 @@ angular.module( 'ngm.widget.organization.stock', [ 'ngm.provider' ])
             $("#switch_btn_text").attr("disabled", true);
             attribute_headers_obj = ngmClusterImportFile.listheaderAttributeInFile('stock');//$scope.report.uploadFileReport.obj_header;
             if ($scope.report.text_input) {
-              csv_array = Papa.parse($scope.report.text_input).data;
+              // csv_array = Papa.parse($scope.report.text_input).data;
+              csv_array = Papa.parse($scope.report.text_input, { skipEmptyLines: true }).data;
               if (csv_array[0].indexOf('Stock Type') < 0) {
 
 
