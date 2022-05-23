@@ -142,7 +142,8 @@ angular.module('ngm.widget.upload.beneficiaries.stock.report', ['ngm.provider'])
                                 read.readAsBinaryString(file);
                                 read.onloadend = function () {
                                     var csv_string = read.result
-                                    csv_array = Papa.parse(csv_string).data;
+                                    // csv_array = Papa.parse(csv_string).data;
+                                    csv_array = Papa.parse(csv_string, { skipEmptyLines: true }).data;
                                     values = ngmClusterImportFile.setCsvValueToArrayofObject(csv_array);
 
                                     if (values.length > 0) {
@@ -515,7 +516,9 @@ angular.module('ngm.widget.upload.beneficiaries.stock.report', ['ngm.provider'])
                     $("#switch_btn_text").attr("disabled", true);
 
                     if ($scope.upload.text_input ) {
-                        csv_array = Papa.parse($scope.upload.text_input).data;
+                        // csv_array = Papa.parse($scope.upload.text_input).data;
+                        
+                        csv_array = Papa.parse($scope.upload.text_input, { skipEmptyLines: true }).data;
                         var attribute_to_check ='';
                         if($scope.type === 'beneficiaries'){
                             attribute_to_check = 'activity_type_id';

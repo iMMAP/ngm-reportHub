@@ -1888,7 +1888,8 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 
 									read.onloadend = function () {
 										var csv_string = read.result
-										csv_array = Papa.parse(csv_string).data;
+										// csv_array = Papa.parse(csv_string).data;
+										csv_array = Papa.parse(csv_string, { skipEmptyLines: true }).data;
 
 										if ($scope.import_file_type === 'location') {
 											header_must_exist = 'Admin1 Pcode';
@@ -2530,7 +2531,8 @@ angular.module( 'ngm.widget.project.details', [ 'ngm.provider' ])
 						$("#switch_btn_text").attr("disabled", true);
 						var attribute_headers_obj = ngmClusterImportFile.listheaderAttributeInFile('monthly_report');
 						if ($scope.project.text_input) {
-							csv_array = Papa.parse($scope.project.text_input).data;
+							// csv_array = Papa.parse($scope.project.text_input).data;
+							csv_array = Papa.parse($scope.project.text_input, { skipEmptyLines: true }).data;
 							var header_must_exist ='';
 							if ($scope.import_file_type === 'location'){
 								 header_must_exist = 'Admin1 Pcode';

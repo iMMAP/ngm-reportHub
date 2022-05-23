@@ -1544,7 +1544,8 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 
 									read.onloadend = function () {
 										var csv_string = read.result
-										csv_array= Papa.parse(csv_string).data;
+										// csv_array= Papa.parse(csv_string).data;
+										csv_array = Papa.parse(csv_string, { skipEmptyLines: true }).data;
 										if(csv_array[0].indexOf('Activity Type')<0){
 											var previews = document.querySelectorAll(".dz-preview");
 											previews.forEach(function (preview) {
@@ -1911,7 +1912,8 @@ angular.module( 'ngm.widget.project.report', [ 'ngm.provider' ])
 						$("#switch_btn_text").attr("disabled", true);
 						var attribute_headers_obj = ngmClusterImportFile.listheaderAttributeInFile('monthly_report');
 						if ($scope.project.report.text_input){
-							csv_array = Papa.parse($scope.project.report.text_input).data;
+							// csv_array = Papa.parse($scope.project.report.text_input).data;
+							csv_array = Papa.parse($scope.project.report.text_input, { skipEmptyLines: true }).data;
 							if (csv_array[0].indexOf('Activity Type') < 0) {
 
 

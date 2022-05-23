@@ -294,7 +294,8 @@ angular.module( 'ngm.widget.organization.stocks.list', [ 'ngm.provider' ])
 
                   read.onloadend = function () {
                     var csv_string = read.result
-                    csv_array = Papa.parse(csv_string).data;
+                    // csv_array = Papa.parse(csv_string).data;
+                    csv_array = Papa.parse(csv_string, { skipEmptyLines: true }).data;
 
                     if (csv_array[0].indexOf('Admin1 Pcode') < 0) {
                       var previews = document.querySelectorAll(".dz-preview");
